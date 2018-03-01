@@ -8,9 +8,9 @@
   "LOGIN": "Sign in",
   "SIGNUP": "Sign up",
 
-  "TAB1_TITLE": "Items",
-  "TAB2_TITLE": "Search",
-  "TAB3_TITLE": "Settings",
+  "TAB1_TITLE": "My Trips",
+  "TAB2_TITLE": "Plan Trip",
+  "TAB3_TITLE": "My Profile",
 
   "MAP_TITLE": "Map",
 
@@ -49,19 +49,23 @@
   "SIGNUP_ERROR": "Unable to create account. Please check your account information and try again.",
   "SIGNUP_BUTTON": "Sign up",
 
-  "LIST_MASTER_TITLE": "Items",
+  "LIST_MASTER_TITLE": "My Trips",
 
-  "ITEM_CREATE_TITLE": "New Item",
+  "ITEM_CREATE_TITLE": "New Trip",
   "ITEM_CREATE_CHOOSE_IMAGE": "Add Image",
 
   "ITEM_NAME_PLACEHOLDER": "Name",
-  "ITEM_ABOUT_PLACEHOLDER": "About",
+  "ITEM_DESCRIPTION_PLACEHOLDER": "Description",
+  "ITEM_DATE_FROM_PLACEHOLDER": "Start from",
+  "ITEM_DATE_TO_PLACEHOLDER": "End on",
 
   "DONE_BUTTON": "Done",
   "CANCEL_BUTTON": "Cancel",
   "DELETE_BUTTON": "Delete",
 
   "CARDS_TITLE": "Social",
+
+  "PLAN_TRIP_TITLE": "Plan Trip",
 
   "SEARCH_TITLE": "Search",
   "SEARCH_PLACEHOLDER": "Search the items list, e.g. \"Donald Duck\""

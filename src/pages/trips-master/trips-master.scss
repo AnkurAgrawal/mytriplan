@@ -1,0 +1,45 @@
+page-trips-master {
+  .card-background-page {
+
+    ion-card {
+      position: relative;
+      text-align: center;
+    }
+
+    .button-clear.button-clear {
+      border-color: transparent;
+      background: none;
+      box-shadow: none;
+    }
+
+    .card-image-overlay {
+      content: "";
+      display: block;
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      background-color: rgba(0, 0, 0, .4);
+      background-size: 100% 100%;
+    }
+
+    .card-title {
+      position: absolute;
+      top: 36%;
+      font-size: 2.0em;
+      width: 100%;
+      font-weight: bold;
+      color: #fff;
+    }
+
+    .card-subtitle {
+      font-size: 1.0em;
+      position: absolute;
+      top: 50%;
+      width: 100%;
+      color: #fff;
+    }
+
+  }
+}

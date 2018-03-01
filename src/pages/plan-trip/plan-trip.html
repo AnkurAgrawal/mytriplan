@@ -1,0 +1,22 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>{{ 'PLAN_TRIP_TITLE' | translate }}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+  <ion-searchbar (ionInput)="getTrips($event)" placeholder="{{ 'SEARCH_PLACEHOLDER' | translate }}"></ion-searchbar>
+  <ion-list>
+    <button ion-item (click)="openTrip(trip)" *ngFor="let trip of currentTrips">
+      <ion-avatar item-start>
+        <img [src]="trip.tripPic" />
+      </ion-avatar>
+      <h2>{{trip.name}}</h2>
+      <p>{{trip.about}}</p>
+      <ion-note item-end *ngIf="trip.note">{{trip.note}}</ion-note>
+    </button>
+  </ion-list>
+</ion-content>

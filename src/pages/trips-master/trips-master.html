@@ -1,0 +1,32 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>{{ 'LIST_MASTER_TITLE' | translate }}</ion-title>
+
+    <ion-buttons end>
+      <button ion-button icon-only (click)="addTrip()">
+        <ion-icon name="add"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content class="card-background-page">
+
+  <button class="button button-clear" (click)="openTrip(trip)" clear *ngFor="let trip of currentTrips">
+    <ion-card>
+      <img [src]="trip.tripPic">
+      <div class="card-image-overlay"></div>
+      <div class="card-title">{{trip.name}}</div>
+      <div class="card-subtitle">{{trip.dateFrom | date: "MMM dd"}} - {{trip.dateTo | date: "MMM dd"}}</div>
+
+      <ion-fab right top>
+        <button ion-fab color="danger" (click)="deleteTrip(trip, $event)">
+          <ion-icon name="trash"></ion-icon>
+        </button>
+      </ion-fab>
+    </ion-card>
+  </button>
+
+</ion-content>

@@ -1,0 +1,47 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>{{ trip.name }}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+  <div class="trip-profile" #tripPic [style.background-image]="'url(' + trip.tripPic + ')'">
+    <div class="trip-detail" padding>
+      <h4>{{trip.name}}</h4>
+      <ion-row clear>
+        <ion-col start>{{trip.dateFrom | date: "MMM dd"}} - {{trip.dateTo | date: "MMM dd"}}</ion-col>
+        <ion-badge end>{{trip.daysLeft}} days to go</ion-badge>
+      </ion-row>
+    </div>
+  </div>
+  <ion-toolbar no-border-top class="trip-itinerary">
+    <ion-scroll scrollX="true" style="height:45px" >
+      <ion-segment [(ngModel)]="itinerary">
+        <ion-segment-button (click)="changeCurrentDay(i+1)" value="{{i+1}}" *ngFor="let date of trip.dates; let i = index ">{{date | date: "MMM dd"}}</ion-segment-button>
+      </ion-segment>
+    </ion-scroll>
+  </ion-toolbar>
+
+  <div *ngFor="let date of trip.dates; let i = index ">
+    <ion-list *ngIf="itinerary==(i+1)">
+      <ion-item-sliding *ngFor="let entry of trip.currentDayItinerary">
+        <button ion-item (click)="openEntry(entry)">
+          <ion-icon item-start>
+            <i class="fa fa-{{entry.icon}} fa-fw" aria-hidden="true"></i>
+          </ion-icon>
+          <h2>{{entry.place}}</h2>
+          <small>{{entry.timeFrom}}</small> - <small>{{entry.timeTo}}</small>
+        </button>
+
+        <ion-item-options>
+          <button ion-button color="danger" (click)="deleteEntry(entry)">
+            {{ 'DELETE_BUTTON' | translate }}
+          </button>
+        </ion-item-options>
+      </ion-item-sliding>
+    </ion-list>
+  </div>
+</ion-content>
