@@ -3,15 +3,14 @@
  * that something that fits your app as well.
  */
 
-import { Entry } from '../models/entry';
+import { Plan } from '../models/plan';
 
-export class Activity extends Entry {
+export abstract class Activity extends Plan {
+  static ICON: string = 'calendar';
+  static GROUP: string = 'Activity';
+  static NAME: string;
 
-  static TYPES: any[] = ['lodging', 'meeting', 'restaurant', 'outing', 'show', 'shopping'];
-  static icon: string = 'calendar';
-
-  constructor(fields: any) {
+  constructor(fields?: any) {
     super(fields);
   }
-
 }

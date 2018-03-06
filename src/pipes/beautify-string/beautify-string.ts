@@ -12,9 +12,21 @@ export class BeautifyStringPipe implements PipeTransform {
   /**
    * Takes a value and makes it lowercase.
    */
-  transform(value: string, ...args) {
-    return value.toLowerCase().split(/[_\s-]+/).map((word) => {
-      return word.charAt(0).toUpperCase() + word.slice(1);
+  transform(value: string, args: string) {
+    return value.split(/(?=[A-Z])|[_\s-]+/).map((word) => {
+      if (args == undefined) {
+        args = 'title';
+      }
+      args = args.toLowerCase();
+
+      if (args == 'title') {
+        return word.toLowerCase().charAt(0).toUpperCase() + word.slice(1);
+      } else if (args == 'small') {
+        return word.toLowerCase();
+      } else if (args == 'caps') {
+        return word.toUpperCase();
+      }
+      return word;
     }).join(' ');
   }
 }

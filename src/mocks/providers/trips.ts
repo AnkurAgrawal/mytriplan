@@ -18,30 +18,27 @@ export class Trips {
     "dateTo": "10/19/2018",
     "itinerary": [
       {
-        "category": "flight",
+        "group": "Flight",
         "date": "10/09/2018",
-        "timeFrom": "02:00 AM",
-        "timeTo": "03:00 AM",
+        "time": "02:00 AM",
         "address": "Portland, OR"
       },
       {
-        "category": "carrental",
+        "group": "CarRental",
         "date": "10/09/2018",
-        "timeFrom": "03:00 AM",
-        "timeTo": "04:00 AM",
+        "time": "03:00 AM",
         "address": "Portland, OR"
       },
       {
-        "category": "lodging",
+        "group": "Lodging",
         "date": "10/10/2018",
-        "timeFrom": "04:00 AM",
-        "timeTo": "05:00 AM",
+        "time": "04:00 AM",
         "address": "Portland, OR"
       },
       {
-        "category": "restaurant",
+        "group": "Restaurant",
         "date": "10/11/2018",
-        "timeFrom": "05:00 AM",
+        "time": "05:00 AM",
         "timeTo": "06:00 AM",
         "address": "Portland, OR"
       }
@@ -62,32 +59,29 @@ export class Trips {
         "dateTo": "10/19/2018",
         "itinerary": [
           {
-            "category": "flight",
+            "group": "flight",
             "date": "10/09/2018",
-            "timeFrom": "02:00 AM",
-            "timeTo": "03:00 AM",
-            "place": "Portland, OR"
+            "time": "02:00 AM",
+            "address": "Portland, OR"
           },
           {
-            "category": "carrental",
+            "group": "car-rental",
             "date": "10/09/2018",
-            "timeFrom": "03:00 AM",
-            "timeTo": "04:00 AM",
-            "place": "Portland, OR"
+            "time": "03:00 AM",
+            "address": "Portland, OR"
           },
           {
-            "category": "lodging",
+            "group": "lodging",
             "date": "10/10/2018",
-            "timeFrom": "04:00 AM",
-            "timeTo": "05:00 AM",
-            "place": "Portland, OR"
+            "time": "04:00 AM",
+            "address": "Portland, OR"
           },
           {
-            "category": "restaurant",
+            "group": "restaurant",
             "date": "10/11/2018",
-            "timeFrom": "05:00 AM",
+            "time": "05:00 AM",
             "timeTo": "06:00 AM",
-            "place": "Portland, OR"
+            "address": "Portland, OR"
           }
         ]
       },
@@ -184,14 +178,13 @@ export class Trips {
 
   queryItinerary(params?: any) {
     if (!params) {
-      return this.trips[0].itinerary.getEntries();
+      return this.trips[0].itinerary.getPlans();
     }
-    return this.trips[0].itinerary.getEntries().filter((entry) => {
+    return this.trips[0].itinerary.getPlans().filter((entry) => {
+      // console.log(JSON.stringify(entry));
       for (let key in params) {
         let field = entry[key];
-        if (typeof field == 'string' && field.toLowerCase().indexOf(params[key].toLowerCase()) >= 0) {
-          return entry;
-        } else if (field == params[key]) {
+        if ((typeof field == 'string' && field.toLowerCase().indexOf(params[key].toLowerCase()) >= 0) || (field == params[key])) {
           return entry;
         }
       }

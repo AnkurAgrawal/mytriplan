@@ -8,7 +8,7 @@ import { Http, RequestOptions, URLSearchParams } from '@angular/http';
  */
 @Injectable()
 export class Api {
-  url: string = 'https://example.com/api/v1';
+  url: string = 'https://mytriplan.com/api/v1';
 
   constructor(public http: Http) {
   }

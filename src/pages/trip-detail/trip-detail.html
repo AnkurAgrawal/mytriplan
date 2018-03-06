@@ -27,17 +27,17 @@
 
   <div *ngFor="let date of trip.dates; let i = index ">
     <ion-list *ngIf="itinerary==(i+1)">
-      <ion-item-sliding *ngFor="let entry of trip.currentDayItinerary">
-        <button ion-item (click)="openEntry(entry)">
+      <ion-item-sliding *ngFor="let plan of trip.currentDayItinerary">
+        <button ion-item (click)="openEntry(plan)">
           <ion-icon item-start>
-            <i class="fa fa-{{entry.icon}} fa-fw" aria-hidden="true"></i>
+            <i class="fa fa-{{plan.icon}} fa-fw" aria-hidden="true"></i>
           </ion-icon>
-          <h2>{{entry.place}}</h2>
-          <small>{{entry.timeFrom}}</small> - <small>{{entry.timeTo}}</small>
+          <h2>{{plan.address}}</h2>
+          <small>{{plan.time}}</small><small *ngIf="plan.timeTo"> - {{plan.timeTo}}</small>
         </button>
 
         <ion-item-options>
-          <button ion-button color="danger" (click)="deleteEntry(entry)">
+          <button ion-button color="danger" (click)="deleteEntry(plan)">
             {{ 'DELETE_BUTTON' | translate }}
           </button>
         </ion-item-options>

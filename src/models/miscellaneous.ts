@@ -1,16 +1,16 @@
 /**
- * The Entries service manages creating instances of Entry, so go ahead and rename
+ * The Plans service manages creating instances of Plan, so go ahead and rename
  * that something that fits your app as well.
  */
 
-import { Entry } from '../models/entry';
+import { Plan } from '../models/plan';
 
-export class Miscellaneous extends Entry {
+export abstract class Miscellaneous extends Plan {
+  static ICON: string = 'suitcase';
+  static GROUP: string = 'Miscellaneous';
+  static NAME: string;
 
-  static TYPES: any[] = ['notes', 'todo'];
-  static icon: string = 'suitcase';
-
-  constructor(fields: any) {
+  constructor(fields?: any) {
     super(fields);
   }
 

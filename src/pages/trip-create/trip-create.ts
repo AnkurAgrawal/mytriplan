@@ -1,8 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Camera } from '@ionic-native/camera';
-import { IonicPage, NavController, ViewController, ModalController } from 'ionic-angular';
-import { Slides } from 'ionic-angular';
+import { IonicPage, NavController, ViewController, ModalController, Slides } from 'ionic-angular';
 
 import { Trip } from '../../models/trip';
 
@@ -12,11 +11,9 @@ import { Trip } from '../../models/trip';
   templateUrl: 'trip-create.html'
 })
 export class TripCreatePage {
-  @ViewChild(Slides) slides: Slides;
+  @ViewChild('createTripSlider') slides: Slides;
 
   @ViewChild('fileInput') fileInput;
-
-  isReadyToSave: boolean;
 
   trip: Trip;
 
@@ -24,7 +21,6 @@ export class TripCreatePage {
 
   constructor(public navCtrl: NavController, public viewCtrl: ViewController, formBuilder: FormBuilder, public camera: Camera, public modalCtrl: ModalController) {
     this.trip = new Trip([]);
-    console.log(JSON.stringify(this.trip));
 
     this.form = formBuilder.group({
       tripPic: [''],
@@ -35,8 +31,7 @@ export class TripCreatePage {
     });
 
     // Watch the form for changes, and
-    this.form.valueChanges.subscribe((v) => {
-      this.isReadyToSave = this.form.valid;
+    this.form.valueChanges.subscribe((value) => {
       this.trip.name = this.form.controls['name'].value;
       this.trip.description = this.form.controls['description'].value;
       this.trip.tripPic = this.form.controls['tripPic'].value;
@@ -98,7 +93,7 @@ export class TripCreatePage {
 
   slideChanging() {
     let currentIndex = this.slides.getActiveIndex();
-    console.log('Current index is', currentIndex);
+    console.info('Current slide index is', currentIndex);
 
     if (currentIndex == 1) {
       ;
@@ -109,14 +104,14 @@ export class TripCreatePage {
     // this.form.getRawValue[]
   }
 
-  openAddEntry() {
-    let addEntryModal = this.modalCtrl.create('TripAddEntryPage');
-    addEntryModal.onDidDismiss(entry => {
-      if (entry) {
-        console.log(entry);
-        this.trip.itinerary.addEntry(entry);
+  openAddPlan() {
+    let addPlanModal = this.modalCtrl.create('TripAddPlanPage');
+    addPlanModal.onDidDismiss(plan => {
+      if (plan) {
+        console.log(plan);
+        this.trip.itinerary.addPlan(plan);
       }
     })
-    addEntryModal.present();
+    addPlanModal.present();
   }
 }
