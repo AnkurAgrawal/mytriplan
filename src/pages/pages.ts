@@ -9,5 +9,5 @@ export const MainPage = 'TabsPage';
 
 // The initial root pages for our tabs (remove if not using tabs)
 export const Tab1Root = 'TripsMasterPage';
-export const Tab2Root = 'PlanTripPage';
-export const Tab3Root = 'ProfilePage';
+export const Tab2Root = 'SettingsPage';
+export const Tab3Root = 'PlanTripPage';
