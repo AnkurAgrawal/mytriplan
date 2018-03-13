@@ -9,78 +9,77 @@ export class Trips {
 
   defaultTrip: any = {
     "user": {
-      "name": "Burt Bear"
+      "name": "Jane Doe"
     },
-    "name": "Trip to Portland",
+    "name": "Trip to Montreal",
     "description": "",
-    "tripPic": "assets/img/speakers/bear.jpg",
-    "dateFrom": "10/09/2018",
-    "dateTo": "10/19/2018",
+    "tripPic": "assets/img/trips/portland-oregon.jpg",
+    "dateFrom": "2018-10-09",
+    "dateTo": "2018-10-19",
     "itinerary": [
       {
         "group": "Flight",
-        "date": "10/09/2018",
-        "time": "02:00 AM",
+        "date": "2018-10-09",
+        "time": "22:00",
         "address": "Portland, OR"
       },
       {
         "group": "CarRental",
-        "date": "10/09/2018",
-        "time": "03:00 AM",
+        "date": "2018-10-09",
+        "time": "03:00",
         "address": "Portland, OR"
       },
       {
         "group": "Lodging",
-        "date": "10/10/2018",
-        "time": "04:00 AM",
+        "date": "2018-10-10",
+        "time": "04:00",
         "address": "Portland, OR"
       },
       {
         "group": "Restaurant",
-        "date": "10/11/2018",
-        "time": "05:00 AM",
-        "timeTo": "06:00 AM",
+        "date": "2018-10-11",
+        "time": "05:00",
+        "timeTo": "06:00",
         "address": "Portland, OR"
       }
     ]
   };
 
-
   constructor(public http: Http) {
     let trips = [
       {
         "user": {
-          "name": "Burt Bear"
+          "name": "Jane Doe"
         },
-        "name": "Trip to Portland",
+        "name": "Trip to Montreal",
         "description": "",
-        "tripPic": "assets/img/speakers/bear.jpg",
-        "dateFrom": "10/09/2018",
-        "dateTo": "10/19/2018",
+        "tripPic": "assets/img/trips/lion.jpg",
+        "dateFrom": "2018-10-09",
+        "dateTo": "2018-10-19",
         "itinerary": [
           {
             "group": "flight",
-            "date": "10/09/2018",
-            "time": "02:00 AM",
+            "date": "2018-10-09",
+            "time": "22:00",
             "address": "Portland, OR"
           },
           {
             "group": "car-rental",
-            "date": "10/09/2018",
-            "time": "03:00 AM",
+            "date": "2018-10-09",
+            "time": "03:00",
             "address": "Portland, OR"
           },
           {
             "group": "lodging",
-            "date": "10/10/2018",
-            "time": "04:00 AM",
+            "date": "2018-10-10",
+            "time": "04:00",
             "address": "Portland, OR"
           },
           {
             "group": "restaurant",
-            "date": "10/11/2018",
-            "time": "05:00 AM",
-            "timeTo": "06:00 AM",
+            "date": "2018-10-11",
+            "time": "05:00",
+            "timeTo": "06:00",
             "address": "Portland, OR"
           }
         ]
@@ -91,9 +90,9 @@ export class Trips {
         },
         "name": "Trip to Portland",
         "description": "",
-        "tripPic": "assets/img/speakers/cheetah.jpg",
-        "dateFrom": "10/09/2018",
-        "dateTo": "10/19/2018",
+        "tripPic": "assets/img/trips/portland-oregon.jpg",
+        "dateFrom": "2018-10-09",
+        "dateTo": "2018-10-19",
         "itinerary": {}
       },
       {
@@ -102,9 +101,9 @@ export class Trips {
         },
         "name": "Trip to Portland",
         "description": "",
-        "tripPic": "assets/img/speakers/duck.jpg",
-        "dateFrom": "10/09/2018",
-        "dateTo": "10/19/2018",
+        "tripPic": "assets/img/trips/kitten.jpg",
+        "dateFrom": "2018-10-09",
+        "dateTo": "2018-10-19",
         "itinerary": {}
       },
       {
@@ -113,9 +112,9 @@ export class Trips {
         },
         "name": "Trip to Portland",
         "description": "",
-        "tripPic": "assets/img/speakers/eagle.jpg",
-        "dateFrom": "10/09/2018",
-        "dateTo": "10/19/2018",
+        "tripPic": "assets/img/trips/rabbit.jpg",
+        "dateFrom": "2018-10-09",
+        "dateTo": "2018-10-19",
         "itinerary": {}
       },
       {
@@ -124,9 +123,9 @@ export class Trips {
         },
         "name": "Trip to Portland",
         "description": "",
-        "tripPic": "assets/img/speakers/elephant.jpg",
-        "dateFrom": "10/09/2018",
-        "dateTo": "10/19/2018",
+        "tripPic": "assets/img/trips/bear.jpg",
+        "dateFrom": "2018-10-09",
+        "dateTo": "2018-10-19",
         "itinerary": {}
       },
       {
@@ -135,9 +134,9 @@ export class Trips {
         },
         "name": "Trip to Portland",
         "description": "",
-        "tripPic": "assets/img/speakers/mouse.jpg",
-        "dateFrom": "10/09/2018",
-        "dateTo": "10/19/2018",
+        "tripPic": "assets/img/trips/mouse.jpg",
+        "dateFrom": "2018-10-09",
+        "dateTo": "2018-10-19",
         "itinerary": {}
       },
       {
@@ -146,9 +145,9 @@ export class Trips {
         },
         "name": "Trip to Portland",
         "description": "",
-        "tripPic": "assets/img/speakers/puppy.jpg",
-        "dateFrom": "10/09/2018",
-        "dateTo": "10/19/2018",
+        "tripPic": "assets/img/trips/puppy.jpg",
+        "dateFrom": "2018-10-09",
+        "dateTo": "2018-10-19",
         "itinerary": {}
       }
     ];
@@ -180,12 +179,12 @@ export class Trips {
     if (!params) {
       return this.trips[0].itinerary.getPlans();
     }
-    return this.trips[0].itinerary.getPlans().filter((entry) => {
-      // console.log(JSON.stringify(entry));
+    return this.trips[0].itinerary.getPlans().filter((plan) => {
+      // console.log(JSON.stringify(plan));
       for (let key in params) {
-        let field = entry[key];
+        let field = plan[key];
         if ((typeof field == 'string' && field.toLowerCase().indexOf(params[key].toLowerCase()) >= 0) || (field == params[key])) {
-          return entry;
+          return plan;
         }
       }
       return null;
