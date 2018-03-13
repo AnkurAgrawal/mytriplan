@@ -11,21 +11,30 @@ export class Trip {
   name: string;
   description: string;
   tripPic: string;
+  destination: string;
   dateFrom: string;
   dateTo: string;
   itinerary: Itinerary;
+  destinations: Destination[] = [];
 
   constructor(fields?: any) {
     // Quick and dirty extend/assign fields to this model
     for (const f in fields) {
       if (f == 'itinerary') {
         this.itinerary = new Itinerary(fields[f]);
+      } else if (f == 'destinations') {
+        fields[f].forEach((destination) =>
+          this.destinations.push(new Destination(destination.location, destination.dateFrom, destination.dateTo))
+        );
       } else {
         this[f] = fields[f];
       }
     }
     if (this.itinerary == undefined) {
       this.itinerary = new Itinerary();
+    }
+    if (this.destinations == undefined || this.destinations.length == 0) {
+      this.destinations.push(new Destination('', '', ''));
     }
   }
 
@@ -37,7 +46,7 @@ export class Trip {
   }
 
   updatePlan(newPlan, oldPlan) {
-    // TODO Update the old plan with the new one
+    this.itinerary.updatePlan(newPlan, oldPlan);
   }
 
   get length(): number {
@@ -69,4 +78,9 @@ export class Trip {
     return undefined;
   }
 
+}
+
+class Destination {
+
+  constructor(public location: string, public dateFrom: string, public dateTo: string) { }
 }

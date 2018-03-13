@@ -28,7 +28,5 @@ export class Flight extends Travel {
 
 class Airport {
 
-  constructor(public city: string = '', public name: string = '', public terminal: string = '', public gate: string = '') {
-    ;
-  }
+  constructor(public name: string = '', public terminal: string = '', public gate: string = '') { }
 }

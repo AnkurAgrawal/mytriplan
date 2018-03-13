@@ -54,6 +54,11 @@ export class Itinerary {
     });
   }
 
+  updatePlan(newPlan: Plan, oldPlan: Plan) {
+    console.log('Updating the plan: ' + oldPlan.name + ' at ' + oldPlan.time + ' on ' + oldPlan.date + '.');
+    ;
+  }
+
   static getPlanTypes() {
     return [
     {
