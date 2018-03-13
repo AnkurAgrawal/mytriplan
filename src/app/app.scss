@@ -14,3 +14,50 @@
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
+
+.dark-background {
+  background-color: color($colors, dark);
+}
+.light-background {
+  background-color: color($colors, light);
+}
+.primary-background {
+  background-color: color($colors, primary);
+}
+
+.overlay-background {
+  background-color: transparentize(black, 0.6);
+}
+
+.center-vertically {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.full-width {
+  width: 100%;
+}
+
+.round-icon-placeholder {
+  display: inline-block;
+  position: relative;
+
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  text-align: center;
+
+  ion-icon {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
+
+// Temporary solution to double tap issue
+.input-cover{
+  display: none;
+}
