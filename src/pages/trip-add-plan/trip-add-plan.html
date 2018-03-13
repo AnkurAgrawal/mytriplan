@@ -32,48 +32,43 @@
 <ion-content scroll="true">
   <ion-slides #newPlanSlider>
     <ion-slide>
-      <ion-item-group *ngFor="let planGroup of planGroups">
-        <ion-item-divider color="dark">
-          <ion-icon>
-            <i class="fa fa-{{planGroup.icon}} fa-fw" aria-hidden="true"></i>
-          </ion-icon>
-          {{planGroup.name | beautifyString}}
-        </ion-item-divider>
-        <button ion-item (click)="openNewPlanForm(type)" *ngFor="let type of planGroup.types">
-          {{type.NAME | beautifyString}}
-        </button>
-      </ion-item-group>
+      <button ion-button icon-only (click)="grid = !grid" clear color="dark" float-right>
+        <ion-icon name="apps" *ngIf="!grid"></ion-icon>
+        <ion-icon name="menu" *ngIf="grid"></ion-icon>
+      </button>
+      <ion-grid no-padding *ngIf="grid">
+        <ion-row *ngFor="let planGroup of planGroups">
+          <ion-item-divider color="primary" margin-bottom>
+            <ion-icon class="fa fa-{{planGroup.icon}} fa-fw" aria-hidden="true"></ion-icon>
+            {{planGroup.name | beautifyString}}
+          </ion-item-divider>
+          <button padding full clear text-center text-capitalize col-6 (click)="openNewPlanForm(type)" *ngFor="let type of planGroup.types">
+            <ion-icon class="fa fa-{{type.ICON}} fa-2x" aria-hidden="true"></ion-icon>
+            <ion-label margin-left margin-right text-uppercase>{{type.NAME | beautifyString}}</ion-label>
+          </button>
+        </ion-row>
+      </ion-grid>
+
+      <template [ngIf]="!grid">
+        <ion-item-group *ngFor="let planGroup of planGroups">
+          <ion-item-divider color="primary">
+            <ion-icon class="fa fa-{{planGroup.icon}} fa-fw" aria-hidden="true"></ion-icon>
+            {{planGroup.name | beautifyString}}
+          </ion-item-divider>
+          <button ion-item (click)="openNewPlanForm(type)" *ngFor="let type of planGroup.types">
+            <ion-icon class="fa fa-{{type.ICON}} fa-fw" aria-hidden="true"></ion-icon>
+            {{type.NAME | beautifyString}}
+          </button>
+        </ion-item-group>
+      </template>
     </ion-slide>
     <ion-slide>
-      <form [formGroup]="newPlanForm" (ngSubmit)="logForm()">
-        <ion-list>
-          <template ngFor let-field [ngForOf]="newPlanForm.controls | objectKeysToArray">
-            <ion-item *ngIf="!newPlanForm.controls[field].controls">
-              <ion-label floating>{{field | beautifyString}}</ion-label>
-              <ion-input *ngIf="!(field | isType:'date':'time':'address')" formControlName="{{field}}"></ion-input>
-              <ion-textarea *ngIf="field | isType:'address'" formControlName="{{field}}"></ion-textarea>
-              <ion-datetime *ngIf="field | isType:'time'" displayFormat="h:mm A" pickerFormat="h mm A" formControlName="{{field}}"></ion-datetime>
-              <ion-datetime *ngIf="field | isType:'date'" displayFormat="MM/DD/YYYY" pickerFormat="MMM DD YYYY" formControlName="{{field}}"></ion-datetime>
-            </ion-item>
-            <ion-card *ngIf="newPlanForm.controls[field].controls" formGroupName="{{field}}">
-              <ion-card-header>{{field | beautifyString}}</ion-card-header>
-              <ion-card-content>
-                <ion-item *ngFor="let f of newPlanForm.controls[field].controls | objectKeysToArray">
-                  <ion-label floating>{{f | beautifyString}}</ion-label>
-                  <ion-input formControlName="{{f}}"></ion-input>
-                </ion-item>
-              </ion-card-content>
-            </ion-card>
-          </template>
-<!--
-          <ion-item>
-            <ion-label floating>Address</ion-label>
-            <ion-input (click)="showAddressModal()" formControlName="address"></ion-input>
-          </ion-item>
--->
-          <button ion-button type="submit" [disabled]="!newPlanForm.valid">Submit</button>
-        </ion-list>
-      </form>
+      <div text-center>
+        <div class="round-icon-placeholder light-background" padding margin>
+          <ion-icon *ngIf="plan" class="fa fa-{{plan.icon}} fa-3x" aria-hidden="true"></ion-icon>
+        </div>
+      </div>
+      <mytriplan-form [form]="newPlanForm"></mytriplan-form>
     </ion-slide>
   </ion-slides>
 </ion-content>

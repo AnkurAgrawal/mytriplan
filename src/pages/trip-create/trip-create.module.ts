@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { IonicPageModule } from 'ionic-angular';
+import { ComponentsModule } from '../../components/components.module';
 
 import { TripCreatePage } from './trip-create';
 
@@ -10,7 +11,8 @@ import { TripCreatePage } from './trip-create';
   ],
   imports: [
     IonicPageModule.forChild(TripCreatePage),
-    TranslateModule.forChild()
+    TranslateModule.forChild(),
+    ComponentsModule
   ],
   exports: [
     TripCreatePage

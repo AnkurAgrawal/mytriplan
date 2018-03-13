@@ -4,6 +4,7 @@ import { IonicPageModule } from 'ionic-angular';
 
 import { TripAddPlanPage } from './trip-add-plan';
 import { PipesModule } from '../../pipes/pipes.module';
+import { ComponentsModule } from '../../components/components.module';
 
 @NgModule({
   declarations: [
@@ -12,7 +13,8 @@ import { PipesModule } from '../../pipes/pipes.module';
   imports: [
     IonicPageModule.forChild(TripAddPlanPage),
     TranslateModule.forChild(),
-    PipesModule
+    PipesModule,
+    ComponentsModule
   ],
   exports: [
     TripAddPlanPage

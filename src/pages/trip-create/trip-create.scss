@@ -31,16 +31,22 @@ page-trip-create {
       }
     }
   }
-
   ion-label {
-    &.label-md {
-      margin-left: 10px !important;
-    }
     &.label-ios {
-      color: #999;
+      color: color($colors, light-grey);
     }
   }
-  ion-datetime.datetime-md {
-    padding-left: 10px !important;
+
+  .slide-zoom {
+    height: 100%;
+  }
+
+  ion-list.absolute {
+    position:absolute;
+  }
+
+  mytriplan-address {
+    display: block;
+    width: 100%;
   }
 }
