@@ -1,6 +1,6 @@
 {
-  "name": "Ionic",
-  "short_name": "Ionic",
+  "name": "MyTriplan",
+  "short_name": "mytriplan",
   "start_url": "index.html",
   "display": "standalone",
   "icons": [{
