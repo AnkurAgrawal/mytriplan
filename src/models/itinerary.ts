@@ -2,6 +2,7 @@
  * The Itineraries service manages creating instances of Itinerary, so go ahead and rename
  * that something that fits your app as well.
  */
+import moment from 'moment';
 
 import { Plan } from '../models/plan';
 import { Travel } from '../models/travel';
@@ -13,36 +14,44 @@ export class Itinerary {
 
   private _plans: Plan[] = [];
 
-  constructor(entries: any) {
+  constructor(entries?: any) {
     // Quick and dirty extend/assign _plans to this model
     if (entries != undefined) {
       for (let f in entries) {
         this.addPlan(entries[f]);
       }
-      // console.log("All entries in current trips: " + JSON.stringify(this._plans));
     }
   }
 
   addPlan(_plan: any) {
-    Itinerary.getPlanTypes().forEach(planGroup =>
-      planGroup.types.forEach(plan => {
-        if (plan.NAME == _plan.group)
-          this._plans.push(plan.getInstance(_plan));
-      })
-    );
-    // for (let i = Itinerary.getPlanTypes().length - 1; i >= 0; i--) {
-    //   for (let j = Itinerary.getPlanTypes()[i].types.length - 1; j >= 0; j--) {
-    //     if (Itinerary.getPlanTypes()[i].types[j].NAME == _plan.group) {
-    //       // console.log("Adding plan: " + JSON.stringify(_plan));
-    //       this._plans.push(Itinerary.getPlanTypes()[i].types[j].getInstance(_plan));
-    //     }
-    //   }
-    // }
+    if (_plan.name) {
+      this._plans.push(_plan);
+    } else {
+      Itinerary.getPlanTypes().forEach(planGroup =>
+        planGroup.types.forEach(plan => {
+          if (plan.NAME == _plan.group)
+            this._plans.push(plan.getInstance(_plan));
+        })
+      );
+    }
   }
 
-  getPlans() {
-    // console.log("Plans: " + JSON.stringify(this._plans));
-    return this._plans;
+  getPlans(params?: any) {
+    if (!params || (!params.date && !params.dateFrom)) {
+      return this._plans;
+    }
+    if (!params.date && params.day && params.dateFrom) {
+      params = {date: moment(params.dateFrom).add(+params.day - 1, 'days').format('YYYY-MM-DD')};
+    }
+    return this._plans.filter((plan) => {
+      for (let key in params) {
+        let field = plan[key];
+        if ((typeof field == 'string' && field.toLowerCase().indexOf(params[key].toLowerCase()) >= 0) || (field == params[key])) {
+          return plan;
+        }
+      }
+      return null;
+    });
   }
 
   static getPlanTypes() {

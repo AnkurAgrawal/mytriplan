@@ -15,10 +15,6 @@ page-trip-detail {
     left: 0;
     right: 0;
     color: white;
-
-    ion-badge {
-      line-height: 1.6;
-    }
   }
   ion-segment {
     display: block;
@@ -37,5 +33,10 @@ page-trip-detail {
       min-width: 70px;
       width: auto;
     }
+  }
+
+  ion-list.absolute {
+    position:absolute;
+    width: 100%;
   }
 }

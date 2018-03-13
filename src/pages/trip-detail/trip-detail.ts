@@ -1,47 +1,72 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, ModalController, NavController, NavParams } from 'ionic-angular';
+import { TranslateService } from '@ngx-translate/core';
+import { FadeInOut } from '../../animations/animations.module';
 import moment from 'moment';
 
+import { Trip } from '../../models/trip';
 import { Trips } from '../../providers/providers';
 
 @IonicPage()
 @Component({
   selector: 'page-trip-detail',
-  templateUrl: 'trip-detail.html'
+  templateUrl: 'trip-detail.html',
+  animations: [
+    FadeInOut
+  ]
 })
 export class TripDetailPage {
-  trip: any;
+  trip: Trip;
   itinerary: string;
+  private tripDates: any[];
 
-  constructor(public navCtrl: NavController, navParams: NavParams, public trips: Trips) {
-    this.trip = navParams.get('trip') || trips.defaultTrip;
+  constructor(public navCtrl: NavController, navParams: NavParams, public modalCtrl: ModalController, public trips: Trips, private translate: TranslateService) {
+    this.trip = navParams.get('trip') as Trip;
 
-    this.trip.daysLeft = 1 + moment(this.trip.dateFrom).diff(moment(new Date()), 'days');
+    this.itinerary = '1';
 
-    this.itinerary = "1";
-
-    this.trip.dates = [];
-    this.trip.length = 1 + moment(this.trip.dateTo).diff(moment(this.trip.dateFrom), 'days');
-    for (var _i = 0; _i < this.trip.length; _i++) {
-      this.trip.dates.push(moment(this.trip.dateFrom).add(_i, 'days'));
-    }
-
-    this.changeCurrentDay(this.itinerary);
+    this.tripDates = this.trip.dates;
   }
 
-  changeCurrentDay(day:string) {
-    let currentDay = moment(this.trip.dateFrom).add(+day - 1, 'days').format('MM/DD/YYYY');
+  editTrip() {
+    console.log('Editing trip: ' + this.trip.name);
+  }
 
-    this.trip.currentDayItinerary = this.trips.queryItinerary({
-      date: currentDay
+  openPlan(plan) {
+    // console.log("Open: " + JSON.stringify(plan));
+    let addModal = this.modalCtrl.create('TripViewPlanPage', {plan: plan});
+    addModal.onDidDismiss(newPlan => {
+      if (newPlan) {
+        this.trip.updatePlan(newPlan, plan);
+      }
     });
+    addModal.present();
   }
 
-  openEntry(entry) {
-    console.log(entry);
-    // this.navCtrl.push('TripDetailPage', {
-    //   trip: trip
-    // });
+  deletePlan(plan) {
+    console.log("Delete: " + JSON.stringify(plan));
   }
 
+  openAddPlan() {
+    let displayDateFormat = 'MMM DD, YYYY';
+    this.translate.get('DISPLAY_DATE_FORMAT').subscribe((value) => displayDateFormat = value);
+    // console.log('Opening Add Plan: ' + JSON.stringify(this.trip));
+
+    let addPlanModal = this.modalCtrl.create('TripAddPlanPage');
+    addPlanModal.onDidDismiss(plan => {
+      if (plan) {
+        // console.log(plan);
+        this.trip.itinerary.addPlan(plan);
+        // console.log('Received the plan: ' + JSON.stringify(this.trip));
+        if (this.trip.dateFrom == undefined || this.trip.dateFrom == null || this.trip.dateFrom == '' || ((plan as Plan).date && moment((plan as Plan).date).diff(moment(this.trip.dateFrom), 'days') < 0)) {
+          this.trip.dateFrom = (plan as Plan).date;
+        }
+        if (this.trip.dateTo == undefined || this.trip.dateTo == null || this.trip.dateTo == '' || ((plan as Plan).date && moment(this.trip.dateTo).diff(moment((plan as Plan).date), 'days') < 0)) {
+          this.trip.dateTo = (plan as Plan).date;
+        }
+        // console.log('Updated trip dates: ' + JSON.stringify(this.trip));
+      }
+    })
+    addPlanModal.present();
+  }
 }
