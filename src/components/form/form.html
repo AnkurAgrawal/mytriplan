@@ -1,0 +1,26 @@
+<!-- Template for the FormComponent component -->
+<form [formGroup]="form">
+  <ion-list text-wrap>
+    <template ngFor let-field [ngForOf]="form.controls | objectKeysToArray">
+      <ion-item *ngIf="!form.controls[field].controls">
+        <ion-label fixed>{{field | beautifyString}}</ion-label>
+        <ion-input *ngIf="!(field | isType:'date':'time':'address')" formControlName="{{field}}"></ion-input>
+        <mytriplan-address *ngIf="field | isType:'address'" item-content [searchPlaceholder]="'SEARCH_ADDRESS_PLACEHOLDER' | translate" formControlName="{{field}}"></mytriplan-address>
+        <ion-datetime *ngIf="field | isType:'time'" displayFormat="{{'DISPLAY_TIME_FORMAT' | translate}}" pickerFormat="{{'PICKER_TIME_FORMAT' | translate}}" formControlName="{{field}}"></ion-datetime>
+        <ion-input *ngIf="field | isType:'date'" (click)="openCalendar($event, field)" readonly formControlName="{{field}}" (ionChange)="x()"></ion-input>
+      </ion-item>
+      <div *ngIf="form.controls[field].controls" formGroupName="{{field}}">
+        <ion-list-header color="primary">{{field | beautifyString}}</ion-list-header>
+        <ion-item-group>
+          <ion-item *ngFor="let f of form.controls[field].controls | objectKeysToArray">
+            <ion-label fixed>{{f | beautifyString}}</ion-label>
+            <ion-input *ngIf="!(f | isType:'date':'time':'address')" formControlName="{{f}}"></ion-input>
+            <ion-textarea *ngIf="f | isType:'address'" formControlName="{{f}}"></ion-textarea>
+            <ion-datetime *ngIf="f | isType:'time'" displayFormat="{{'DISPLAY_TIME_FORMAT' | translate}}" pickerFormat="{{'PICKER_TIME_FORMAT' | translate}}" formControlName="{{f}}"></ion-datetime>
+            <ion-input *ngIf="f | isType:'date'" (click)="openCalendar($event, field, f)" readonly formControlName="{{f}}"></ion-input>
+          </ion-item>
+        </ion-item-group>
+      </div>
+    </template>
+  </ion-list>
+</form>
