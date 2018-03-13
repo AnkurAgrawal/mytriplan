@@ -1,4 +1,10 @@
 {
+  "DISPLAY_TIME_FORMAT": "h:mm A",
+  "DATABASE_TIME_FORMAT": "H:mm",
+  "PICKER_TIME_FORMAT": "h mm A",
+  "DISPLAY_DATE_FORMAT": "MMM DD, YYYY",
+  "DATABASE_DATE_FORMAT": "YYYY-MM-DD",
+
   "BACK_BUTTON_TEXT": "Back",
 
   "NAME": "Name",
@@ -9,8 +15,8 @@
   "SIGNUP": "Sign up",
 
   "TAB1_TITLE": "My Trips",
-  "TAB2_TITLE": "Plan Trip",
   "TAB3_TITLE": "My Profile",
+  "TAB2_TITLE": "Settings",
 
   "MAP_TITLE": "Map",
 
@@ -36,9 +42,9 @@
   "SETTINGS_OPTION3": "Option 3",
   "SETTINGS_OPTION4": "Option 4",
 
-  "SETTINGS_PROFILE_BUTTON": "Edit Profile",
+  "SETTINGS_PROFILE_BUTTON": "Edit profile",
 
-  "SETTINGS_PAGE_PROFILE": "Edit Profile",
+  "SETTINGS_PAGE_PROFILE": "Edit profile",
 
   "WELCOME_TITLE": "Welcome",
 
@@ -49,23 +55,32 @@
   "SIGNUP_ERROR": "Unable to create account. Please check your account information and try again.",
   "SIGNUP_BUTTON": "Sign up",
 
-  "LIST_MASTER_TITLE": "My Trips",
+  "LIST_MASTER_TITLE": "My trips",
 
-  "ITEM_CREATE_TITLE": "New Trip",
-  "ITEM_CREATE_CHOOSE_IMAGE": "Add Image",
+  "TRIP_CREATE_TITLE": "New trip",
+  "TRIP_CREATE_CHOOSE_IMAGE": "Add Image",
 
-  "ITEM_NAME_PLACEHOLDER": "Name",
-  "ITEM_DESCRIPTION_PLACEHOLDER": "Description",
-  "ITEM_DATE_FROM_PLACEHOLDER": "Start from",
-  "ITEM_DATE_TO_PLACEHOLDER": "End on",
+  "TRIP_NAME_PLACEHOLDER": "Name",
+  "TRIP_DESCRIPTION_PLACEHOLDER": "Description",
+  "TRIP_DESTINATION_PLACEHOLDER": "Destination",
+  "TRIP_DATE_FROM_PLACEHOLDER": "Start from",
+  "TRIP_DATE_TO_PLACEHOLDER": "End on",
+  "TRIP_DATE_CALENDAR_TITLE": "When is the trip?",
+  "SEARCH_TRIP_DESTINATION_PLACEHOLDER": "Search destination",
+  "SEARCH_ADDRESS_PLACEHOLDER": "Search address",
+
+  "DATE_CALENDAR_TITLE": "Pick a date",
 
   "DONE_BUTTON": "Done",
   "CANCEL_BUTTON": "Cancel",
   "DELETE_BUTTON": "Delete",
+  "EDIT_BUTTON": "Edit",
+  "UPDATE_BUTTON": "Update",
+  "SAVE_BUTTON": "Save",
 
   "CARDS_TITLE": "Social",
 
-  "PLAN_TRIP_TITLE": "Plan Trip",
+  "PLAN_TRIP_TITLE": "Plan trip",
 
   "SEARCH_TITLE": "Search",
   "SEARCH_PLACEHOLDER": "Search the items list, e.g. \"Donald Duck\""
