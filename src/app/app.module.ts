@@ -1,6 +1,7 @@
 import { ErrorHandler, NgModule } from '@angular/core';
 import { Http, HttpModule } from '@angular/http';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Camera } from '@ionic-native/camera';
 import { GoogleMaps } from '@ionic-native/google-maps';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -9,6 +10,7 @@ import { IonicStorageModule, Storage } from '@ionic/storage';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
+import { CalendarModule } from "ion2-calendar";
 
 import { Trips } from '../mocks/providers/trips';
 import { Settings } from '../providers/providers';
@@ -16,6 +18,7 @@ import { User } from '../providers/providers';
 import { Api } from '../providers/providers';
 import { MyApp } from './app.component';
 import { PlanFormGeneratorProvider } from '../providers/plan-form-generator/plan-form-generator';
+import { AirportsProvider } from '../providers/airports/airports';
 
 // The translate loader needs to know where to load i18n files
 // in Ionic's static asset pipeline.
@@ -44,6 +47,7 @@ export function provideSettings(storage: Storage) {
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     HttpModule,
     TranslateModule.forRoot({
       loader: {
@@ -52,8 +56,11 @@ export function provideSettings(storage: Storage) {
         deps: [Http]
       }
     }),
-    IonicModule.forRoot(MyApp),
-    IonicStorageModule.forRoot()
+    IonicModule.forRoot(MyApp, {
+      scrollAssist: false
+    }),
+    IonicStorageModule.forRoot(),
+    CalendarModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -70,7 +77,8 @@ export function provideSettings(storage: Storage) {
     { provide: Settings, useFactory: provideSettings, deps: [Storage] },
     // Keep this to enable Ionic's runtime error handling during development
     { provide: ErrorHandler, useClass: IonicErrorHandler },
-    PlanFormGeneratorProvider
+    PlanFormGeneratorProvider,
+    AirportsProvider
   ]
 })
 export class AppModule { }
