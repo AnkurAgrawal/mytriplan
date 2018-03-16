@@ -54,7 +54,9 @@ export class AddressInputComponent implements ControlValueAccessor {
   }
 
   openGoogleAutocompleteModal() {
-    let googleAutocompleteModal = this.modalCtrl.create('GoogleAutocompleteModalPage');
+    let googleAutocompleteModal = this.modalCtrl.create('GoogleAutocompleteModalPage', {
+      searchPlaceholder: this.searchPlaceholder
+    });
     googleAutocompleteModal.onDidDismiss(address => {
       if (address) {
         this.value = address;

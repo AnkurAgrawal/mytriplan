@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, ViewController, Searchbar } from 'ionic-angular';
+import { IonicPage, ViewController, Searchbar, NavParams } from 'ionic-angular';
 import { Keyboard } from '@ionic-native/keyboard';
 
 @IonicPage()
@@ -15,7 +15,11 @@ export class GoogleAutocompleteModalPage {
   autocompletePlaces: any;
   autocompleteService;
 
-  constructor(public viewCtrl: ViewController, private keyboard: Keyboard) { }
+  searchPlaceholder: string;
+
+  constructor(public viewCtrl: ViewController, private navParams: NavParams, private keyboard: Keyboard) {
+    this.searchPlaceholder = this.navParams.get('searchPlaceholder');
+  }
 
   ngOnInit() {
     this.autocompleteService = new google.maps.places.AutocompleteService();

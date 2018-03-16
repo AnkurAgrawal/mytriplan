@@ -6,20 +6,29 @@ import { TripItineraryComponent } from './trip-itinerary/trip-itinerary';
 import { FormComponent } from './form/form';
 import { PipesModule } from '../pipes/pipes.module';
 import { AddressInputComponent } from './address-input/address-input';
+import { DateInputComponent } from './date-input/date-input';
+import { DirectivesModule } from '../directives/directives.module';
 
 @NgModule({
-	declarations: [PlanItemSlidingComponent,
+	declarations: [
+    PlanItemSlidingComponent,
     TripItineraryComponent,
     FormComponent,
-    AddressInputComponent],
+    AddressInputComponent,
+    DateInputComponent
+  ],
 	imports: [
     TranslateModule.forChild(),
     IonicModule,
-    PipesModule
+    PipesModule,
+    DirectivesModule
   ],
-	exports: [PlanItemSlidingComponent,
+	exports: [
+    PlanItemSlidingComponent,
     TripItineraryComponent,
     FormComponent,
-    AddressInputComponent]
+    AddressInputComponent,
+    DateInputComponent
+  ]
 })
 export class ComponentsModule {}
