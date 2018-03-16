@@ -36,6 +36,21 @@
   transform: translate(-50%, -50%);
 }
 
+.quarter-vertically {
+  position: absolute;
+  left: 50%;
+  top: 25%;
+  transform: translate(-50%, -50%);
+}
+
+.relative {
+  position: relative;
+}
+
+.absolute {
+  position: absolute;
+}
+
 .full-width {
   width: 100%;
 }
@@ -58,6 +73,21 @@
 }
 
 // Temporary solution to double tap issue
-.input-cover{
+.input-cover {
   display: none;
+}
+
+.cursor-pointer input {
+  cursor: pointer;
+}
+
+.datetime-md {
+  margin-left: 8px !important;
+  padding-left: 0 !important;
+}
+.datetime-ios {
+  padding-left: 0 !important;
+}
+.datetime-wp {
+  padding-left: 8px !important;
 }
