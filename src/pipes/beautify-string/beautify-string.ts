@@ -14,6 +14,8 @@ export class BeautifyStringPipe implements PipeTransform {
    */
   transform(value: string, args: string) {
     return value.split(/(?=[A-Z])|[_\s-]+/).map((word) => {
+      word = (word.toLowerCase()=='id'?'#':word);
+
       if (args == undefined) {
         args = 'title';
       }
