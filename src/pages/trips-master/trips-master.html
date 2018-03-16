@@ -16,7 +16,9 @@
 
   <button class="button button-clear" (click)="openTrip(trip)" clear *ngFor="let trip of currentTrips">
     <ion-card>
-      <img [src]="trip.tripPic">
+      <div class="relative height-220">
+        <img [src]="trip.tripPic">
+      </div>
       <div class="card-image-overlay"></div>
       <div class="card-title">{{trip.name}}</div>
       <div class="card-subtitle">{{trip.dateFrom | date: "MMM dd"}} - {{trip.dateTo | date: "MMM dd"}}</div>

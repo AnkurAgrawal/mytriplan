@@ -7,7 +7,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>{{ 'TRIP_CREATE_TITLE' | translate }}</ion-title>
+    <ion-title>{{plan.name | beautifyString}}</ion-title>
     <ion-buttons start>
       <button ion-button (click)="cancel()">
         <span color="primary" showWhen="ios">
@@ -17,7 +17,7 @@
       </button>
     </ion-buttons>
     <ion-buttons end>
-      <button ion-button (click)="update()" [disabled]="!form.valid || !updated" strong>
+      <button ion-button (click)="update()" [disabled]="!form.valid || !unsavedChanges" strong>
         <span color="primary" showWhen="ios">
           {{ 'UPDATE_BUTTON' | translate }}
         </span>
@@ -35,5 +35,5 @@
       <ion-icon *ngIf="plan" class="fa fa-{{plan.icon}} fa-3x" aria-hidden="true"></ion-icon>
     </div>
   </div>
-  <mytriplan-form [form]="form"></mytriplan-form>
+  <mytriplan-form [form]="form" [from]="from" [to]="to"></mytriplan-form>
 </ion-content>

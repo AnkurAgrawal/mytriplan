@@ -7,8 +7,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title *ngIf="plan">Add a {{plan.name | beautifyString:'small'}} to itinerary</ion-title>
-    <ion-title *ngIf="!plan">Add to itinerary</ion-title>
+    <ion-title>Add a {{(plan?plan.name:'plan') | beautifyString:'small'}} to itinerary</ion-title>
     <ion-buttons start>
       <button ion-button (click)="cancel()">
         <span ion-text color="primary" showWhen="ios">
@@ -36,7 +35,7 @@
         <ion-icon name="apps" *ngIf="!grid"></ion-icon>
         <ion-icon name="menu" *ngIf="grid"></ion-icon>
       </button>
-      <ion-grid no-padding *ngIf="grid">
+      <ion-grid [@fadeInOut] no-padding *ngIf="grid">
         <ion-row *ngFor="let planGroup of planGroups">
           <ion-item-divider color="primary" margin-bottom>
             <ion-icon class="fa fa-{{planGroup.icon}} fa-fw" aria-hidden="true"></ion-icon>
@@ -50,7 +49,7 @@
       </ion-grid>
 
       <template [ngIf]="!grid">
-        <ion-item-group *ngFor="let planGroup of planGroups">
+        <ion-item-group [@fadeInOut] *ngFor="let planGroup of planGroups">
           <ion-item-divider color="primary">
             <ion-icon class="fa fa-{{planGroup.icon}} fa-fw" aria-hidden="true"></ion-icon>
             {{planGroup.name | beautifyString}}
@@ -68,7 +67,7 @@
           <ion-icon *ngIf="plan" class="fa fa-{{plan.icon}} fa-3x" aria-hidden="true"></ion-icon>
         </div>
       </div>
-      <mytriplan-form [form]="newPlanForm"></mytriplan-form>
+      <mytriplan-form [form]="newPlanForm" [from]="from" [to]="to"></mytriplan-form>
     </ion-slide>
   </ion-slides>
 </ion-content>

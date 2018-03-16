@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { IonicPage, ModalController, ViewController, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, ModalController, ViewController, AlertController, NavController, NavParams } from 'ionic-angular';
 import { PlanFormGeneratorProvider } from '../../providers/providers';
 
 import { Plan } from '../../models/plan';
@@ -21,27 +21,18 @@ export class TripViewPlanPage {
 
   form: FormGroup;
   plan: Plan;
+  private from: Date | number;
+  private to: Date | number;
 
-  updated: boolean = false;
+  unsavedChanges: boolean = false;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController, public modalCtrl: ModalController, formBuilder: FormBuilder, private pfg: PlanFormGeneratorProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private alertCtrl: AlertController, public viewCtrl: ViewController, public modalCtrl: ModalController, formBuilder: FormBuilder, private pfg: PlanFormGeneratorProvider) {
     this.plan = navParams.get('plan') as Plan;
+    this.from = navParams.get('from');
+    this.to = navParams.get('to');
 
     this.form = this.pfg.create(this.plan);
-    this.form.valueChanges.subscribe((value) => {
-      this.updated = true;
-
-      Object.keys(value).forEach(key => {
-        if ((typeof value[key]) == 'object') {
-          Object.keys(value[key]).forEach(k =>
-            this.plan[key][k] = value[key][k]
-          );
-        } else {
-          this.plan[key] = value[key];
-        }
-      });
-      console.log(this.plan);
-    });
+    this.form.valueChanges.subscribe((value) => this.unsavedChanges = true);
   }
 
   ionViewDidLoad() {
@@ -58,14 +49,56 @@ export class TripViewPlanPage {
    */
   update() {
     if (!this.form.valid) { return; }
-    this.viewCtrl.dismiss(this.plan);
+    this.saveChanges();
+    this.viewCtrl.dismiss();
   }
 
   /**
    * The user cancelled, so we dismiss without sending data back.
    */
   cancel() {
-    this.viewCtrl.dismiss();
+    if (this.unsavedChanges) {
+      this.presentDiscard(() => this.viewCtrl.dismiss());
+    } else {
+      this.viewCtrl.dismiss();
+    }
+  }
+
+  presentDiscard(discardCallback) {
+    let discard = this.alertCtrl.create({
+      subTitle: 'Discard changes?',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {
+            console.log('Canceled')
+          }
+        },
+        {
+          text: 'Discard',
+          handler: () => {
+            console.log('Discarded');
+            discardCallback();
+          }
+        }
+      ]
+    });
+    discard.present();
+  }
+
+  saveChanges() {
+    let values = this.form.value;
+    Object.keys(values).forEach(key => {
+      if ((typeof values[key]) == 'object') {
+        Object.keys(values[key]).forEach(k =>
+          this.plan[key][k] = values[key][k]
+        );
+      } else {
+        this.plan[key] = values[key];
+      }
+    });
+    // console.log(this.plan);
   }
 
 }

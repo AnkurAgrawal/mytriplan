@@ -37,10 +37,10 @@
 
   <div [ngSwitch]="itinerary">
     <template ngFor let-date [ngForOf]="tripDates" let-i="index">
-      <ion-list class="absolute" [@fadeInOut] *ngSwitchCase="i+1">
+      <ion-list class="absolute full-width" [@fadeInOut] *ngSwitchCase="i+1">
         <mytriplan-plan-item-sliding (open)="openPlan(plan)" (delete)="deletePlan(plan)" [plan]="plan" *ngFor="let plan of trip.getPlans({day: i+1})"></mytriplan-plan-item-sliding>
         <ion-item>
-          <button ion-button block outline (click)="openAddPlan()" aria-label="add plan to your itinerary">
+          <button ion-button block outline (click)="openAddPlan(date)" aria-label="add plan to your itinerary">
             <ion-icon name="add" aria-hidden="true" item-start></ion-icon>&nbsp;
             Add plan
           </button>

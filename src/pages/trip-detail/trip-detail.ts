@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { IonicPage, ModalController, NavController, NavParams } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
 import { FadeInOut } from '../../animations/animations.module';
-import moment from 'moment';
 
 import { Trip } from '../../models/trip';
 import { Trips } from '../../providers/providers';
@@ -30,41 +29,38 @@ export class TripDetailPage {
 
   editTrip() {
     console.log('Editing trip: ' + this.trip.name);
+    this.navCtrl.push('TripCreatePage', {
+      mode: 'edit',
+      trip: this.trip
+    });
   }
 
   openPlan(plan) {
     // console.log("Open: " + JSON.stringify(plan));
-    let addModal = this.modalCtrl.create('TripViewPlanPage', {plan: plan});
+    let addModal = this.modalCtrl.create('TripViewPlanPage', {plan: plan, from: this.trip.dateFrom, to: this.trip.dateTo});
     addModal.onDidDismiss(newPlan => {
-      if (newPlan) {
-        this.trip.updatePlan(newPlan, plan);
-      }
+      // TODO Update plan on the web-service
+      // if (newPlan) {
+      //   this.trip.updatePlan(newPlan, plan);
+      // }
     });
     addModal.present();
   }
 
   deletePlan(plan) {
     console.log("Delete: " + JSON.stringify(plan));
+    this.trip.deletePlan(plan);
   }
 
-  openAddPlan() {
+  openAddPlan(date: string) {
     let displayDateFormat = 'MMM DD, YYYY';
     this.translate.get('DISPLAY_DATE_FORMAT').subscribe((value) => displayDateFormat = value);
     // console.log('Opening Add Plan: ' + JSON.stringify(this.trip));
 
-    let addPlanModal = this.modalCtrl.create('TripAddPlanPage');
+    let addPlanModal = this.modalCtrl.create('TripAddPlanPage', { date: date, from: this.trip.dateFrom, to: this.trip.dateTo });
     addPlanModal.onDidDismiss(plan => {
       if (plan) {
-        // console.log(plan);
         this.trip.itinerary.addPlan(plan);
-        // console.log('Received the plan: ' + JSON.stringify(this.trip));
-        if (this.trip.dateFrom == undefined || this.trip.dateFrom == null || this.trip.dateFrom == '' || ((plan as Plan).date && moment((plan as Plan).date).diff(moment(this.trip.dateFrom), 'days') < 0)) {
-          this.trip.dateFrom = (plan as Plan).date;
-        }
-        if (this.trip.dateTo == undefined || this.trip.dateTo == null || this.trip.dateTo == '' || ((plan as Plan).date && moment(this.trip.dateTo).diff(moment((plan as Plan).date), 'days') < 0)) {
-          this.trip.dateTo = (plan as Plan).date;
-        }
-        // console.log('Updated trip dates: ' + JSON.stringify(this.trip));
       }
     })
     addPlanModal.present();

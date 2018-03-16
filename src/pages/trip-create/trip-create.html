@@ -1,21 +1,27 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>{{ 'TRIP_CREATE_TITLE' | translate }}</ion-title>
-<!--     <ion-buttons start>
+    <ion-title (click)="presentDiscard()">{{ (mode === 'create'? 'TRIP_CREATE_TITLE': 'TRIP_EDIT_TITLE') | translate }}</ion-title>
+    <ion-buttons start *ngIf="mode=='create'">
       <button ion-button (click)="cancel()">
         <span color="primary" showWhen="ios">
           {{ 'CANCEL_BUTTON' | translate }}
         </span>
         <ion-icon name="md-close" showWhen="android,windows"></ion-icon>
       </button>
-    </ion-buttons> -->
+    </ion-buttons>
     <ion-buttons end>
-      <button ion-button (click)="save()" [disabled]="!form.valid" strong icon-only>
+      <button ion-button (click)="save()" [disabled]="!form.valid" strong *ngIf="mode=='create'">
         <span color="primary" showWhen="ios">
           {{ 'SAVE_BUTTON' | translate }}
         </span>
-        <ion-icon color="dark" class="fa fa-save fa-fw" aria-hidden="true" showWhen="core,android,windows"></ion-icon>
+        <ion-icon name="md-checkmark" showWhen="core,android,windows"></ion-icon>
+      </button>
+      <button ion-button (click)="save()" [disabled]="!form.valid || !unsavedChanges" strong icon-only *ngIf="mode=='edit'">
+        <span color="primary" showWhen="ios">
+          {{ 'SAVE_BUTTON' | translate }}
+        </span>
+        <ion-icon class="fa fa-save faw" showWhen="core,android,windows"></ion-icon>
       </button>
     </ion-buttons>
   </ion-navbar>
@@ -24,73 +30,42 @@
 
 
 <ion-content>
-  <ion-slides #createTripSlider (ionSlideWillChange)="slideChanging()">
-    <ion-slide>
-      <form *ngIf="form" [formGroup]="form" (ngSubmit)="createTrip()">
-        <input type="file" #fileInput style="visibility: hidden; height: 0px" name="files[]" (change)="processWebImage($event)" />
-        <div class="trip-image-wrapper" (click)="getPicture()">
-          <div class="trip-image-placeholder" *ngIf="!this.form.controls.tripPic.value">
-            <ion-icon name="add"></ion-icon>
-            <div>
-              {{ 'TRIP_CREATE_CHOOSE_IMAGE' | translate }}
-            </div>
-          </div>
-          <div class="trip-image" [style.backgroundImage]="getProfileImageStyle()" *ngIf="this.form.controls.tripPic.value"></div>
+  <form *ngIf="form" [formGroup]="form" (ngSubmit)="createTrip()">
+    <input type="file" #fileInput style="visibility: hidden; height: 0px" name="files[]" (change)="processWebImage($event)" />
+    <div class="trip-image-wrapper" (click)="getPicture()">
+      <div class="trip-image-placeholder" *ngIf="!this.form.controls.tripPic.value">
+        <ion-icon name="add"></ion-icon>
+        <div>
+          {{ 'TRIP_CREATE_CHOOSE_IMAGE' | translate }}
         </div>
-        <ion-list>
-          <ion-item>
-            <ion-input type="text" placeholder="{{ 'TRIP_NAME_PLACEHOLDER' | translate }}" formControlName="name" autocorrect="on" clearInput></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-textarea placeholder="{{ 'TRIP_DESCRIPTION_PLACEHOLDER' | translate }}" formControlName="description"></ion-textarea>
-          </ion-item>
-        </ion-list>
-        <ion-list>
-          <ion-list-header text-left color="light">Destination</ion-list-header>
-          <ion-item>
-            <mytriplan-address item-content [placeholder]="'TRIP_DESTINATION_PLACEHOLDER' | translate" [searchPlaceholder]="'SEARCH_TRIP_DESTINATION_PLACEHOLDER' | translate" formControlName="destination"></mytriplan-address>
-          </ion-item>
-          <ion-grid>
-            <ion-row>
-              <ion-item ion-col>
-                <ion-label floating>{{ 'TRIP_DATE_FROM_PLACEHOLDER' | translate }}</ion-label>
-                <ion-input (click)="openCalendar()" readonly formControlName="dateFrom"></ion-input>
-              </ion-item>
-              <ion-item ion-col>
-                <ion-label floating>{{ 'TRIP_DATE_TO_PLACEHOLDER' | translate }}</ion-label>
-                <ion-input (click)="openCalendar()" readonly formControlName="dateTo"></ion-input>
-              </ion-item>
-            </ion-row>
-          </ion-grid>
-        </ion-list>
-      </form>
-    </ion-slide>
-    <ion-slide>
-      <div padding class="center-vertically full-width" *ngIf="trip.length == undefined">
-        <ion-label color="primary">Let's make your itinerary</ion-label>
-        <ion-note>You can start by tapping on the '+' button</ion-note>
       </div>
-      <ion-fab bottom right>
-        <button color="primary" ion-fab (click)="openAddPlan()">
-          <ion-icon name="add" role="img" aria-label="add plan to your itinerary"></ion-icon>
-        </button>
-      </ion-fab>
-      <template [ngIf]="trip.length">
-        <ion-toolbar no-border-top class="trip-itinerary">
-          <ion-scroll scrollX="true" style="height:45px" >
-            <ion-segment [(ngModel)]="itinerary">
-              <ion-segment-button (click)="x(i+1)" value="{{i+1}}" *ngFor="let date of trip.dates; let i = index ">{{date | date: "MMM dd"}}</ion-segment-button>
-            </ion-segment>
-          </ion-scroll>
-        </ion-toolbar>
-        <div [ngSwitch]="itinerary">
-          <template ngFor let-date [ngForOf]="trip.dates" let-i="index">
-            <ion-list class="absolute" [@fadeInOut] *ngSwitchCase="i+1">
-              <mytriplan-plan-item-sliding (open)="openPlan(plan)" (edit)="editPlan(plan)" (delete)="deletePlan(plan)" [plan]="plan" *ngFor="let plan of trip.getPlans({day: i+1})"></mytriplan-plan-item-sliding>
-            </ion-list>
-          </template>
-        </div>
-      </template>
-    </ion-slide>
-  </ion-slides>
+      <div class="trip-image" [style.backgroundImage]="getProfileImageStyle()" *ngIf="this.form.controls.tripPic.value"></div>
+    </div>
+    <ion-list>
+      <ion-item>
+        <ion-input type="text" placeholder="{{ 'TRIP_NAME_PLACEHOLDER' | translate }}" formControlName="name" autocorrect="on" clearInput></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-textarea placeholder="{{ 'TRIP_DESCRIPTION_PLACEHOLDER' | translate }}" formControlName="description"></ion-textarea>
+      </ion-item>
+    </ion-list>
+    <ion-list>
+      <ion-list-header text-left color="light">Destination</ion-list-header>
+      <ion-item>
+        <mytriplan-address item-content [placeholder]="'TRIP_DESTINATION_PLACEHOLDER' | translate" [searchPlaceholder]="'SEARCH_TRIP_DESTINATION_PLACEHOLDER' | translate" formControlName="destination"></mytriplan-address>
+      </ion-item>
+      <ion-grid>
+        <ion-row>
+          <ion-item ion-col>
+            <ion-label floating>{{ 'TRIP_DATE_FROM_PLACEHOLDER' | translate }}</ion-label>
+            <ion-input (click)="openCalendar()" readonly formControlName="dateFrom"></ion-input>
+          </ion-item>
+          <ion-item ion-col>
+            <ion-label floating>{{ 'TRIP_DATE_TO_PLACEHOLDER' | translate }}</ion-label>
+            <ion-input (click)="openCalendar()" readonly formControlName="dateTo"></ion-input>
+          </ion-item>
+        </ion-row>
+      </ion-grid>
+    </ion-list>
+  </form>
 </ion-content>

@@ -26,7 +26,7 @@ page-trips-master {
 
     .card-title {
       position: absolute;
-      top: 36%;
+      top: 45%;
       font-size: 2.0em;
       width: 100%;
       font-weight: bold;
@@ -36,9 +36,13 @@ page-trips-master {
     .card-subtitle {
       font-size: 1.0em;
       position: absolute;
-      top: 50%;
+      top: 59%;
       width: 100%;
       color: #fff;
+    }
+
+    .height-220 {
+      height: 220px;
     }
 
   }
