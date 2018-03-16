@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, Validators } from "@angular/forms";
 
 /*
   Generated class for the FormGeneratorProvider provider.
@@ -27,8 +27,15 @@ export abstract class FormGeneratorProvider<T> {
     let objectKeysToAdd = keysToAdd.filter(k => (typeof data[k] == 'object'));
     keysToAdd = keysToAdd.filter(k => !(typeof data[k] == 'object'));
 
+
     const schema = this.params.schema();
-    keysToAdd.forEach(k => schema[k] = []);
+    keysToAdd.forEach(k => schema[k] = ['']);
+
+    let validators = (data['validators']? data['validators'](): undefined);
+    if (validators !== undefined) {
+      let validatorKeysToAdd = keysToAdd.filter(k => Object.keys(validators).some(cmk => cmk === k));
+      validatorKeysToAdd.forEach(k => schema[k][1] = validators[k]);
+    }
 
     const form = this.params.formBuilder.group(schema);
 
