@@ -27,12 +27,17 @@ export class Itinerary {
     if (_plan.name) {
       this._plans.push(_plan);
     } else {
-      Itinerary.getPlanTypes().forEach(planGroup =>
-        planGroup.types.forEach(plan => {
+      Itinerary.getPlanTypes().forEach(planGroup => {
+        for (var i = planGroup.types.length - 1; i >= 0; i--) {
+          let plan = planGroup.types[i];
           if (plan.NAME == _plan.group)
             this._plans.push(plan.getInstance(_plan));
-        })
-      );
+        }
+        // planGroup.types.forEach(plan => {
+        //   if (plan.NAME == _plan.group)
+        //     this._plans.push(plan.getInstance(_plan));
+        // })
+      });
     }
   }
 
@@ -56,7 +61,11 @@ export class Itinerary {
 
   updatePlan(newPlan: Plan, oldPlan: Plan) {
     console.log('Updating the plan: ' + oldPlan.name + ' at ' + oldPlan.time + ' on ' + oldPlan.date + '.');
-    ;
+    // TODO Update the plan
+  }
+
+  deletePlan(plan: Plan) {
+    this._plans.splice(this._plans.indexOf(plan), 1);
   }
 
   static getPlanTypes() {

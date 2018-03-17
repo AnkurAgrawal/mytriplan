@@ -4,6 +4,7 @@
  */
 import moment from 'moment';
 
+
 import { Itinerary } from '../models/itinerary';
 
 export class Trip {
@@ -49,6 +50,10 @@ export class Trip {
     this.itinerary.updatePlan(newPlan, oldPlan);
   }
 
+  deletePlan(plan) {
+    this.itinerary.deletePlan(plan);
+  }
+
   get length(): number {
     if (this.dateFrom && this.dateTo) {
       return 1 + moment(this.dateTo).diff(moment(this.dateFrom), 'days');
@@ -65,7 +70,7 @@ export class Trip {
       return tripDates;
     }
     for (var _i = 0; _i < this.length; _i++) {
-      tripDates.push(moment(this.dateFrom).add(_i, 'days'));
+      tripDates.push(moment(this.dateFrom).add(_i, 'days').format('YYYY-MM-DD'));
     }
     return tripDates;
   }

@@ -3,6 +3,8 @@
  * that something that fits your app as well.
  */
 
+import { Validators } from '@angular/forms';
+import { FormValidators } from '../../providers/form-generator/form-validators';
 import { Travel } from '../../models/travel';
 
 export class Flight extends Travel {
@@ -18,15 +20,72 @@ export class Flight extends Travel {
 
   constructor(fields?: any) {
     super(fields);
+    if (fields) {
+      this.patchValues(fields);
+    }
   }
 
   static getInstance(fields?: any) {
-    return new this(fields);
+    return new Flight(fields);
+  }
+
+  get date(): string {
+    return this.departureAirport.date;
+  }
+
+  set date(value: string) {
+    this.departureAirport.date = value;
+  }
+
+  get time(): string {
+    return this.departureAirport.time;
+  }
+
+  set time(value: string) {
+    this.departureAirport.time = value;
+  }
+
+  get address(): string {
+    return this.departureAirport.address;
+  }
+
+  set address(value: string) {
+    this.departureAirport.address = value;
+  }
+
+  public validators(): { [key: string]: Validators } {
+    return { };
   }
 
 }
 
-class Airport {
+class Airport implements FormValidators {
 
-  constructor(public name: string = '', public terminal: string = '', public gate: string = '') { }
+  constructor(public date: string = '', public time: string = '', public address: string = '', public terminal: string = '', public gate: string = '') { }
+
+  get address1(): string {
+    let address = this.address;
+    address = (this.terminal? address + ' (${this.terminal}': address);
+    address = (this.gate? address + ', Gate ${this.gate})': address);
+    address = (this.terminal? address + ')': address);
+
+    return address;
+  }
+
+  get name(): string {
+    return this.address;
+  }
+
+  set name(value: string) {
+    this.address = value;
+  }
+
+  public validators(): { [key: string]: Validators } {
+    return {
+      date: Validators.required,
+      time: Validators.required,
+      address: Validators.required
+    };
+  }
+
 }

@@ -3,20 +3,26 @@
  * that something that fits your app as well.
  */
 
-export abstract class Plan {
+import { Validators } from '@angular/forms';
+import { FormValidators } from '../providers/form-generator/form-validators';
+
+export abstract class Plan implements FormValidators {
   static ICON: string = 'pencil';
   static GROUP: string;
   static NAME: string;
 
-  date: string = '';
-  time: string = '';
-  address: string = '';
+  constructor(fields?: any) { }
 
-  constructor(fields?: any) {
-    // Quick and dirty extend/assign fields to this model
-    for (const f in fields) {
-      if (f != 'group')
-        this[f] = fields[f];
+  protected patchValues(values: {[key: string] : any}, currentLevel?: string) {
+
+    for (const f in values) {
+      if (f != 'group') {
+        if (typeof values[f] == 'object') {
+          this.patchValues(values[f], f);
+        } else {
+          currentLevel? this[currentLevel][f] = values[f]: this[f] = values[f];
+        }
+      }
     }
   }
 
@@ -37,5 +43,16 @@ export abstract class Plan {
   set group(_group: string) {
     this.constructor['GROUP'] = _group;
   }
+
+  abstract get date(): string;
+  abstract set date(value: string);
+
+  abstract get time(): string;
+  abstract set time(value: string);
+
+  abstract get address(): string;
+  abstract set address(value: string);
+
+  public abstract validators(): { [key: string]: Validators };
 
 }
