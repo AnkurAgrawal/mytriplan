@@ -13,6 +13,6 @@ export class IsTypePipe implements PipeTransform {
    * Takes a value and makes it lowercase.
    */
   transform(value: string, ...args: string[]) {
-    return args.some(arg => value.toLowerCase().startsWith(arg.toLowerCase()));
+    return args.some(arg => value.toLowerCase().indexOf(arg.toLowerCase()) !== -1);
   }
 }
