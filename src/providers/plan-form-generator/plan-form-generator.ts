@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { FormBuilder, Validators } from "@angular/forms";
+import { FormBuilder } from "@angular/forms";
 import { FormGeneratorProvider } from '../form-generator/form-generator';
 import { Plan } from '../../models/plan';
 
@@ -16,9 +16,6 @@ export class PlanFormGeneratorProvider extends FormGeneratorProvider<Plan> {
     super({
       formBuilder: formBuilder,
       schema: () => ({
-        // date: ['', Validators.required],
-        // time: ['', Validators.required],
-        // address: ['', Validators.required]
       })
     });
   }
