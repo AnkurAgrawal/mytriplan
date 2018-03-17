@@ -7,7 +7,6 @@ import { FormComponent } from './form/form';
 import { PipesModule } from '../pipes/pipes.module';
 import { AddressInputComponent } from './address-input/address-input';
 import { DateInputComponent } from './date-input/date-input';
-import { DirectivesModule } from '../directives/directives.module';
 
 @NgModule({
 	declarations: [
@@ -20,8 +19,7 @@ import { DirectivesModule } from '../directives/directives.module';
 	imports: [
     TranslateModule.forChild(),
     IonicModule,
-    PipesModule,
-    DirectivesModule
+    PipesModule
   ],
 	exports: [
     PlanItemSlidingComponent,
