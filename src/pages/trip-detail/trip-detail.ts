@@ -60,6 +60,7 @@ export class TripDetailPage {
     let addPlanModal = this.modalCtrl.create('TripAddPlanPage', { date: date, from: this.trip.dateFrom, to: this.trip.dateTo });
     addPlanModal.onDidDismiss(plan => {
       if (plan) {
+        console.log(plan);
         this.trip.itinerary.addPlan(plan);
       }
     })
