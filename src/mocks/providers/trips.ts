@@ -2,48 +2,11 @@ import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 
 import { Trip } from '../../models/trip';
+import { Itinerary } from '../../models/itinerary';
 
 @Injectable()
 export class Trips {
   trips: Trip[] = [];
-
-  defaultTrip: any = {
-    "user": {
-      "name": "Jane Doe"
-    },
-    "name": "Trip to Montreal",
-    "description": "",
-    "tripPic": "assets/img/trips/portland-oregon.jpg",
-    "dateFrom": "2018-10-09",
-    "dateTo": "2018-10-19",
-    "itinerary": [
-      {
-        "group": "Flight",
-        "date": "2018-10-09",
-        "time": "22:00",
-        "address": "Portland, OR"
-      },
-      {
-        "group": "CarRental",
-        "date": "2018-10-09",
-        "time": "03:00",
-        "address": "Portland, OR"
-      },
-      {
-        "group": "Lodging",
-        "date": "2018-10-10",
-        "time": "04:00",
-        "address": "Portland, OR"
-      },
-      {
-        "group": "Restaurant",
-        "date": "2018-10-11",
-        "time": "05:00",
-        "timeTo": "06:00",
-        "address": "Portland, OR"
-      }
-    ]
-  };
 
   constructor(public http: Http) {
     let trips = [
@@ -54,33 +17,47 @@ export class Trips {
         "name": "Trip to Montreal",
         "description": "",
         "tripPic": "assets/img/trips/lion.jpg",
+        "destination": "Montreal, QC, Canada",
         "dateFrom": "2018-10-09",
         "dateTo": "2018-10-19",
         "itinerary": [
           {
             "group": "flight",
-            "date": "2018-10-09",
-            "time": "22:00",
-            "address": "Portland, OR"
+            "departureAirport" : {
+              "date": "2018-10-09",
+              "time": "16:00",
+              "address": "Portland, OR, USA"
+            },
+            "arrivalAirport" : {
+              "date": "2018-10-09",
+              "time": "22:00",
+              "address": "Montreal, QC, Canada"
+            }
           },
           {
             "group": "car-rental",
-            "date": "2018-10-09",
-            "time": "03:00",
-            "address": "Portland, OR"
+            "company": "Hertz",
+            "pickUp": {
+              "date": "2018-10-09",
+              "time": "03:00",
+              "address": "Portland, OR"
+            }
           },
           {
             "group": "lodging",
-            "date": "2018-10-10",
-            "time": "04:00",
-            "address": "Portland, OR"
+            "nameOfThePlace": "Marriott",
+            "address": "Portland, OR",
+            "checkIn": {
+              "date": "2018-10-10",
+              "time": "04:00",
+            },
           },
           {
             "group": "restaurant",
             "date": "2018-10-11",
-            "time": "05:00",
-            "timeTo": "06:00",
-            "address": "Portland, OR"
+            "startTime": "05:00",
+            "address": "Portland, OR",
+            "endTime": "06:00"
           }
         ]
       },
@@ -91,6 +68,7 @@ export class Trips {
         "name": "Trip to Portland",
         "description": "",
         "tripPic": "assets/img/trips/portland-oregon.jpg",
+        "destination": "Portland, OR, USA",
         "dateFrom": "2018-10-09",
         "dateTo": "2018-10-19",
         "itinerary": {}
@@ -198,4 +176,9 @@ export class Trips {
   delete(trip: Trip) {
     this.trips.splice(this.trips.indexOf(trip), 1);
   }
+
+  update(newTrip: Trip, oldTrip: Trip) {
+    this.trips.splice(this.trips.indexOf(oldTrip), 1, newTrip);
+  }
+
 }
