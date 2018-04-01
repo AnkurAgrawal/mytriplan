@@ -1,5 +1,5 @@
 import { ErrorHandler, NgModule } from '@angular/core';
-import { Http, HttpModule } from '@angular/http';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Camera } from '@ionic-native/camera';
@@ -12,17 +12,24 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { CalendarModule } from "ion2-calendar";
 
-import { Trips } from '../mocks/providers/trips';
+import { AngularFireModule } from 'angularfire2';
+import { AngularFirestoreModule } from 'angularfire2/firestore';
+// import { AngularFireStorageModule } from 'angularfire2/storage';
+import { AngularFireAuthModule } from 'angularfire2/auth'
+import { AngularFirestypeModule } from 'angular-firestype';
+import { modelMapping } from '../models/angularfireModelMapping';
+
+import { TripsProvider } from '../providers/providers';
 import { Settings } from '../providers/providers';
 import { User } from '../providers/providers';
 import { Api } from '../providers/providers';
 import { MyApp } from './app.component';
 import { PlanFormGeneratorProvider } from '../providers/plan-form-generator/plan-form-generator';
-import { AirportsProvider } from '../providers/airports/airports';
+import { AirportsProvider, FirestoreProvider } from '../providers/providers';
 
 // The translate loader needs to know where to load i18n files
 // in Ionic's static asset pipeline.
-export function HttpLoaderFactory(http: Http) {
+export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
 
@@ -41,6 +48,15 @@ export function provideSettings(storage: Storage) {
   });
 }
 
+const firebaseConfig = {
+  apiKey: "AIzaSyAM_sodtij6t5doxsTwRe266cVH62RwnEk",
+  authDomain: "mytriplan-0810.firebaseapp.com",
+  databaseURL: "https://mytriplan-0810.firebaseio.com",
+  projectId: "mytriplan-0810",
+  storageBucket: "mytriplan-0810.appspot.com",
+  messagingSenderId: "1098980197287"
+};
+
 @NgModule({
   declarations: [
     MyApp
@@ -48,19 +64,25 @@ export function provideSettings(storage: Storage) {
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    HttpModule,
+    HttpClientModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
         useFactory: HttpLoaderFactory,
-        deps: [Http]
+        deps: [HttpClient]
       }
     }),
     IonicModule.forRoot(MyApp, {
       scrollAssist: false
     }),
     IonicStorageModule.forRoot(),
-    CalendarModule
+    CalendarModule,
+    AngularFireModule.initializeApp(firebaseConfig), // imports firebase/app needed for everything
+    // AngularFirestoreModule.enablePersistence(),
+    AngularFirestoreModule, // imports firebase/firestore, only needed for database features
+    AngularFireAuthModule, // imports firebase/auth, only needed for auth features,
+    // AngularFireStorageModule // imports firebase/storage only needed for storage features
+    AngularFirestypeModule.forRoot(modelMapping, true),   // Import module using forRoot() to add mapping information
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -68,7 +90,6 @@ export function provideSettings(storage: Storage) {
   ],
   providers: [
     Api,
-    Trips,
     User,
     Camera,
     GoogleMaps,
@@ -78,7 +99,9 @@ export function provideSettings(storage: Storage) {
     // Keep this to enable Ionic's runtime error handling during development
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     PlanFormGeneratorProvider,
-    AirportsProvider
+    AirportsProvider,
+    FirestoreProvider,
+    TripsProvider,
   ]
 })
 export class AppModule { }
