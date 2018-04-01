@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
+import { Observable } from 'rxjs/Observable';
 
 import { Trip } from '../../models/trip';
 import { Itinerary } from '../../models/itinerary';
 
 @Injectable()
-export class Trips {
+export class TripsProvider {
   trips: Trip[] = [];
 
-  constructor(public http: Http) {
+  constructor() {
     let trips = [
       {
         "user": {
@@ -20,46 +20,48 @@ export class Trips {
         "destination": "Montreal, QC, Canada",
         "dateFrom": "2018-10-09",
         "dateTo": "2018-10-19",
-        "itinerary": [
-          {
-            "group": "flight",
-            "departureAirport" : {
-              "date": "2018-10-09",
-              "time": "16:00",
-              "address": "Portland, OR, USA"
+        "itinerary": {
+          "_plans": [
+            {
+              "type": "flight",
+              "departureAirport" : {
+                "date": "2018-10-09",
+                "time": "16:00",
+                "address": "Portland, OR, USA"
+              },
+              "arrivalAirport" : {
+                "date": "2018-10-09",
+                "time": "23:00",
+                "address": "Montreal, QC, Canada"
+              }
             },
-            "arrivalAirport" : {
-              "date": "2018-10-09",
-              "time": "22:00",
-              "address": "Montreal, QC, Canada"
-            }
-          },
-          {
-            "group": "car-rental",
-            "company": "Hertz",
-            "pickUp": {
-              "date": "2018-10-09",
-              "time": "03:00",
-              "address": "Portland, OR"
-            }
-          },
-          {
-            "group": "lodging",
-            "nameOfThePlace": "Marriott",
-            "address": "Portland, OR",
-            "checkIn": {
-              "date": "2018-10-10",
-              "time": "04:00",
+            {
+              "type": "car-rental",
+              "company": "Hertz",
+              "pickUp": {
+                "date": "2018-10-10",
+                "time": "03:00",
+                "address": "Montreal, QC, Canada"
+              }
             },
-          },
-          {
-            "group": "restaurant",
-            "date": "2018-10-11",
-            "startTime": "05:00",
-            "address": "Portland, OR",
-            "endTime": "06:00"
-          }
-        ]
+            {
+              "type": "lodging",
+              "nameOfThePlace": "Marriott",
+              "address": "Montreal, QC, Canada",
+              "checkIn": {
+                "date": "2018-10-10",
+                "time": "04:00",
+              },
+            },
+            {
+              "type": "restaurant",
+              "date": "2018-10-11",
+              "startTime": "05:00",
+              "address": "Montreal, QC, Canada",
+              "endTime": "06:00"
+            }
+          ]
+        }
       },
       {
         "user": {
@@ -69,9 +71,9 @@ export class Trips {
         "description": "",
         "tripPic": "assets/img/trips/portland-oregon.jpg",
         "destination": "Portland, OR, USA",
-        "dateFrom": "2018-10-09",
-        "dateTo": "2018-10-19",
-        "itinerary": {}
+        "dateFrom": "2018-11-09",
+        "dateTo": "2018-11-19",
+        "itinerary": { "_plans": [] }
       },
       {
         "user": {
@@ -80,9 +82,10 @@ export class Trips {
         "name": "Trip to Portland",
         "description": "",
         "tripPic": "assets/img/trips/kitten.jpg",
-        "dateFrom": "2018-10-09",
-        "dateTo": "2018-10-19",
-        "itinerary": {}
+        "destination": "Portland, OR, USA",
+        "dateFrom": "2018-12-09",
+        "dateTo": "2018-12-19",
+        "itinerary": { "_plans": [] }
       },
       {
         "user": {
@@ -91,9 +94,10 @@ export class Trips {
         "name": "Trip to Portland",
         "description": "",
         "tripPic": "assets/img/trips/rabbit.jpg",
-        "dateFrom": "2018-10-09",
-        "dateTo": "2018-10-19",
-        "itinerary": {}
+        "destination": "Portland, OR, USA",
+        "dateFrom": "2019-01-09",
+        "dateTo": "2019-01-19",
+        "itinerary": { "_plans": [] }
       },
       {
         "user": {
@@ -102,9 +106,10 @@ export class Trips {
         "name": "Trip to Portland",
         "description": "",
         "tripPic": "assets/img/trips/bear.jpg",
-        "dateFrom": "2018-10-09",
-        "dateTo": "2018-10-19",
-        "itinerary": {}
+        "destination": "Portland, OR, USA",
+        "dateFrom": "2019-02-09",
+        "dateTo": "2019-02-19",
+        "itinerary": { "_plans": [] }
       },
       {
         "user": {
@@ -113,9 +118,10 @@ export class Trips {
         "name": "Trip to Portland",
         "description": "",
         "tripPic": "assets/img/trips/mouse.jpg",
-        "dateFrom": "2018-10-09",
-        "dateTo": "2018-10-19",
-        "itinerary": {}
+        "destination": "Portland, OR, USA",
+        "dateFrom": "2019-03-09",
+        "dateTo": "2019-03-19",
+        "itinerary": { "_plans": [] }
       },
       {
         "user": {
@@ -124,9 +130,10 @@ export class Trips {
         "name": "Trip to Portland",
         "description": "",
         "tripPic": "assets/img/trips/puppy.jpg",
-        "dateFrom": "2018-10-09",
-        "dateTo": "2018-10-19",
-        "itinerary": {}
+        "destination": "Portland, OR, USA",
+        "dateFrom": "2019-04-09",
+        "dateTo": "2019-04-19",
+        "itinerary": { "_plans": [] }
       }
     ];
 
@@ -135,7 +142,7 @@ export class Trips {
     }
   }
 
-  query(params?: any) {
+  getReadonlyTrips(params?: any) {
     if (!params) {
       return this.trips;
     }
@@ -151,6 +158,10 @@ export class Trips {
       }
       return null;
     });
+  }
+
+  getEditableTrips(params?: any) {
+    return this.getReadonlyTrips(params);
   }
 
   queryItinerary(params?: any) {
