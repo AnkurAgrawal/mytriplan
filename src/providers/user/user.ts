@@ -1,9 +1,6 @@
-import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
 
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
-
 import { Api } from '../api/api';
 
 /**
@@ -29,7 +26,7 @@ import { Api } from '../api/api';
 export class User {
   _user: any;
 
-  constructor(public http: Http, public api: Api) {
+  constructor(public api: Api) {
   }
 
   /**
@@ -40,16 +37,11 @@ export class User {
     let seq = this.api.post('login', accountInfo).share();
 
     seq
-      .map(res => res.json())
-      .subscribe(res => {
+      .subscribe(res =>
         // If the API returned a successful response, mark the user as logged in
-        if (res.status == 'success') {
-          this._loggedIn(res);
-        } else {
-        }
-      }, err => {
-        console.error('ERROR', err);
-      });
+          this._loggedIn(res)
+      , err => console.error('ERROR', err)
+      );
 
     return seq;
   }
@@ -62,15 +54,11 @@ export class User {
     let seq = this.api.post('signup', accountInfo).share();
 
     seq
-      .map(res => res.json())
-      .subscribe(res => {
+      .subscribe(data =>
         // If the API returned a successful response, mark the user as logged in
-        if (res.status == 'success') {
-          this._loggedIn(res);
-        }
-      }, err => {
-        console.error('ERROR', err);
-      });
+        this._loggedIn(data)
+      , err => console.error('ERROR', err)
+      );
 
     return seq;
   }

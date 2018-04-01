@@ -1,7 +1,7 @@
 import 'rxjs/add/operator/map';
 
 import { Injectable } from '@angular/core';
-import { Http, RequestOptions, URLSearchParams } from '@angular/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
 /**
  * Api is a generic REST Api handler. Set your API url first.
@@ -10,41 +10,46 @@ import { Http, RequestOptions, URLSearchParams } from '@angular/http';
 export class Api {
   url: string = 'https://mytriplan.com/api/v1';
 
-  constructor(public http: Http) {
+  constructor(public http: HttpClient) {
   }
 
-  get(endpoint: string, params?: any, options?: RequestOptions) {
-    if (!options) {
-      options = new RequestOptions();
+  get(endpoint: string, params?: any, httpOptions?: object) {
+    if (!httpOptions) {
+      httpOptions = {
+        headers: new HttpHeaders({
+          'Content-Type':  'application/json',
+          // 'Authorization': 'my-auth-token'
+        })
+      };
     }
 
     // Support easy query params for GET requests
     if (params) {
-      let p = new URLSearchParams();
+      let p = new HttpParams();
       for (let k in params) {
         p.set(k, params[k]);
       }
       // Set the search field if we have params and don't already have
-      // a search field set in options.
-      options.search = !options.search && p || options.search;
+      // a search field set in httpOptions.
+      httpOptions['params'] = !httpOptions['params'] && p || httpOptions['params'];
     }
 
-    return this.http.get(this.url + '/' + endpoint, options);
+    return this.http.get(this.url + '/' + endpoint, httpOptions);
   }
 
-  post(endpoint: string, body: any, options?: RequestOptions) {
-    return this.http.post(this.url + '/' + endpoint, body, options);
+  post<T>(endpoint: string, data: T, httpOptions?: object) {
+    return this.http.post(this.url + '/' + endpoint, data, httpOptions);
   }
 
-  put(endpoint: string, body: any, options?: RequestOptions) {
-    return this.http.put(this.url + '/' + endpoint, body, options);
+  put<T>(endpoint: string, data: T, httpOptions?: object) {
+    return this.http.put(this.url + '/' + endpoint, data, httpOptions);
   }
 
-  delete(endpoint: string, options?: RequestOptions) {
-    return this.http.delete(this.url + '/' + endpoint, options);
+  delete(endpoint: string, httpOptions?: object) {
+    return this.http.delete(this.url + '/' + endpoint, httpOptions);
   }
 
-  patch(endpoint: string, body: any, options?: RequestOptions) {
-    return this.http.put(this.url + '/' + endpoint, body, options);
+  patch<T>(endpoint: string, data: T, httpOptions?: object) {
+    return this.http.put(this.url + '/' + endpoint, data, httpOptions);
   }
 }

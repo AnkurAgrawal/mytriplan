@@ -1,14 +1,19 @@
 import { Api } from './api/api';
-import { Trips } from '../mocks/providers/trips';
+import { TripsProvider } from './trips/trips';
+// import { TripsProvider } from '../mocks/providers/trips';
 import { Settings } from './settings/settings';
 import { User } from './user/user';
 
 import { PlanFormGeneratorProvider } from './plan-form-generator/plan-form-generator';
+import { AirportsProvider } from './airports/airports';
+import { FirestoreProvider } from './firestore/firestore';
 
 export {
     Api,
-    Trips,
+    TripsProvider,
     Settings,
     User,
-    PlanFormGeneratorProvider
+    PlanFormGeneratorProvider,
+    AirportsProvider,
+    FirestoreProvider
 };

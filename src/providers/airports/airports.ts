@@ -1,8 +1,4 @@
-import 'rxjs/add/operator/map';
-
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
-
 import { Api } from '../api/api';
 
 /*
@@ -14,13 +10,13 @@ import { Api } from '../api/api';
 @Injectable()
 export class AirportsProvider {
 
-  constructor(public http: Http, public api: Api) {
+  constructor(public api: Api) {
     console.log('Hello AirportsProvider Provider');
   }
 
   query(params?: any) {
     return this.api.get('/airports', params)
-      .map(resp => resp.json());
+      .subscribe(data => data);
   }
 
 }
