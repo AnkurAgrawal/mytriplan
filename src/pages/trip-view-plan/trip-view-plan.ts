@@ -50,7 +50,7 @@ export class TripViewPlanPage {
   update() {
     if (!this.form.valid) { return; }
     this.saveChanges();
-    this.viewCtrl.dismiss();
+    this.viewCtrl.dismiss(true);
   }
 
   /**

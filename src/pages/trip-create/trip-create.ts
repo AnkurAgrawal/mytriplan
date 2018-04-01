@@ -127,7 +127,7 @@ export class TripCreatePage {
   save() {
     if (!this.form.valid) { return; }
     this.saveChanges();
-    this.viewCtrl.dismiss(this.trip);
+    this.mode == 'create'? this.viewCtrl.dismiss(this.trip): this.viewCtrl.dismiss(true);
   }
 
   presentDiscard(discardCallback) {

@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 import { Trip } from '../../models/trip';
-import { Trips } from '../../providers/providers';
+import { TripsProvider } from '../../providers/providers';
 
 @IonicPage()
 @Component({
@@ -13,7 +13,7 @@ export class PlanTripPage {
 
   currentTrips: any = [];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public trips: Trips) { }
+  constructor(public navCtrl: NavController, public navParams: NavParams, public tripsProvider: TripsProvider) { }
 
   /**
    * Perform a service for the proper trips.
@@ -24,7 +24,7 @@ export class PlanTripPage {
       this.currentTrips = [];
       return;
     }
-    this.currentTrips = this.trips.query({
+    this.currentTrips = this.tripsProvider.query({
       name: val
     });
   }

@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, ModalController } from 'ionic-angular';
 
 import { Trip } from '../../models/trip';
-import { Trips } from '../../providers/providers';
+import { TripsProvider } from '../../providers/providers';
 
 @IonicPage()
 @Component({
@@ -12,8 +12,14 @@ import { Trips } from '../../providers/providers';
 export class TripsMasterPage {
   currentTrips: Trip[];
 
-  constructor(public navCtrl: NavController, public trips: Trips, private modalCtrl: ModalController) {
-    this.currentTrips = this.trips.query();
+  constructor(private navCtrl: NavController, private tripsProvider: TripsProvider, private modalCtrl: ModalController) {
+    // Get trips form firebase using Firestype api
+    this.tripsProvider.getReadonlyTrips().subscribe((trips: Trip[]) => {
+      this.currentTrips = trips;
+    });
+
+    // Add trips to the database
+    // this.currentTrips.forEach(trip => this.firebaseProvider.addDocument<Trip>(trip, "trips"))
   }
 
   /**
@@ -28,11 +34,10 @@ export class TripsMasterPage {
   addTrip() {
     // this.navCtrl.push('TripCreatePage');
     let addModal = this.modalCtrl.create('TripCreatePage');
-    addModal.onDidDismiss(trip => {
+    addModal.onDidDismiss((trip: Trip) => {
       if (trip) {
-        this.trips.add(trip);
-        console.log(JSON.stringify(trip));
-        this.openTrip(trip);
+        this.tripsProvider.add(trip);
+        this.openTrip(trip.id);
       }
     })
     addModal.present();
@@ -43,15 +48,15 @@ export class TripsMasterPage {
    */
   deleteTrip(trip, event: Event) {
     event.stopPropagation();
-    this.trips.delete(trip);
+    this.tripsProvider.delete(trip);
   }
 
   /**
    * Navigate to the detail page for this trip.
    */
-  openTrip(trip: Trip) {
+  openTrip(tripId: string) {
     this.navCtrl.push('TripDetailPage', {
-      trip: trip
+      tripId: tripId
     });
   }
 }

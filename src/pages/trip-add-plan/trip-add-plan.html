@@ -7,7 +7,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>Add a {{(plan?plan.name:'plan') | beautifyString:'small'}} to itinerary</ion-title>
+    <ion-title>Add a {{ (plan? plan.type: 'plan') | beautifyString:'small' }} to itinerary</ion-title>
     <ion-buttons start>
       <button ion-button (click)="cancel()">
         <span ion-text color="primary" showWhen="ios">
@@ -43,12 +43,12 @@
           </ion-item-divider>
           <button padding full clear text-center text-capitalize col-6 (click)="openNewPlanForm(type)" *ngFor="let type of planGroup.types">
             <ion-icon class="fa fa-{{type.ICON}} fa-2x" aria-hidden="true"></ion-icon>
-            <ion-label margin-left margin-right text-uppercase>{{type.NAME | beautifyString}}</ion-label>
+            <ion-label margin-left margin-right text-uppercase>{{type.TYPE | beautifyString}}</ion-label>
           </button>
         </ion-row>
       </ion-grid>
 
-      <template [ngIf]="!grid">
+      <ng-template [ngIf]="!grid">
         <ion-item-group [@fadeInOut] *ngFor="let planGroup of planGroups">
           <ion-item-divider color="primary">
             <ion-icon class="fa fa-{{planGroup.icon}} fa-fw" aria-hidden="true"></ion-icon>
@@ -59,7 +59,7 @@
             {{type.NAME | beautifyString}}
           </button>
         </ion-item-group>
-      </template>
+      </ng-template>
     </ion-slide>
     <ion-slide>
       <div text-center>
