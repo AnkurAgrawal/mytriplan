@@ -54,7 +54,7 @@ export class DateInputComponent implements ControlValueAccessor {
   }
 
   writeValue(value: any) {
-    if (value !== undefined) {
+    if (value !== undefined && value !== '') {
       this._value = this.moment.transform(value, this.displayFormat);;
     }
   }
@@ -77,7 +77,7 @@ export class DateInputComponent implements ControlValueAccessor {
       doneLabel: 'Done',
       closeIcon: this.platform.is('android'),
       doneIcon: this.platform.is('android'),
-      defaultDate: ev.target.value || Date.now(),
+      defaultDate: ev.target.value || this.from || Date.now(),
       defaultScrollTo: ev.target.value || Date.now(),
       showAdjacentMonthDay: true
     };

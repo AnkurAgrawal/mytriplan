@@ -1,8 +1,8 @@
 <!-- Template for the FormComponent component -->
 <form [formGroup]="form">
   <ion-list text-wrap>
-    <template ngFor let-field [ngForOf]="form.controls | objectKeysToArray">
-      <ion-item *ngIf="!form.controls[field].controls">
+    <ng-template ngFor let-field [ngForOf]="form.controls | objectKeysToArray">
+      <ion-item *ngIf="!form.controls[field].controls && field!='type'">
         <ion-label fixed>{{field | beautifyString}}</ion-label>
         <ion-input *ngIf="!(field | isType:'date':'time':'address':'phoneNumber')" formControlName="{{field}}"></ion-input>
         <ion-input *ngIf="field | isType:'phonenumber'" type="tel" formControlName="{{field}}"></ion-input>
@@ -24,6 +24,6 @@
           </ion-item>
         </ion-item-group>
       </div>
-    </template>
+    </ng-template>
   </ion-list>
 </form>

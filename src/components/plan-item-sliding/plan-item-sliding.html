@@ -2,7 +2,7 @@
 <ion-item-sliding (ionSwipe)="delete.emit()">
   <button ion-item (click)="open.emit()">
     <ion-icon item-start color="dark-grey" class="fa fa-{{plan.icon}} fa-fw" aria-hidden="true"></ion-icon>
-    <h2>{{plan.address}}</h2>
+    <h2>{{plan.displayText()}}</h2>
     <small>{{plan.time | moment:('DATABASE_TIME_FORMAT' | translate):('DISPLAY_TIME_FORMAT' | translate)}}</small><small *ngIf="plan.timeTo"> - {{plan.timeTo | moment:('DATABASE_TIME_FORMAT' | translate):('DISPLAY_TIME_FORMAT' | translate)}}</small>
   </button>
 
