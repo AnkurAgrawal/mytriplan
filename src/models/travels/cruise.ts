@@ -9,7 +9,7 @@ import { Travel } from '../../models/travel';
 
 export class Cruise extends Travel {
   static ICON: string = 'ship';
-  static NAME: string = 'cruise';
+  static TYPE: string = 'cruise';
 
   cruiseLine: string = '';
   shipName: string = '';
@@ -53,6 +53,10 @@ export class Cruise extends Travel {
     this.startingPort.address = value;
   }
 
+  displayText(): string {
+    return this.startingPort.displayText();
+  }
+
   public validators(): { [key: string]: Validators } {
     return {
       date: Validators.required,
@@ -67,9 +71,9 @@ class Port implements FormValidators {
 
   constructor(public date: string = '', public time: string = '', public address: string = '', public pier: string = '') { }
 
-  get address1(): string {
+  displayText(): string {
     let address = this.address;
-    address = (this.pier? address + ' (Pier ${this.pier})': address);
+    address = (this.pier? address + ` (Pier ${this.pier})`: address);
 
     return address;
   }

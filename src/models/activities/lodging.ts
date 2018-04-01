@@ -9,7 +9,7 @@ import { Activity } from '../../models/activity';
 
 export class Lodging extends Activity {
   static ICON: string = 'home';
-  static NAME: string = 'lodging';
+  static TYPE: string = 'lodging';
 
   nameOfThePlace: string = '';
   address: string = '';
@@ -44,6 +44,10 @@ export class Lodging extends Activity {
 
   set time(value: string) {
     this.checkIn.time = value;
+  }
+
+  displayText(): string {
+    return this.nameOfThePlace;
   }
 
   public validators(): { [key: string]: Validators } {

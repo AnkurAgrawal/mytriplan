@@ -8,7 +8,7 @@ import { Plan } from '../models/plan';
 export abstract class Miscellaneous extends Plan {
   static ICON: string = 'suitcase';
   static GROUP: string = 'Miscellaneous';
-  static NAME: string;
+  static TYPE: string;
 
   constructor(fields?: any) {
     super(fields);

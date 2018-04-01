@@ -8,8 +8,11 @@ import { Miscellaneous } from '../../models/miscellaneous';
 
 export class Note extends Miscellaneous {
   static ICON: string = 'sticky-note';
-  static NAME: string = 'note';
+  static TYPE: string = 'note';
 
+  date: string = '';
+  time: string = '';
+  address: string = '';
   description: string = '';
 
   constructor(fields?: any) {
@@ -23,18 +26,9 @@ export class Note extends Miscellaneous {
     return new this(fields);
   }
 
-  get address(): string {
+  displayText(): string {
     return this.description;
   }
-
-  set address(value: string) {
-    this.description = value;
-  }
-
-  get date(): string { return ''; }
-  set date(value: string) { }
-  get time(): string { return ''; }
-  set time(value: string) { }
 
   public validators(): { [key: string]: Validators } {
     return {

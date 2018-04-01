@@ -7,8 +7,8 @@ import { Validators } from '@angular/forms';
 import { Activity } from '../../models/activity';
 
 export class Restaurant extends Activity {
-  static ICON: string = 'utensils';
-  static NAME: string = 'restaurant';
+  static ICON: string = 'cutlery';
+  static TYPE: string = 'restaurant';
 
   date: string = '';
   address: string = '';
@@ -33,6 +33,10 @@ export class Restaurant extends Activity {
 
   set time(value: string) {
     this.startTime = value;
+  }
+
+  displayText(): string {
+    return this.address;
   }
 
   public validators(): { [key: string]: Validators } {

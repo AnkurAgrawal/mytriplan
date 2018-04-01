@@ -9,17 +9,19 @@ import { FormValidators } from '../providers/form-generator/form-validators';
 export abstract class Plan implements FormValidators {
   static ICON: string = 'pencil';
   static GROUP: string;
-  static NAME: string;
+  static TYPE: string;
+
+  type: string = this.constructor['TYPE'];
 
   constructor(fields?: any) { }
 
   protected patchValues(values: {[key: string] : any}, currentLevel?: string) {
-
     for (const f in values) {
       if (f != 'group') {
         if (typeof values[f] == 'object') {
           this.patchValues(values[f], f);
         } else {
+          // console.log(currentLevel + ':' + f + ':' + values[f]);
           currentLevel? this[currentLevel][f] = values[f]: this[f] = values[f];
         }
       }
@@ -27,10 +29,6 @@ export abstract class Plan implements FormValidators {
   }
 
   public static getInstance() { }
-
-  get name(): string {
-    return this.constructor['NAME'];
-  }
 
   get icon(): string {
     return this.constructor['ICON'];
@@ -52,6 +50,8 @@ export abstract class Plan implements FormValidators {
 
   abstract get address(): string;
   abstract set address(value: string);
+
+  abstract displayText(): string;
 
   public abstract validators(): { [key: string]: Validators };
 

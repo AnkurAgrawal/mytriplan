@@ -9,7 +9,7 @@ import { Travel } from '../../models/travel';
 
 export class Train extends Travel {
   static ICON: string = 'train';
-  static NAME: string = 'train';
+  static TYPE: string = 'train';
 
   carrier: string = '';
   confirmationId: string = '';
@@ -52,6 +52,10 @@ export class Train extends Travel {
     this.departureStation.address = value;
   }
 
+  displayText(): string {
+    return this.departureStation.displayText();
+  }
+
   public validators(): { [key: string]: Validators } {
     return {
       carrier: Validators.required
@@ -64,9 +68,9 @@ class Station implements FormValidators {
 
   constructor(public date: string = '', public time: string = '', public address: string = '', public platform: string = '') { }
 
-  get address1(): string {
+  displayText(): string {
     let address = this.address;
-    address = (this.platform? address + ' (Platform ${this.platform}': address);
+    address = (this.platform? address + ` (Platform ${this.platform}`: address);
 
     return address;
   }

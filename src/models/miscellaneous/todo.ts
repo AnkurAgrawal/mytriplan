@@ -8,10 +8,11 @@ import { Miscellaneous } from '../../models/miscellaneous';
 
 export class Todo extends Miscellaneous {
   static ICON: string = 'list';
-  static NAME: string = 'todo';
+  static TYPE: string = 'todo';
 
   date: string = '';
   time: string = '';
+  address: string = '';
   description: string = '';
 
   constructor(fields?: any) {
@@ -25,12 +26,8 @@ export class Todo extends Miscellaneous {
     return new this(fields);
   }
 
-  get address(): string {
+  displayText(): string {
     return this.description;
-  }
-
-  set address(value: string) {
-    this.description = value;
   }
 
   public validators(): { [key: string]: Validators } {

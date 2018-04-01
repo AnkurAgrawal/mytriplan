@@ -8,7 +8,7 @@ import { Activity } from '../../models/activity';
 
 export class Meeting extends Activity {
   static ICON: string = 'users';
-  static NAME: string = 'meeting';
+  static TYPE: string = 'meeting';
 
   date: string = '';
   address: string = '';
@@ -33,6 +33,10 @@ export class Meeting extends Activity {
 
   set time(value: string) {
     this.startTime = value;
+  }
+
+  displayText(): string {
+    return this.address;
   }
 
   public validators(): { [key: string]: Validators } {

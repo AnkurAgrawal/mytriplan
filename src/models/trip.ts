@@ -3,12 +3,13 @@
  * that something that fits your app as well.
  */
 import moment from 'moment';
-
-
 import { Itinerary } from '../models/itinerary';
+
+export type PartialTrip = Partial<Trip>;
 
 export class Trip {
 
+  id?: string;
   name: string;
   description: string;
   tripPic: string;
@@ -18,29 +19,36 @@ export class Trip {
   itinerary: Itinerary;
   destinations: Destination[] = [];
 
-  constructor(fields?: any) {
-    // Quick and dirty extend/assign fields to this model
-    for (const f in fields) {
-      if (f == 'itinerary') {
-        this.itinerary = new Itinerary(fields[f]);
-      } else if (f == 'destinations') {
-        fields[f].forEach((destination) =>
-          this.destinations.push(new Destination(destination.location, destination.dateFrom, destination.dateTo))
+  constructor(fields?: object);
+  constructor(name: string, destination: string, dateFrom: string, dateTo: string, tripPic?: string, description?: string, itinerary?: Itinerary, destinations?: Destination[]);
+  constructor(...args: (object|string|number|Itinerary|Destination[])[]) {
+    if (args.length == 1 && typeof args[0] === 'object') {
+      this.name = args[0]['name'] || '';
+      this.description = args[0]['description'] || '';
+      this.dateFrom = args[0]['dateFrom'] || '';
+      this.dateTo = args[0]['dateTo'] || '';
+      this.tripPic = args[0]['tripPic'] || 'assets/img/trips/portland-oregon.jpg';
+      this.destination = args[0]['destination'] || '';
+      this.itinerary = args[0]['itinerary']? new Itinerary(args[0]['itinerary'] as object): new Itinerary();
+      if (args[0]['destinations']) {
+        (args[0]['destinations'] as Array<object>).forEach((destination) =>
+          this.destinations.push(new Destination(destination['location'], destination['dateFrom'], destination['dateTo']))
         );
-      } else {
-        this[f] = fields[f];
       }
-    }
-    if (this.itinerary == undefined) {
-      this.itinerary = new Itinerary();
-    }
-    if (this.destinations == undefined || this.destinations.length == 0) {
-      this.destinations.push(new Destination('', '', ''));
+    } else {
+      this.name = args[0] as string;
+      this.destination = args[1] as string || '';
+      this.dateFrom = args[2] as string;
+      this.dateTo = args[3] as string;
+      this.tripPic = args[4] as string || 'assets/img/trips/portland-oregon.jpg';
+      this.description = args[5] as string || '';
+      this.itinerary = args[6] as Itinerary || new Itinerary();
+      this.destinations = args[7] as Destination[] || [];
     }
   }
 
   getPlans(params?: any) {
-    if (this.dateFrom && params) {
+    if (this.dateFrom && params.day && !params.date) {
       params.dateFrom = this.dateFrom;
     }
     return this.itinerary.getPlans(params);
@@ -52,6 +60,21 @@ export class Trip {
 
   deletePlan(plan) {
     this.itinerary.deletePlan(plan);
+  }
+
+  getPartial(properties: string[], includeId: boolean = true): PartialTrip {
+    let partialTrip: PartialTrip = {};
+    includeId && this.id && (partialTrip.id = this.id);
+    properties.forEach(property => {
+      if (this[property] !== undefined) {
+        partialTrip[property] = this[property];
+        if (property == 'itinerary') {
+          partialTrip.itinerary.plans = JSON.parse(JSON.stringify(partialTrip.itinerary.plans));
+        }
+      }
+    });
+
+    return partialTrip;
   }
 
   get length(): number {

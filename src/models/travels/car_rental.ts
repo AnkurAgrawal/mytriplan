@@ -9,7 +9,7 @@ import { Travel } from '../../models/travel';
 
 export class CarRental extends Travel {
   static ICON: string = 'car';
-  static NAME: string = 'car-rental';
+  static TYPE: string = 'car-rental';
 
   company: string = '';
   phoneNumber: string = '';
@@ -54,6 +54,10 @@ export class CarRental extends Travel {
     this.pickUp.address = value;
   }
 
+  displayText(): string {
+    return this.pickUp.displayText();
+  }
+
   public validators(): { [key: string]: Validators } {
     return {
       company: Validators.required,
@@ -65,6 +69,10 @@ export class CarRental extends Travel {
 class Appointment implements FormValidators {
 
   constructor(public date: string = '', public time: string = '', public address: string = '') { }
+
+  displayText(): string {
+    return this.address;
+  }
 
   public validators(): { [key: string]: Validators } {
     return {

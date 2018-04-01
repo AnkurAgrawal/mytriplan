@@ -12,30 +12,32 @@ import * as models from '../models/models';
 
 export class Itinerary {
 
-  private _plans: Plan[] = [];
+  plans: Plan[] = [];
 
-  constructor(entries?: any) {
-    // Quick and dirty extend/assign _plans to this model
-    if (entries != undefined) {
-      for (let f in entries) {
-        this.addPlan(entries[f]);
-      }
+  constructor(plans?: object|Array<object>) {
+    // Quick extend/assign plans to this model
+    if (plans !== undefined) {
+      // console.log(plans as Array<object>);
+      plans = !(plans instanceof Array)? plans['plans']: plans;
+      (plans as Array<object>).forEach(plan => this.addPlan(plan));
     }
   }
 
-  addPlan(_plan: any) {
-    if (_plan.name) {
-      this._plans.push(_plan);
+  addPlan(plan: any) {
+    if (plan.group) {
+      this.plans.push(plan);
     } else {
       Itinerary.getPlanTypes().forEach(planGroup => {
         for (var i = planGroup.types.length - 1; i >= 0; i--) {
-          let plan = planGroup.types[i];
-          if (plan.NAME == _plan.group)
-            this._plans.push(plan.getInstance(_plan));
+          let _plan = planGroup.types[i];
+          if (_plan.TYPE == plan.type) {
+            delete plan.type;
+            this.plans.push(_plan.getInstance(plan));
+          }
         }
         // planGroup.types.forEach(plan => {
         //   if (plan.NAME == _plan.group)
-        //     this._plans.push(plan.getInstance(_plan));
+        //     this.plans.push(plan.getInstance(plan));
         // })
       });
     }
@@ -43,12 +45,13 @@ export class Itinerary {
 
   getPlans(params?: any) {
     if (!params || (!params.date && !params.dateFrom)) {
-      return this._plans;
+      console.log(this.plans);
+      return this.plans;
     }
     if (!params.date && params.day && params.dateFrom) {
       params = {date: moment(params.dateFrom).add(+params.day - 1, 'days').format('YYYY-MM-DD')};
     }
-    return this._plans.filter((plan) => {
+    return this.plans.filter((plan) => {
       for (let key in params) {
         let field = plan[key];
         if ((typeof field == 'string' && field.toLowerCase().indexOf(params[key].toLowerCase()) >= 0) || (field == params[key])) {
@@ -60,12 +63,12 @@ export class Itinerary {
   }
 
   updatePlan(newPlan: Plan, oldPlan: Plan) {
-    console.log('Updating the plan: ' + oldPlan.name + ' at ' + oldPlan.time + ' on ' + oldPlan.date + '.');
-    // TODO Update the plan
+    console.log('Updating the plan: ' + oldPlan.type + ' at ' + oldPlan.time + ' on ' + oldPlan.date + '.');
+    this.plans[this.plans.indexOf(oldPlan)] = newPlan;
   }
 
   deletePlan(plan: Plan) {
-    this._plans.splice(this._plans.indexOf(plan), 1);
+    this.plans.splice(this.plans.indexOf(plan), 1);
   }
 
   static getPlanTypes() {

@@ -8,7 +8,7 @@ import { Travel } from '../../models/travel';
 
 export class Taxi extends Travel {
   static ICON: string = 'taxi';
-  static NAME: string = 'taxi';
+  static TYPE: string = 'taxi';
 
   date: string = '';
   time: string = '';
@@ -33,6 +33,10 @@ export class Taxi extends Travel {
 
   set address(value: string) {
     this.startingAddress = value;
+  }
+
+  displayText(): string {
+    return this.address;
   }
 
   public validators(): { [key: string]: Validators } {

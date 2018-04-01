@@ -8,7 +8,7 @@ import { Travel } from '../../models/travel';
 
 export class Driving extends Travel {
   static ICON: string = 'road';
-  static NAME: string = 'driving';
+  static TYPE: string = 'driving';
 
   date: string = '';
   time: string = '';
@@ -32,6 +32,10 @@ export class Driving extends Travel {
 
   set address(value: string) {
     this.startingAddress = value;
+  }
+
+  displayText(): string {
+    return this.startingAddress;
   }
 
   public validators(): { [key: string]: Validators } {

@@ -8,7 +8,7 @@ import { Plan } from '../models/plan';
 export abstract class Activity extends Plan {
   static ICON: string = 'calendar';
   static GROUP: string = 'Activity';
-  static NAME: string;
+  static TYPE: string;
 
   constructor(fields?: any) {
     super(fields);

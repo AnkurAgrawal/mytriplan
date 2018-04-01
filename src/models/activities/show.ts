@@ -8,7 +8,7 @@ import { Activity } from '../../models/activity';
 
 export class Show extends Activity {
   static ICON: string = 'calendar';
-  static NAME: string = 'show';
+  static TYPE: string = 'show';
 
   nameOfTheShow: string = '';
   date: string = '';
@@ -35,6 +35,10 @@ export class Show extends Activity {
 
   set time(value: string) {
     this.startTime = value;
+  }
+
+  displayText(): string {
+    return this.nameOfTheShow;
   }
 
   public validators(): { [key: string]: Validators } {
