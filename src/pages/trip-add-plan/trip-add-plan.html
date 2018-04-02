@@ -56,7 +56,7 @@
           </ion-item-divider>
           <button ion-item (click)="openNewPlanForm(type)" *ngFor="let type of planGroup.types">
             <ion-icon class="fa fa-{{type.ICON}} fa-fw" aria-hidden="true"></ion-icon>
-            {{type.NAME | beautifyString}}
+            {{type.TYPE | beautifyString}}
           </button>
         </ion-item-group>
       </ng-template>

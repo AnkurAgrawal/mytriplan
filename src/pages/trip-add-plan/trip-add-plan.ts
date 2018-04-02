@@ -44,8 +44,8 @@ export class TripAddPlanPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private alertCtrl: AlertController, public viewCtrl: ViewController, public formBuilder: FormBuilder, private pfg: PlanFormGeneratorProvider, private isType: IsTypePipe, private moment: MomentPipe, private translate: TranslateService) {
     this.date = navParams.get('date');
-    this.from = navParams.get('from');
-    this.to = navParams.get('to');
+    this.from = navParams.get('from') || Date.now();
+    this.to = navParams.get('to') || Date.now();
 
     this.planGroups = Itinerary.getPlanTypes();
     this.newPlanForm = this.formBuilder.group({
