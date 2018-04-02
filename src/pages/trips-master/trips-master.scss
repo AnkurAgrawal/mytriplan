@@ -1,3 +1,7 @@
+.platform-core page-trips-master .button-md {
+  width: 50%;
+}
+
 page-trips-master {
   .card-background-page {
 
@@ -10,6 +14,12 @@ page-trips-master {
       border-color: transparent;
       background: none;
       box-shadow: none;
+    }
+
+    .button-ios, .button-md {
+      height: auto;
+      margin: 0;
+      padding: 1px 7px 2px;
     }
 
     .card-image-overlay {
@@ -43,6 +53,18 @@ page-trips-master {
 
     .height-220 {
       height: 220px;
+    }
+
+    .width-100 {
+      width: 100%;
+    }
+
+    .width-50 {
+      width: 50%;
+    }
+
+    .width-25 {
+      width: 25%;
     }
 
   }

@@ -12,7 +12,7 @@
 
 </ion-header>
 <ion-content class="card-background-page">
-  <button class="button button-clear" (click)="openTrip(trip.id)" clear *ngFor="let trip of currentTrips">
+  <button ion-button class="button button-clear" (click)="openTrip(trip.id)" clear *ngFor="let trip of currentTrips">
     <ion-card>
       <div class="relative height-220">
         <img [src]="trip.tripPic">
