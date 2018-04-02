@@ -32,10 +32,12 @@
     "@ngx-translate/http-loader": "^2.0.0",
     "@types/google-maps": "^3.2.0",
     "angular-firestype": "^5.2.0",
-    "angularfire2": "^5.0.0-rc.6",
-    "cordova-browser": "^5.0.3",
+    "angularfire2": "^5.0.0-rc.5-next",
+    "cordova-android": "6.3.0",
+    "cordova-browser": "5.0.3",
+    "cordova-ios": "4.5.4",
     "cordova-plugin-console": "^1.1.0",
-    "cordova-plugin-crosswalk-webview": "~2.4.0",
+    "cordova-plugin-crosswalk-webview": "^2.4.0",
     "cordova-plugin-device": "^2.0.1",
     "cordova-plugin-googlemaps": "git+https://github.com/mapsplugin/cordova-plugin-googlemaps.git",
     "cordova-plugin-googlemaps-sdk": "git+https://github.com/mapsplugin/cordova-plugin-googlemaps-sdk.git#2.6.0",
@@ -67,16 +69,26 @@
       "cordova-plugin-statusbar": {},
       "cordova-plugin-whitelist": {},
       "ionic-plugin-keyboard": {},
+      "cordova-plugin-crosswalk-webview": {
+        "XWALK_VERSION": "23+",
+        "XWALK_LITEVERSION": "xwalk_core_library_canary:17+",
+        "XWALK_COMMANDLINE": "--disable-pull-to-refresh-effect",
+        "XWALK_MODE": "embedded",
+        "XWALK_MULTIPLEAPK": "true"
+      },
       "cordova-plugin-googlemaps": {
         "API_KEY_FOR_ANDROID": "AIzaSyDz0Arnx2J3imWm7t859MwUi-9Au2lsOpo",
         "API_KEY_FOR_IOS": "AIzaSyBORt0zhFkZbuetAgH8R3sGkzVKTTrLvBY",
+        "PLAY_SERVICES_VERSION": "12.0.0",
+        "ANDROID_SUPPORT_V4_VERSION": "24.1.0",
         "LOCATION_WHEN_IN_USE_DESCRIPTION": "This app wants to get your location while this app runs only.",
         "LOCATION_ALWAYS_USAGE_DESCRIPTION": "This app wants to get your location always, even this app runs in background."
-      },
-      "cordova-plugin-crosswalk-webview": {}
+      }
     },
     "platforms": [
-      "browser"
+      "ios",
+      "browser",
+      "android"
     ]
   },
   "config": {
