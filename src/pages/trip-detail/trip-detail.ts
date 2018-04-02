@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { IonicPage, ModalController, NavController, NavParams } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
 import { FadeInOut } from '../../animations/animations.module';
-import { Observable } from 'rxjs/Observable';
 
 import { TripsProvider } from '../../providers/providers';
 import { Trip } from '../../models/trip';
