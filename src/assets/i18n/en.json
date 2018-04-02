@@ -69,7 +69,7 @@
   "SEARCH_TRIP_DESTINATION_PLACEHOLDER": "Search destination",
   "SEARCH_ADDRESS_PLACEHOLDER": "Search address",
 
-  "PLAN_TRIP_TITLE": "Plan trip",
+  "TRIP_SEARCH_TITLE": "Find a trip",
 
   "TRIP_EDIT_TITLE": "Edit trip",
 
@@ -86,5 +86,5 @@
 
 
   "SEARCH_TITLE": "Search",
-  "SEARCH_PLACEHOLDER": "Search the items list, e.g. \"Donald Duck\""
+  "SEARCH_PLACEHOLDER": "Search the trips, e.g. \"Portland\""
 }

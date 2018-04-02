@@ -6,12 +6,12 @@ import { TripsProvider } from '../../providers/providers';
 
 @IonicPage()
 @Component({
-  selector: 'page-plan-trip',
-  templateUrl: 'plan-trip.html'
+  selector: 'page-trip-search',
+  templateUrl: 'trip-search.html'
 })
-export class PlanTripPage {
+export class TripSearchPage {
 
-  currentTrips: any = [];
+  currentTrips: Trip[] = [];
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public tripsProvider: TripsProvider) { }
 
@@ -24,17 +24,20 @@ export class PlanTripPage {
       this.currentTrips = [];
       return;
     }
-    this.currentTrips = this.tripsProvider.query({
+    this.tripsProvider.query({
       name: val
+    }).subscribe((trips: Trip[]) => {
+      // console.log(trips);
+      this.currentTrips = trips;
     });
   }
 
   /**
    * Navigate to the detail page for this trip.
    */
-  openTrip(trip: Trip) {
+  openTrip(tripId: string) {
     this.navCtrl.push('TripDetailPage', {
-      trip: trip
+      tripId: tripId
     });
   }
 

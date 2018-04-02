@@ -2,18 +2,18 @@ import { NgModule } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { IonicPageModule } from 'ionic-angular';
 
-import { PlanTripPage } from './plan-trip';
+import { TripSearchPage } from './trip-search';
 
 @NgModule({
   declarations: [
-    PlanTripPage,
+    TripSearchPage,
   ],
   imports: [
-    IonicPageModule.forChild(PlanTripPage),
+    IonicPageModule.forChild(TripSearchPage),
     TranslateModule.forChild()
   ],
   exports: [
-    PlanTripPage
+    TripSearchPage
   ]
 })
-export class PlanTripPageModule { }
+export class TripSearchPageModule { }
