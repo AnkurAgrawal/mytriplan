@@ -1,8 +1,8 @@
 <!-- Template for the GoogleAutocompleteModal -->
-<ion-content class="overlay-background">
-  <ion-searchbar (ionInput)="getPlaces($event)" [showCancelButton]="true" (ionCancel)="cancel()" debounce="150" animated="true" [placeholder]="searchPlaceholder"></ion-searchbar>
-  <ion-list>
-    <ion-item tappable (click)="selectAddress(place)" *ngFor="let place of autocompletePlaces">
+<ion-content class="overlay-background" (click)="cancel()">
+  <ion-searchbar (click)="$event.stopPropagation()" (ionInput)="getPlaces($event)" [showCancelButton]="true" (ionCancel)="cancel()" debounce="150" animated="true" [placeholder]="searchPlaceholder"></ion-searchbar>
+  <ion-list (click)="$event.stopPropagation()">
+    <ion-item tappable (click)="$event.stopPropagation();selectAddress(place)" *ngFor="let place of autocompletePlaces">
       {{ place }}
     </ion-item>
   </ion-list>
