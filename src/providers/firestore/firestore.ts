@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { QueryFn } from 'angularfire2/firestore';
-import { Query } from '@firebase/firestore-types';
 import { AngularFirestype, Collection, Document } from 'angular-firestype';
 import { Observable } from 'rxjs/Observable';
 /*
@@ -19,7 +18,6 @@ export class FirestoreProvider {
   }
 
   query<T>(collection: string, queryFn?: QueryFn): Collection<T> {
-
     return this.getCollection<T>(collection, queryFn);
   }
 

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs/Observable';
+import { Query, CollectionReference } from '@firebase/firestore-types';
 import { Collection, Document } from 'angular-firestype';
 
 import { Trip, PartialTrip } from '../../models/trip';
@@ -47,18 +47,21 @@ export class TripsProvider {
     return this.firestore.getEditableDocument<Trip>(tripId, this.getTrips() || this.collectionName);
   }
 
-  query(params?: any) {
+  query(params?: object): Observable<Trip[]> {
     switch (this.currentDb) {
       default:
       case Database.Type.Firestore:
-        this.firestore.query<Trip>(this.collectionName, params);
-        break;
+        return this.firestore.queryObservable<Trip>(this.collectionName, ref => {
+          let query: CollectionReference | Query = ref;
+          Object.keys(params).forEach((key) => query = query.where(key, '>=', params[key]).where(key, '<=', params[key]+'z'));
+          return query;
+        });
       case Database.Type.Firebase:
         // TODO code for firebase
         return null;
       case Database.Type.WebApi:
-        return this.api.get('/trips', params)
-          .subscribe(data => console.log(data));
+        // return this.api.get('/trips', params).subscribe(data => console.log(data));
+        return null;
     }
   }
 
