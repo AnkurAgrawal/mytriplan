@@ -6,10 +6,10 @@ import { TripsProvider } from '../../providers/providers';
 
 @IonicPage()
 @Component({
-  selector: 'page-trips-master',
-  templateUrl: 'trips-master.html'
+  selector: 'page-trip-list',
+  templateUrl: 'trip-list.html'
 })
-export class TripsMasterPage {
+export class TripListPage {
   currentTrips: Trip[];
 
   constructor(private navCtrl: NavController, private tripsProvider: TripsProvider, private modalCtrl: ModalController) {
