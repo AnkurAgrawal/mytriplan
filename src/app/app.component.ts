@@ -35,7 +35,7 @@ export class MyApp {
     { title: 'Tutorial', component: 'TutorialPage' },
     { title: 'Welcome', component: 'WelcomePage' },
     { title: 'Maps', component: 'MapPage' },
-    { title: 'MyTriplan', component: 'TripsMasterPage' },
+    { title: 'MyTriplan', component: 'TripListPage' },
     { title: 'Cards', component: 'CardsPage' },
     { title: 'Login', component: 'LoginPage' },
     { title: 'Signup', component: 'SignupPage' },
