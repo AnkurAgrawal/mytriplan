@@ -23,18 +23,18 @@
   "TUTORIAL_SKIP_BUTTON": "Skip",
   "TUTORIAL_CONTINUE_BUTTON": "Continue",
 
-  "TUTORIAL_SLIDE1_TITLE": "Welcome to the Ionic Super Starter",
-  "TUTORIAL_SLIDE1_DESCRIPTION": "The <b>Ionic Super Starter</b> is a fully-featured Ionic starter with many pre-built pages and best practices.",
+  "TUTORIAL_SLIDE1_TITLE": "Welcome to MyTriplan",
+  "TUTORIAL_SLIDE1_DESCRIPTION": "<b>MyTriplan</b> is a fully-featured trip planning application.",
 
-  "TUTORIAL_SLIDE2_TITLE": "How to use the Super Starter",
-  "TUTORIAL_SLIDE2_DESCRIPTION": "Assemble the various page types you want and remove the ones you don't. We've provided many common mobile app page layouts, like login and signup pages, tabs, and this tutorial page.",
+  "TUTORIAL_SLIDE2_TITLE": "How to use MyTriplan",
+  "TUTORIAL_SLIDE2_DESCRIPTION": "Start by adding an upcoming trip. Then you can add plans to the trip and make itinerary for every day of the trip. We have provided you with a list of plans to choose from.",
 
-  "TUTORIAL_SLIDE3_TITLE": "Getting Started",
-  "TUTORIAL_SLIDE3_DESCRIPTION": "Need help? Check out the Super Starter README for a full tutorial",
+  "TUTORIAL_SLIDE3_TITLE": "Something doesn't make sense",
+  "TUTORIAL_SLIDE3_DESCRIPTION": "Need help? Don't hesitate to contact us. We are always eager to help you. 🙂",
 
-  "TUTORIAL_SLIDE4_TITLE": "Ready to Play?",
+  "TUTORIAL_SLIDE4_TITLE": "Ready to Plan your trip?",
 
-  "WELCOME_INTRO": "The starting point for your next great Ionic app",
+  "WELCOME_INTRO": "Let's get you logged in to MyTriplan",
 
   "SETTINGS_TITLE": "Settings",
   "SETTINGS_OPTION1": "Option 1",
@@ -55,7 +55,10 @@
   "SIGNUP_ERROR": "Unable to create account. Please check your account information and try again.",
   "SIGNUP_BUTTON": "Sign up",
 
-  "LIST_MASTER_TITLE": "My trips",
+  "LOGIN_EMAIL_PLACEHOLDER": "Email",
+  "LOGIN_PASSWORD_PLACEHOLDER": "Password",
+
+  "TRIP_LIST_TITLE": "My trips",
 
   "TRIP_CREATE_TITLE": "New trip",
   "TRIP_CREATE_CHOOSE_IMAGE": "Add Image",
