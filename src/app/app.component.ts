@@ -2,16 +2,17 @@ import { Component, ViewChild } from '@angular/core';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { TranslateService } from '@ngx-translate/core';
-import { Config, Nav, Platform } from 'ionic-angular';
+import { Config, Nav, Platform, Menu } from 'ionic-angular';
+import { Storage } from '@ionic/storage';
 
-import { FirstRunPage } from '../pages/pages';
-import { Settings } from '../providers/providers';
+import { MainPage, SignInPage, WelcomePage, TutorialPage } from '../pages/pages';
+import { Settings, AuthServiceProvider } from '../providers/providers';
 
 @Component({
   template: `<ion-menu [content]="content">
     <ion-header>
       <ion-toolbar>
-        <ion-title>Pages</ion-title>
+        <ion-title>Menu</ion-title>
       </ion-toolbar>
     </ion-header>
 
@@ -20,6 +21,19 @@ import { Settings } from '../providers/providers';
         <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
           {{p.title}}
         </button>
+
+        <ion-list-header *ngIf="auth.getEmail()">{{auth.getEmail()}}</ion-list-header>
+
+        <ion-item (click)="signout()" *ngIf="auth.userLoggedIn">
+          <ion-icon name="log-out" item-left></ion-icon>
+          Sign out
+        </ion-item>
+
+        <ion-item (click)="signin()" *ngIf="!auth.userLoggedIn">
+          <ion-icon name="log-in" item-left></ion-icon>
+          Sign in
+        </ion-item>
+
       </ion-list>
     </ion-content>
 
@@ -27,24 +41,32 @@ import { Settings } from '../providers/providers';
   <ion-nav #content [root]="rootPage"></ion-nav>`
 })
 export class MyApp {
-  rootPage = FirstRunPage;
+  rootPage = TutorialPage;
 
   @ViewChild(Nav) nav: Nav;
+  @ViewChild(Menu) menu: Menu;
 
-  pages: any[] = [
-    { title: 'Tutorial', component: 'TutorialPage' },
-    { title: 'Welcome', component: 'WelcomePage' },
+  pages: {title: string, component: string}[] = [
+    { title: 'MyTriplan', component: MainPage },
     { title: 'Maps', component: 'MapPage' },
-    { title: 'MyTriplan', component: 'TripListPage' },
     { title: 'Cards', component: 'CardsPage' },
-    { title: 'Login', component: 'LoginPage' },
-    { title: 'Signup', component: 'SignupPage' },
-    { title: 'Menu', component: 'MenuPage' },
     { title: 'Settings', component: 'SettingsPage' }
   ]
 
-  constructor(private translate: TranslateService, private platform: Platform, settings: Settings, private config: Config, private statusBar: StatusBar, private splashScreen: SplashScreen) {
+  constructor(private translate: TranslateService, private platform: Platform, private auth: AuthServiceProvider, settings: Settings, private config: Config, private statusBar: StatusBar, private splashScreen: SplashScreen, private storage: Storage) {
     this.initTranslate();
+
+    this.platform.ready().then(() => {
+      this.storage.get('tutorial-done').then((result) => {
+
+        if (result) {
+          this.auth.userLoggedIn? this.rootPage = MainPage: this.rootPage = WelcomePage;
+        } else {
+          this.storage.set('tutorial-done', true);
+        }
+      });
+    });
+
   }
 
   ionViewDidLoad() {
@@ -75,5 +97,18 @@ export class MyApp {
     // Reset the content nav to have just this page
     // we wouldn't want the back button to show in this scenario
     this.nav.setRoot(page.component);
+  }
+
+  signin() {
+    this.menu.close();
+    this.auth.signOut();
+    this.nav.setRoot(SignInPage);
+  }
+
+  signout() {
+    this.menu.close();
+    this.auth.signOut().then(() =>
+      this.nav.setRoot(WelcomePage)
+    );
   }
 }
