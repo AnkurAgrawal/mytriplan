@@ -31,6 +31,7 @@
     "@ngx-translate/core": "^9.0.0",
     "@ngx-translate/http-loader": "^2.0.0",
     "@types/google-maps": "^3.2.0",
+    "@ultimate/ngxerrors": "^1.4.0",
     "angular-firestype": "^5.2.0",
     "angularfire2": "^5.0.0-rc.5-next",
     "cordova-android": "6.3.0",
