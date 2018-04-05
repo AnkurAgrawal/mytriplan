@@ -8,15 +8,16 @@
   "BACK_BUTTON_TEXT": "Back",
 
   "NAME": "Name",
+  "PHONE_NUMBER": "Phone Number",
   "EMAIL": "Email",
   "USERNAME": "Username",
   "PASSWORD": "Password",
-  "LOGIN": "Sign in",
+  "SIGNIN": "Sign in",
   "SIGNUP": "Sign up",
 
   "TAB1_TITLE": "My Trips",
+  "TAB2_TITLE": "Search",
   "TAB3_TITLE": "My Profile",
-  "TAB2_TITLE": "Settings",
 
   "MAP_TITLE": "Map",
 
@@ -57,6 +58,8 @@
 
   "LOGIN_EMAIL_PLACEHOLDER": "Email",
   "LOGIN_PASSWORD_PLACEHOLDER": "Password",
+
+  "PROFILE_PAGE_TITLE": "Profile",
 
   "TRIP_LIST_TITLE": "My trips",
 
