@@ -11,6 +11,7 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { CalendarModule } from "ion2-calendar";
+import { NgxErrorsModule } from '@ultimate/ngxerrors';
 
 import { AngularFireModule } from 'angularfire2';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
@@ -19,13 +20,9 @@ import { AngularFireAuthModule } from 'angularfire2/auth'
 import { AngularFirestypeModule } from 'angular-firestype';
 import { modelMapping } from '../models/angularfireModelMapping';
 
-import { TripsProvider } from '../providers/providers';
-import { Settings } from '../providers/providers';
-import { User } from '../providers/providers';
-import { Api } from '../providers/providers';
+import { TripsProvider, AirportsProvider, PlanFormGeneratorProvider, FirestoreProvider, AuthServiceProvider, Settings, User, Api } from '../providers/providers';
 import { MyApp } from './app.component';
-import { PlanFormGeneratorProvider } from '../providers/plan-form-generator/plan-form-generator';
-import { AirportsProvider, FirestoreProvider } from '../providers/providers';
+import { PhotoProvider } from '../providers/photo/photo';
 
 // The translate loader needs to know where to load i18n files
 // in Ionic's static asset pipeline.
@@ -49,7 +46,7 @@ export function provideSettings(storage: Storage) {
 }
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAM_sodtij6t5doxsTwRe266cVH62RwnEk",
+  apiKey: "AIzaSyCgube3ItIa7pmixf39HrD5SqMpUWUdBeg",
   authDomain: "mytriplan-0810.firebaseapp.com",
   databaseURL: "https://mytriplan-0810.firebaseio.com",
   projectId: "mytriplan-0810",
@@ -72,6 +69,7 @@ const firebaseConfig = {
         deps: [HttpClient]
       }
     }),
+    NgxErrorsModule,
     IonicModule.forRoot(MyApp, {
       scrollAssist: false
     }),
@@ -102,6 +100,8 @@ const firebaseConfig = {
     AirportsProvider,
     FirestoreProvider,
     TripsProvider,
+    AuthServiceProvider,
+    PhotoProvider,
   ]
 })
 export class AppModule { }
