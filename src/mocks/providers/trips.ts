@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
 import { Trip } from '../../models/trip';
-import { Itinerary } from '../../models/itinerary';
 
 @Injectable()
 export class TripsProvider {
@@ -142,7 +141,8 @@ export class TripsProvider {
     }
   }
 
-  getReadonlyTrips(params?: any) {
+  getTrips(params?: any): Trip[] {
+    console.log('Fetching all the trips.');
     if (!params) {
       return this.trips;
     }
@@ -160,11 +160,36 @@ export class TripsProvider {
     });
   }
 
-  getEditableTrips(params?: any) {
+  getReadonlyTrips(params?: any): Observable<Trip[]> {
+    console.log('Fetching all the trips.');
+    if (!params) {
+      return Observable.create(observer => {
+        observer.next(this.trips);
+        observer.completed();
+      });
+    }
+
+    return Observable.create(observer => {
+      observer.next(this.trips.filter((trip) => {
+        for (let key in params) {
+          let field = trip[key];
+          if (typeof field == 'string' && field.toLowerCase().indexOf(params[key].toLowerCase()) >= 0) {
+            return trip;
+          } else if (field == params[key]) {
+            return trip;
+          }
+        }
+        return null;
+      }));
+      observer.completed();
+    });
+  }
+
+  getEditableTrips(params?: any): Observable<Trip[]> {
     return this.getReadonlyTrips(params);
   }
 
-  queryItinerary(params?: any) {
+  getPlans(params?: any) {
     if (!params) {
       return this.trips[0].itinerary.getPlans();
     }
@@ -178,6 +203,21 @@ export class TripsProvider {
       }
       return null;
     });
+  }
+
+  getTrip(tripId: string): Trip {
+    console.log(`Fetching the trip (${tripId}).`);
+    return this.getTrips()[tripId];
+  }
+
+  getReadonlyTrip(tripId: string): Trip {
+    console.log(`Fetching the trip (${tripId}).`);
+    return this.getTrips()[tripId];
+  }
+
+  getEditableTrip(tripId: string): Trip {
+    console.log(`Fetching the trip (${tripId}).`);
+    return this.getTrips()[tripId];
   }
 
   add(trip: Trip) {
