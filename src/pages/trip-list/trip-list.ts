@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, ModalController } from 'ionic-angular';
+import { Subject } from 'rxjs/Subject';
 
 import { Trip } from '../../models/trip';
 import { TripsProvider } from '../../providers/providers';
@@ -10,13 +11,18 @@ import { TripsProvider } from '../../providers/providers';
   templateUrl: 'trip-list.html'
 })
 export class TripListPage {
+  private ngUnsubscribe: Subject<Trip> = new Subject<Trip>();
+
   currentTrips: Trip[];
 
   constructor(private navCtrl: NavController, private tripsProvider: TripsProvider, private modalCtrl: ModalController) {
     // Get trips form firebase using Firestype api
-    this.tripsProvider.getReadonlyTrips().subscribe((trips: Trip[]) => {
-      this.currentTrips = trips;
-    });
+    this.tripsProvider.getReadonlyTrips()
+      .takeUntil(this.ngUnsubscribe)
+      .subscribe((trips: Trip[]) => {
+        this.currentTrips = trips;
+      }
+    );
 
     // Add trips to the database
     // this.currentTrips.forEach(trip => this.firebaseProvider.addDocument<Trip>(trip, "trips"))
@@ -26,6 +32,11 @@ export class TripListPage {
    * The view loaded, let's query our trips for the list
    */
   ionViewDidLoad() { }
+
+  ionViewWillUnload() {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
+  }
 
   /**
    * Prompt the user to add a new trip. This shows our TripCreatePage in a

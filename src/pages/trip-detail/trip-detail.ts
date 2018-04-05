@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, ModalController, NavController, NavParams } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
 import { FadeInOut } from '../../animations/animations.module';
+import { Subject } from 'rxjs/Subject';
 
 import { TripsProvider } from '../../providers/providers';
 import { Trip } from '../../models/trip';
@@ -15,18 +16,27 @@ import { Trip } from '../../models/trip';
   ]
 })
 export class TripDetailPage {
+  private ngUnsubscribe: Subject<Trip> = new Subject<Trip>();
+
   trip: Trip;
   itinerary: string;
   private tripDates: any[];
 
   constructor(public tripsProvider: TripsProvider, public navCtrl: NavController, navParams: NavParams, public modalCtrl: ModalController, private translate: TranslateService) {
-    this.tripsProvider.getReadonlyTrip(navParams.get('tripId')).subscribe(trip => {
+    this.tripsProvider.getReadonlyTrip(navParams.get('tripId'))
+      .takeUntil(this.ngUnsubscribe)
+      .subscribe(trip => {
       if (trip) {
         this.trip = trip;
         this.tripDates = this.trip.dates;
         this.itinerary = this.itinerary || this.tripDates[0];
       }
     });
+  }
+
+  ionViewWillUnload() {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
   }
 
   editTrip() {

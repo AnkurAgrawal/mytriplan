@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Subject } from 'rxjs/Subject';
 
 import { Trip } from '../../models/trip';
 import { TripsProvider } from '../../providers/providers';
@@ -10,6 +11,7 @@ import { TripsProvider } from '../../providers/providers';
   templateUrl: 'trip-search.html'
 })
 export class TripSearchPage {
+  private ngUnsubscribe: Subject<Trip> = new Subject<Trip>();
 
   currentTrips: Trip[] = [];
 
@@ -26,10 +28,17 @@ export class TripSearchPage {
     }
     this.tripsProvider.query({
       name: val
-    }).subscribe((trips: Trip[]) => {
+    })
+    .takeUntil(this.ngUnsubscribe)
+    .subscribe((trips: Trip[]) => {
       // console.log(trips);
       this.currentTrips = trips;
     });
+  }
+
+  ionViewWillUnload() {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
   }
 
   /**
