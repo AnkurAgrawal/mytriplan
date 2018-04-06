@@ -20,9 +20,8 @@ import { AngularFireAuthModule } from 'angularfire2/auth'
 import { AngularFirestypeModule } from 'angular-firestype';
 import { modelMapping } from '../models/angularfireModelMapping';
 
-import { TripsProvider, AirportsProvider, PlanFormGeneratorProvider, FirestoreProvider, AuthServiceProvider, Settings, User, Api } from '../providers/providers';
+import { TripsProvider, AirportsProvider, PlanFormGeneratorProvider, FirestoreProvider, AuthServiceProvider, PhotoProvider, Settings, User, Api } from '../providers/providers';
 import { MyApp } from './app.component';
-import { PhotoProvider } from '../providers/photo/photo';
 
 // The translate loader needs to know where to load i18n files
 // in Ionic's static asset pipeline.
