@@ -5,6 +5,7 @@ import { Platform, IonicPage, ViewController, NavParams, ModalController, AlertC
 import { TranslateService } from '@ngx-translate/core';
 import { CalendarModal, CalendarModalOptions, CalendarResult } from 'ion2-calendar';
 import { MomentPipe } from '../../pipes/moment/moment';
+import { PhotoProvider } from '../../providers/providers';
 import moment from 'moment';
 
 import { Trip } from '../../models/trip';
@@ -26,7 +27,7 @@ export class TripCreatePage {
   private displayDateFormat: string = 'MMM DD, YYYY';
   unsavedChanges: boolean = false;
 
-  constructor(private platform: Platform, public viewCtrl: ViewController, private alertCtrl: AlertController, private navParams: NavParams, formBuilder: FormBuilder, public camera: Camera, public modalCtrl: ModalController, private translate: TranslateService, private moment: MomentPipe) {
+  constructor(private platform: Platform, private viewCtrl: ViewController, private alertCtrl: AlertController, private navParams: NavParams, formBuilder: FormBuilder, private camera: Camera, private photoProvider: PhotoProvider, private modalCtrl: ModalController, private translate: TranslateService, private moment: MomentPipe) {
     this.mode = (this.navParams.get('mode')) || 'create';
     this.trip = (this.navParams.get('trip') as Trip) || new Trip();
 
@@ -48,34 +49,13 @@ export class TripCreatePage {
   }
 
   getPicture() {
-    if (Camera['installed']()) {
-      this.camera.getPicture({
-        destinationType: this.camera.DestinationType.DATA_URL,
-        targetWidth: 375,
-        targetHeight: 341
-      }).then((data) => {
-        this.form.patchValue({ 'tripPic': 'data:image/jpg;base64,' + data });
-      }, (err) => {
-        alert('Unable to take photo');
-      })
-    } else {
-      this.fileInput.nativeElement.click();
-    }
+    this.photoProvider.getPicture().then(data =>
+      data? this.form.patchValue({ 'tripPic': data }): this.fileInput.nativeElement.click()
+    );
   }
 
-  processWebImage(event) {
-    let reader = new FileReader();
-    reader.onload = (readerEvent) => {
-
-      let imageData = (readerEvent.target as any).result;
-      this.form.patchValue({ 'tripPic': imageData });
-    };
-
-    reader.readAsDataURL(event.target.files[0]);
-  }
-
-  getProfileImageStyle() {
-    return 'url(' + this.form.controls['tripPic'].value + ')'
+  processWebPicture(event) {
+    this.photoProvider.processWebPicture(event.target.files[0]).then(data => this.form.patchValue({ 'tripPic': data }));
   }
 
   openCalendar() {
