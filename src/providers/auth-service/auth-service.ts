@@ -19,19 +19,15 @@ export class AuthServiceProvider {
     });
   }
 
-  signUp(credentials: {photoUrl: string, displayName: string, email: string, password: string}): Promise<any> {
-    return this.afAuth.auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL).then(() => {
-      return this.afAuth.auth.createUserWithEmailAndPassword(credentials.email,credentials.password);
-    }).catch((error) => {
-      // Handle Errors here.
-      let errorCode = error.code;
-      let errorMessage = error.message;
-      console.error(errorCode + ': ' + JSON.stringify(errorMessage));
-    });
-  }
-
   get userLoggedIn(): boolean {
     return this.user !== null && this.user !== undefined;
+  }
+
+  updateUser(partialUser: {displayName?: string, photoURL?: string}): Promise<any> {
+    return this.userLoggedIn && this.user.updateProfile({
+      displayName: partialUser.displayName || this.user.displayName,
+      photoURL: partialUser.photoURL || this.user.photoURL
+    });
   }
 
   getEmail() {
@@ -41,6 +37,17 @@ export class AuthServiceProvider {
   getCurrentUser(): firebase.User {
     this.user || console.error("User is not logged in.");
     return this.user;
+  }
+
+  signUp(credentials: {photoUrl: string, displayName: string, email: string, password: string}): Promise<any> {
+    return this.afAuth.auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL).then(() => {
+      return this.afAuth.auth.createUserWithEmailAndPassword(credentials.email,credentials.password);
+    }).catch((error) => {
+      // Handle Errors here.
+      let errorCode = error.code;
+      let errorMessage = error.message;
+      console.error(errorCode + ': ' + JSON.stringify(errorMessage));
+    });
   }
 
   signInWithEmail (credentials: {email: string, password: string}): Promise<any> {
