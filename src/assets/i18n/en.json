@@ -60,11 +60,11 @@
   "LOGIN_PASSWORD_PLACEHOLDER": "Password",
 
   "PROFILE_PAGE_TITLE": "Profile",
+  "CHOOSE_IMAGE": "Add Image",
 
   "TRIP_LIST_TITLE": "My trips",
 
   "TRIP_CREATE_TITLE": "New trip",
-  "TRIP_CREATE_CHOOSE_IMAGE": "Add Image",
 
   "TRIP_NAME_PLACEHOLDER": "Name",
   "TRIP_DESCRIPTION_PLACEHOLDER": "Description",

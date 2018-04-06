@@ -39,13 +39,13 @@
   <form *ngIf="form" [formGroup]="form" (ngSubmit)="createTrip()">
     <input type="file" #fileInput style="visibility: hidden; height: 0px" name="files[]" (change)="processWebImage($event)" />
     <div class="trip-image-wrapper" (click)="getPicture()">
-      <div class="trip-image-placeholder" *ngIf="!this.form.controls.tripPic.value">
+      <div class="trip-image-placeholder" *ngIf="!form.controls.tripPic.value">
         <ion-icon name="add"></ion-icon>
         <div>
-          {{ 'TRIP_CREATE_CHOOSE_IMAGE' | translate }}
+          {{ 'CHOOSE_IMAGE' | translate }}
         </div>
       </div>
-      <div class="trip-image" [style.backgroundImage]="getProfileImageStyle()" *ngIf="this.form.controls.tripPic.value"></div>
+      <div class="trip-image" [style.backgroundImage]="'url(' + form.controls.tripPic.value + ')'" *ngIf="form.controls.tripPic.value"></div>
     </div>
     <ion-list>
       <ion-item>
