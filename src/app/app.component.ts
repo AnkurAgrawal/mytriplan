@@ -21,8 +21,9 @@ import { Settings, AuthServiceProvider } from '../providers/providers';
         <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
           {{p.title}}
         </button>
-
-        <ion-list-header *ngIf="auth.getEmail()">{{auth.getEmail()}}</ion-list-header>
+      </ion-list>
+      <ion-item-group>
+        <ion-item-divider *ngIf="auth.getEmail()">{{auth.getEmail()}}</ion-item-divider>
 
         <ion-item (click)="signout()" *ngIf="auth.userLoggedIn">
           <ion-icon name="log-out" item-left></ion-icon>
@@ -33,15 +34,14 @@ import { Settings, AuthServiceProvider } from '../providers/providers';
           <ion-icon name="log-in" item-left></ion-icon>
           Sign in
         </ion-item>
-
-      </ion-list>
+      </ion-item-group>
     </ion-content>
 
   </ion-menu>
   <ion-nav #content [root]="rootPage"></ion-nav>`
 })
 export class MyApp {
-  rootPage = TutorialPage;
+  rootPage = WelcomePage;
 
   @ViewChild(Nav) nav: Nav;
   @ViewChild(Menu) menu: Menu;
@@ -63,6 +63,7 @@ export class MyApp {
           this.auth.userLoggedIn? this.rootPage = MainPage: this.rootPage = WelcomePage;
         } else {
           this.storage.set('tutorial-done', true);
+          this.rootPage = TutorialPage;
         }
       });
     });
