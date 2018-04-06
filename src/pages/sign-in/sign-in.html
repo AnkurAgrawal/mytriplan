@@ -11,10 +11,12 @@
   <form (submit)="signInWithEmail()" [formGroup]="signInForm">
     <ion-list>
       <ion-item>
+        <ion-icon item-start name="mail"></ion-icon>
         <ion-input type="email" placeholder="{{ 'LOGIN_EMAIL_PLACEHOLDER' | translate }}" formControlName="email" clearInput="true" autocomplete="on"></ion-input>
       </ion-item>
 
       <ion-item>
+        <ion-icon item-start name="lock"></ion-icon>
         <ion-input type="password" placeholder="{{ 'LOGIN_PASSWORD_PLACEHOLDER' | translate }}" formControlName="password"></ion-input>
       </ion-item>
     </ion-list>
