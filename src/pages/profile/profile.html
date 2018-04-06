@@ -13,24 +13,37 @@
 </ion-header>
 
 <ion-content>
-  <div class="profile-picture" #profilePic [style.background-image]="'url(' + user.photoUrl + ')'">
-    <div class="profile-detail" padding>
-      <h4>{{ user.displayName }}</h4>
+  <input type="file" #fileInput style="visibility: hidden; height: 0px" name="files[]" (change)="processWebPicture($event)" />
+  <div class="profile-image-wrapper" (click)="getPicture()">
+    <div class="profile-image-placeholder" *ngIf="!user.photoUrl">
+      <ion-icon name="add"></ion-icon>
+      <div>
+        {{ 'CHOOSE_IMAGE' | translate }}
+      </div>
     </div>
+    <div class="profile-image" [style.backgroundImage]="'url(' + user.photoUrl + ')'" *ngIf="user.photoUrl"></div>
   </div>
   <ion-list>
     <ion-item>
-      <ion-label floating>Email</ion-label>
+      <ion-icon item-start name="person"></ion-icon>
+      <ion-input type="text" value="{{ user.displayName }}" placeholder="Name" (ionBlur)="updateUserDisplayName($event.value)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-icon item-start name="mail"></ion-icon>
       <ion-input type="email" readonly value="{{ user.email }}"></ion-input>
+      <ion-badge item-end color="danger">{{ !user.emailVerified && 'verification pending' }}</ion-badge>
+    </ion-item>
+    <ion-item *ngIf="user.phoneNumber">
+      <ion-icon item-start name="call"></ion-icon>
+      <ion-input type="tel" readonly value="{{ user.phoneNumber }}" placeholder="Phone Number"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-label floating></ion-label>
-      <ion-input type="text" readonly value="{{ user.emailVerified }}"></ion-input>
+      <ion-icon item-start name="lock"></ion-icon>
+      <ion-input type="password" placeholder="Password"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-label floating>Phone Number</ion-label>
-      <ion-input type="tel" readonly value="{{ user.phoneNumber }}"></ion-input>
+      <ion-icon item-start name="lock"></ion-icon>
+      <ion-input type="password" placeholder="Confirm password"></ion-input>
     </ion-item>
   </ion-list>
-
 </ion-content>
