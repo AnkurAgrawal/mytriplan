@@ -15,12 +15,21 @@ import { NgxErrorsModule } from '@ultimate/ngxerrors';
 
 import { AngularFireModule } from 'angularfire2';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
-// import { AngularFireStorageModule } from 'angularfire2/storage';
+import { AngularFireStorageModule } from 'angularfire2/storage';
 import { AngularFireAuthModule } from 'angularfire2/auth'
 import { AngularFirestypeModule } from 'angular-firestype';
 import { modelMapping } from '../models/angularfireModelMapping';
 
-import { TripsProvider, AirportsProvider, PlanFormGeneratorProvider, FirestoreProvider, AuthServiceProvider, PhotoProvider, Settings, User, Api } from '../providers/providers';
+import { TripsProvider,
+  AirportsProvider,
+  PlanFormGeneratorProvider,
+  FirestoreProvider,
+  AuthServiceProvider,
+  PhotoProvider,
+  StorageProvider,
+  Settings,
+  User,
+  Api } from '../providers/providers';
 import { MyApp } from './app.component';
 
 // The translate loader needs to know where to load i18n files
@@ -75,10 +84,9 @@ const firebaseConfig = {
     IonicStorageModule.forRoot(),
     CalendarModule,
     AngularFireModule.initializeApp(firebaseConfig), // imports firebase/app needed for everything
-    // AngularFirestoreModule.enablePersistence(),
     AngularFirestoreModule, // imports firebase/firestore, only needed for database features
     AngularFireAuthModule, // imports firebase/auth, only needed for auth features,
-    // AngularFireStorageModule // imports firebase/storage only needed for storage features
+    AngularFireStorageModule, // imports firebase/storage only needed for storage features
     AngularFirestypeModule.forRoot(modelMapping, true),   // Import module using forRoot() to add mapping information
   ],
   bootstrap: [IonicApp],
@@ -101,6 +109,7 @@ const firebaseConfig = {
     TripsProvider,
     AuthServiceProvider,
     PhotoProvider,
+    StorageProvider,
   ]
 })
 export class AppModule { }

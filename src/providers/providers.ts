@@ -9,6 +9,7 @@ import { PlanFormGeneratorProvider } from './plan-form-generator/plan-form-gener
 import { AirportsProvider } from './airports/airports';
 import { FirestoreProvider } from './firestore/firestore';
 import { PhotoProvider } from './photo/photo';
+import { StorageProvider } from './storage/storage';
 
 export {
     Api,
@@ -19,5 +20,6 @@ export {
     AirportsProvider,
     FirestoreProvider,
     AuthServiceProvider,
-    PhotoProvider
+    PhotoProvider,
+    StorageProvider
 };
