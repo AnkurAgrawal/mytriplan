@@ -1,6 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Camera } from '@ionic-native/camera';
 import { Platform, IonicPage, ViewController, NavParams, ModalController, AlertController } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
 import { CalendarModal, CalendarModalOptions, CalendarResult } from 'ion2-calendar';
@@ -27,7 +26,7 @@ export class TripCreatePage {
   private displayDateFormat: string = 'MMM DD, YYYY';
   unsavedChanges: boolean = false;
 
-  constructor(private platform: Platform, private viewCtrl: ViewController, private alertCtrl: AlertController, private navParams: NavParams, formBuilder: FormBuilder, private camera: Camera, private photoProvider: PhotoProvider, private modalCtrl: ModalController, private translate: TranslateService, private moment: MomentPipe) {
+  constructor(private platform: Platform, private viewCtrl: ViewController, private alertCtrl: AlertController, private navParams: NavParams, formBuilder: FormBuilder, private photoProvider: PhotoProvider, private modalCtrl: ModalController, private translate: TranslateService, private moment: MomentPipe) {
     this.mode = (this.navParams.get('mode')) || 'create';
     this.trip = (this.navParams.get('trip') as Trip) || new Trip();
 
