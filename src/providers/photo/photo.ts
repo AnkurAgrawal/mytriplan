@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Camera, CameraOptions } from '@ionic-native/camera';
-
+import { StorageProvider } from '../storage/storage';
 /*
   Generated class for the PhotoProvider provider.
 
@@ -10,7 +10,7 @@ import { Camera, CameraOptions } from '@ionic-native/camera';
 @Injectable()
 export class PhotoProvider {
 
-  constructor(private camera: Camera) { }
+  constructor(private camera: Camera, private storage: StorageProvider) { }
 
   /**
     *
@@ -43,14 +43,11 @@ export class PhotoProvider {
     });
   }
 
-  processWebPicture(file) {
+  processWebPicture(file: File, filename?: string) {
     return new Promise<string>(resolve => {
-      let reader = new FileReader();
-      reader.onload = (readerEvent) => {
-        resolve((readerEvent.target as any).result);
-      };
-
-      reader.readAsDataURL(file);
+      this.storage.upload(file, {name: filename, contentType: file.type}).then().then(res =>
+        resolve(res.metadata.downloadURLs[0])
+      )
     });
   }
 }

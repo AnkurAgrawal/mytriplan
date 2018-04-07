@@ -15,13 +15,13 @@
 <ion-content>
   <input type="file" #fileInput style="visibility: hidden; height: 0px" name="files[]" (change)="processWebPicture($event)" />
   <div class="profile-image-wrapper" (click)="getPicture()">
-    <div class="profile-image-placeholder" *ngIf="!user.photoUrl">
+    <div class="profile-image-placeholder" *ngIf="!user.photoURL">
       <ion-icon name="add"></ion-icon>
       <div>
         {{ 'CHOOSE_IMAGE' | translate }}
       </div>
     </div>
-    <div class="profile-image" [style.backgroundImage]="'url(' + user.photoUrl + ')'" *ngIf="user.photoUrl"></div>
+    <div class="profile-image" [style.backgroundImage]="'url(' + user.photoURL + ')'" *ngIf="user.photoURL"></div>
   </div>
   <ion-list>
     <ion-item>

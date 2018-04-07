@@ -18,6 +18,7 @@ import { AuthServiceProvider, PhotoProvider } from '../../providers/providers';
 })
 export class ProfilePage {
   @ViewChild('fileInput') fileInput;
+  downloadUrl: any;
 
   user: User;
 
@@ -28,15 +29,29 @@ export class ProfilePage {
   ionViewDidLoad() { }
 
   getPicture() {
-    this.photoProvider.getPicture().then(data => data? this.updateUserPhoto(data): this.fileInput.nativeElement.click());
+    this.photoProvider.getPicture().then(data =>
+      data? this.updateUserPhoto(data): this.fileInput.nativeElement.click()
+    );
   }
 
   processWebPicture(event) {
-    this.photoProvider.processWebPicture(event.target.files[0]).then(data => this.updateUserPhoto(data));
+    console.log('Processing web picture.');
+    this.photoProvider.processWebPicture(event.target.files[0], (this.sanatize(this.user.displayName) || 'profile') + '.' + this.getExtension(event.target.files[0].name)).then(data => this.updateUserPhoto(data));
+  }
+
+  private getExtension(filename): string {
+    return filename.substring(filename.lastIndexOf('.') + 1, filename.length) || filename;
+  }
+
+  private sanatize(text: string): string {
+    return text.replace(/\s/gi, '_');
   }
 
   updateUserPhoto(imageData: string) {
-    this.auth.updateUser({photoURL: imageData});
+    console.log('Updating user photo.');
+    this.auth.updateUser({photoURL: imageData})
+    .then(() => console.log('User photo updated successfully.'))
+    .catch(error => console.log(error));
   }
 
   updateUserDisplayName(name: string) {
