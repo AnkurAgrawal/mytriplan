@@ -34,6 +34,10 @@ export class AuthServiceProvider {
     return this.user && this.user.email;
   }
 
+  getDisplayName() {
+    return this.user && this.user.displayName;
+  }
+
   getCurrentUser(): firebase.User {
     this.user || console.error("User is not logged in.");
     return this.user;
