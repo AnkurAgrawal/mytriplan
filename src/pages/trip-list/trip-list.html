@@ -1,6 +1,7 @@
 <ion-header>
 
   <ion-navbar>
+    <button ion-button menuToggle><ion-icon name="menu"></ion-icon></button>
     <ion-title>{{ 'TRIP_LIST_TITLE' | translate }}</ion-title>
 
     <ion-buttons end>
@@ -11,6 +12,7 @@
   </ion-navbar>
 
 </ion-header>
+
 <ion-content class="card-background-page">
   <button ion-button class="button button-clear" (click)="openTrip(trip.id)" clear *ngFor="let trip of currentTrips">
     <ion-card>
