@@ -24,6 +24,7 @@ export class AuthServiceProvider {
   }
 
   updateUser(partialUser: {displayName?: string, photoURL?: string}): Promise<any> {
+    console.log('Updating user name and photo: ' + JSON.stringify(partialUser));
     return this.userLoggedIn && this.user.updateProfile({
       displayName: partialUser.displayName || this.user.displayName,
       photoURL: partialUser.photoURL || this.user.photoURL
@@ -43,7 +44,7 @@ export class AuthServiceProvider {
     return this.user;
   }
 
-  signUp(credentials: {photoUrl: string, displayName: string, email: string, password: string}): Promise<any> {
+  signUp(credentials: {email: string, password: string}): Promise<any> {
     return this.afAuth.auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL).then(() => {
       return this.afAuth.auth.createUserWithEmailAndPassword(credentials.email,credentials.password);
     }).catch((error) => {
@@ -99,5 +100,9 @@ export class AuthServiceProvider {
 
   signOut(): Promise<void> {
     return this.afAuth.auth.signOut();
+  }
+
+  resetPassword(email): Promise<void> {
+    return this.afAuth.auth.sendPasswordResetEmail(email);
   }
 }
