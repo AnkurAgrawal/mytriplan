@@ -8,7 +8,7 @@
 
 
 <ion-content padding-vertical>
-  <form (submit)="signInWithEmail()" [formGroup]="signInForm">
+  <form [formGroup]="signInForm">
     <ion-list>
       <ion-item>
         <ion-icon item-start name="mail"></ion-icon>
@@ -23,12 +23,9 @@
 
     <div padding-horizontal>
       <div class="form-error">{{signInError}}</div>
-      <button ion-button full type="submit" [disabled]="!signInForm.valid">{{ 'LOGIN_BUTTON' | translate }}</button>
+      <button ion-button full (click)="signInWithEmail()" [disabled]="!signInForm.valid">{{ 'LOGIN_BUTTON' | translate }}</button>
       <div class="signIn-footer">
-        <p>
-          <a href="#">Forgot password?</a>
-          If you're a new user, please sign up.
-        </p>
+        <button ion-button clear small no-padding (click)="goToResetPassword()">{{ 'FORGOT_PASSWORD' | translate}}</button>
       </div>
       <ion-list>
         <button ion-button icon-left block outline (click)="signInWithGoogle()">
@@ -36,7 +33,7 @@
           Log in with Google
         </button>
 
-        <button ion-button icon-left block outline (click)="signUp()">
+        <button ion-button icon-left block outline (click)="goToSignUp()">
           <ion-icon name="person-add"></ion-icon>
           Sign up
         </button>
