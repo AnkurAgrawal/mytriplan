@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { IonicPage, NavController } from 'ionic-angular';
+import { IonicPage, NavController, Loading, LoadingController } from 'ionic-angular';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { User, AuthServiceProvider } from '../../providers/providers';
@@ -18,8 +18,9 @@ export class SignInPage {
 
   signInForm: FormGroup;
   signInError: string;
+  loading: Loading;
 
-  constructor(private navCtrl: NavController, private auth: AuthServiceProvider, public user: User, formBuilder: FormBuilder, public translateService: TranslateService) {
+  constructor(private navCtrl: NavController, private auth: AuthServiceProvider, private loadingCtrl: LoadingController, public user: User, formBuilder: FormBuilder, public translateService: TranslateService) {
     this.translateService.get('LOGIN_ERROR').subscribe((value) => {
       this.signInErrorString = value;
     });
@@ -41,11 +42,19 @@ export class SignInPage {
       password: data.password
     };
     this.auth.signInWithEmail(credentials).then(
-      () => this.navCtrl.setRoot(MainPage),
-      error => this.signInError = error.message || this.signInErrorString
+      () => {
+        this.loading.dismiss().then(() => {
+          this.navCtrl.setRoot(MainPage)
+        });
+      },
+      error => {
+        this.loading.dismiss().then(() => {
+          this.signInError = error.message || this.signInErrorString
+        });
+      }
     );
-
-
+    this.loading = this.loadingCtrl.create();
+    this.loading.present();
   }
 
   signInWithGoogle() {
@@ -55,7 +64,11 @@ export class SignInPage {
     );
   }
 
-  signUp() {
+  goToSignUp() {
     this.navCtrl.push('SignupPage');
+  }
+
+  goToResetPassword() {
+    this.navCtrl.push('ResetPasswordPage');
   }
 }
