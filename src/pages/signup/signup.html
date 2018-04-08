@@ -14,15 +14,18 @@
     <ion-list inset>
 
       <ion-item>
-        <ion-input type="text" placeholder="{{ 'NAME' | translate }}" formControlName="name"></ion-input>
+        <ion-icon item-start name="person"></ion-icon>
+        <ion-input type="text" placeholder="{{ 'NAME' | translate }}" formControlName="name" [class.invalid]="!signUpForm.controls.name.valid && blur"></ion-input>
       </ion-item>
 
       <ion-item>
-        <ion-input type="email" placeholder="{{ 'EMAIL' | translate }}" formControlName="email"></ion-input>
+        <ion-icon item-start name="mail"></ion-icon>
+        <ion-input type="email" placeholder="{{ 'EMAIL' | translate }}" formControlName="email" [class.invalid]="!signUpForm.controls.email.valid && blur"></ion-input>
       </ion-item>
 
       <ion-item>
-        <ion-input type="password" placeholder="{{ 'PASSWORD' | translate }}" formControlName="password"></ion-input>
+        <ion-icon item-start name="lock"></ion-icon>
+        <ion-input type="password" placeholder="{{ 'PASSWORD' | translate }}" formControlName="password" [class.invalid]="!signUpForm.controls.password.valid && blur"></ion-input>
       </ion-item>
 
     </ion-list>
