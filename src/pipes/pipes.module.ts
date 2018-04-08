@@ -4,18 +4,21 @@ import { ObjectKeysToArrayPipe } from './object-keys-to-array/object-keys-to-arr
 import { ObjectValuesToArrayPipe } from './object-values-to-array/object-values-to-array';
 import { IsTypePipe } from './is-type/is-type';
 import { MomentPipe } from './moment/moment';
+import { SanitizeStringPipe } from './sanitize-string/sanitize-string';
 
 @NgModule({
 	declarations: [BeautifyStringPipe,
     ObjectKeysToArrayPipe,
     ObjectValuesToArrayPipe,
     IsTypePipe,
-    MomentPipe],
+    MomentPipe,
+    SanitizeStringPipe],
 	imports: [],
 	exports: [BeautifyStringPipe,
     ObjectKeysToArrayPipe,
     ObjectValuesToArrayPipe,
     IsTypePipe,
-    MomentPipe]
+    MomentPipe,
+    SanitizeStringPipe]
 })
 export class PipesModule {}
