@@ -2,43 +2,16 @@ import { Component, ViewChild } from '@angular/core';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { TranslateService } from '@ngx-translate/core';
-import { Config, Nav, Platform, Menu } from 'ionic-angular';
+import { Config, Nav, Platform, Menu, Loading, LoadingController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
+import { Subject } from 'rxjs/Subject';
+import { User } from 'firebase/app';
 
 import { MainPage, SignInPage, WelcomePage, TutorialPage } from '../pages/pages';
 import { Settings, AuthServiceProvider } from '../providers/providers';
 
 @Component({
-  template: `<ion-menu [content]="content">
-    <ion-header>
-      <ion-toolbar>
-        <ion-title>Menu</ion-title>
-      </ion-toolbar>
-    </ion-header>
-
-    <ion-content>
-      <ion-list>
-        <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
-          {{p.title}}
-        </button>
-      </ion-list>
-      <ion-item-group>
-        <ion-item-divider *ngIf="auth.getEmail()">{{auth.getEmail()}}</ion-item-divider>
-
-        <ion-item (click)="signout()" *ngIf="auth.userLoggedIn">
-          <ion-icon name="log-out" item-left></ion-icon>
-          Sign out
-        </ion-item>
-
-        <ion-item (click)="signin()" *ngIf="!auth.userLoggedIn">
-          <ion-icon name="log-in" item-left></ion-icon>
-          Sign in
-        </ion-item>
-      </ion-item-group>
-    </ion-content>
-
-  </ion-menu>
-  <ion-nav #content [root]="rootPage"></ion-nav>`
+  templateUrl: 'app.component.html'
 })
 export class MyApp {
   rootPage = WelcomePage;
@@ -47,20 +20,29 @@ export class MyApp {
   @ViewChild(Menu) menu: Menu;
 
   pages: {title: string, component: string}[] = [
-    { title: 'MyTriplan', component: MainPage },
+    { title: 'Upcoming trips', component: MainPage },
     { title: 'Maps', component: 'MapPage' },
     { title: 'Cards', component: 'CardsPage' },
     { title: 'Settings', component: 'SettingsPage' }
   ]
 
-  constructor(private translate: TranslateService, private platform: Platform, private auth: AuthServiceProvider, settings: Settings, private config: Config, private statusBar: StatusBar, private splashScreen: SplashScreen, private storage: Storage) {
+  loading: Loading;
+  private ngUnsubscribe: Subject<User> = new Subject<User>();
+
+  constructor(private translate: TranslateService, private platform: Platform, private loadingCtrl: LoadingController, private auth: AuthServiceProvider, settings: Settings, private config: Config, private statusBar: StatusBar, private splashScreen: SplashScreen, private storage: Storage) {
     this.initTranslate();
 
     this.platform.ready().then(() => {
       this.storage.get('tutorial-done').then((result) => {
 
         if (result) {
-          this.auth.userLoggedIn? this.rootPage = MainPage: this.rootPage = WelcomePage;
+          this.auth.afAuth.authState
+          .takeUntil(this.ngUnsubscribe)
+          .subscribe(user => {
+            user? this.rootPage = MainPage: this.rootPage = WelcomePage;
+            this.ngUnsubscribe.next();
+            this.ngUnsubscribe.complete();
+          });
         } else {
           this.storage.set('tutorial-done', true);
           this.rootPage = TutorialPage;
@@ -100,16 +82,20 @@ export class MyApp {
     this.nav.setRoot(page.component);
   }
 
-  signin() {
+  signIn() {
     this.menu.close();
     this.auth.signOut();
     this.nav.setRoot(SignInPage);
   }
 
-  signout() {
+  signOut() {
     this.menu.close();
-    this.auth.signOut().then(() =>
-      this.nav.setRoot(WelcomePage)
-    );
+    this.auth.signOut().then(() => {
+      this.loading.dismiss().then(() => {
+        this.nav.setRoot(WelcomePage)
+      });
+    });
+    this.loading = this.loadingCtrl.create();
+    this.loading.present();
   }
 }
