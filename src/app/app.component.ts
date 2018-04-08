@@ -20,7 +20,7 @@ export class MyApp {
   @ViewChild(Menu) menu: Menu;
 
   pages: {title: string, component: string}[] = [
-    { title: 'Upcoming trips', component: MainPage },
+    { title: 'My trips', component: MainPage },
     { title: 'Maps', component: 'MapPage' },
     { title: 'Cards', component: 'CardsPage' },
     { title: 'Settings', component: 'SettingsPage' }
