@@ -14,7 +14,7 @@ import { IonicPage, NavController } from 'ionic-angular';
 })
 export class WelcomePage {
 
-  constructor(public navCtrl: NavController) { }
+  constructor(private navCtrl: NavController) { }
 
   signin() {
     this.navCtrl.push('SignInPage');
