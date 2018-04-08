@@ -12,7 +12,7 @@ export class BeautifyStringPipe implements PipeTransform {
   /**
    * Takes a value and makes it lowercase.
    */
-  transform(value: string, args: string) {
+  transform(value: string, args?: string) {
     return value.split(/(?=[A-Z])|[_\s-]+/).map((word) => {
       word = (word.toLowerCase()=='id'?'#':word);
 
