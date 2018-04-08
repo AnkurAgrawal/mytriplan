@@ -7,7 +7,7 @@
 
   "BACK_BUTTON_TEXT": "Back",
 
-  "MENU_TITLE": "Menu",
+  "MENU_TITLE": "MyTriplan",
 
   "NAME": "Name",
   "PHONE_NUMBER": "Phone Number",
@@ -15,7 +15,9 @@
   "USERNAME": "Username",
   "PASSWORD": "Password",
   "SIGNIN": "Sign in",
+  "SIGNOUT": "Sign out",
   "SIGNUP": "Sign up",
+  "FORGOT_PASSWORD": "Forgot password?",
 
   "TAB1_TITLE": "My Trips",
   "TAB2_TITLE": "Search",
