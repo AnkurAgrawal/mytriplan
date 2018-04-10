@@ -16,9 +16,14 @@ export class StorageProvider {
     this.afStorageRef = this.afStorage.ref(this.ROOT);
   }
 
-  upload(file: File, metadata?: Partial<{name: string, contentType: string, size: number}>): AngularFireUploadTask {
+  upload(file: File | string, metadata?: Partial<{name: string, contentType: string, size: number}>): AngularFireUploadTask {
     console.log('Uploading the file on Firebase storage.');
-    return this.afStorageRef.child((metadata && metadata.name) || file.name).put(file, metadata);
+    console.log(metadata);
+    if (typeof file === 'string') {
+      return this.afStorageRef.child((metadata && metadata.name) || `${new Date().getTime()}`).putString(file, 'base64', metadata);
+    } else {
+      return this.afStorageRef.child((metadata && metadata.name) || file.name).put(file, metadata);
+    }
   }
 
   delete(filePath: string) {
