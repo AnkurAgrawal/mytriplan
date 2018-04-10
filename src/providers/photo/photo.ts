@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Camera, CameraOptions } from '@ionic-native/camera';
-import { StorageProvider } from '../storage/storage';
+import { ActionSheetController, Platform } from 'ionic-angular';
+import { Camera, CameraOptions, PictureSourceType, DestinationType, MediaType, EncodingType } from '@ionic-native/camera';
+import { FilePath } from '@ionic-native/file-path';
+
 /*
   Generated class for the PhotoProvider provider.
 
@@ -10,44 +12,121 @@ import { StorageProvider } from '../storage/storage';
 @Injectable()
 export class PhotoProvider {
 
-  constructor(private camera: Camera, private storage: StorageProvider) { }
+  constructor(private camera: Camera, public platform: Platform, private filePath: FilePath, private actionSheetCtrl: ActionSheetController) { }
 
-  /**
-    *
-    * Select an image from the device photo library or capture from camera
-    *
-    * @public
-    * @method getPicture
-    * @return {Promise}
-    */
-  getPicture(): Promise<string> {
-    return new Promise(resolve => {
+  getPicture(): Promise<File | string> {
+    return new Promise<File | string>(resolve => {
       if (Camera['installed']()) {
-        let cameraOptions : CameraOptions = {
-          destinationType : this.camera.DestinationType.DATA_URL,
-          quality : 100,
-          targetWidth : 375,
-          targetHeight : 341,
-          encodingType : this.camera.EncodingType.JPEG,
-          correctOrientation : true
-        };
-        this.camera.getPicture(cameraOptions).then((data) => {
-          resolve('data:image/jpg;base64,' + data);
-        }, (err) => {
-          console.error('Unable to take photo.');
-          resolve(null);
-        })
+        let actionSheet = this.actionSheetCtrl.create({
+          title: 'Select Image Source',
+          buttons: [
+            {
+              text: 'Load from Library',
+              handler: () => {
+                resolve(this.takePicture({sourceType: PictureSourceType.PHOTOLIBRARY}));
+              }
+            },
+            {
+              text: 'Use Camera',
+              handler: () => {
+                resolve(this.takePicture({sourceType: PictureSourceType.CAMERA}));
+              }
+            },
+            {
+              text: 'Cancel',
+              role: 'cancel',
+              icon: !this.platform.is('ios') ? 'close' : null,
+              handler: () => {
+                resolve(null);
+              }
+            }
+          ]
+        });
+        actionSheet.present();
       } else {
         resolve(null);
       }
     });
   }
 
-  processWebPicture(file: File, filename?: string) {
-    return new Promise<string>(resolve => {
-      this.storage.upload(file, {name: filename, contentType: file.type}).then().then(res =>
-        resolve(res.metadata.downloadURLs[0])
-      )
+  /**
+    *
+    * Select an image from the device photo library or capture from camera
+    *
+    * @public
+    * @method takePicture
+    * @return {Promise}
+    */
+  takePicture(cameraOptions?: Partial<CameraOptions>): Promise<File | string> {
+    return new Promise<File | string>(resolve => {
+      // Create options for the Camera Dialog
+      let defaultCameraOptions: CameraOptions = {
+        quality : 100,
+        allowEdit: true,
+        targetWidth : 375,
+        targetHeight : 341,
+        saveToPhotoAlbum: false,
+        correctOrientation : true,
+        mediaType: MediaType.PICTURE,
+        encodingType : EncodingType.JPEG,
+        sourceType: PictureSourceType.CAMERA,
+        destinationType : DestinationType.FILE_URL
+      };
+      Object.assign(defaultCameraOptions, cameraOptions);
+
+      // Get the data of an image
+      this.camera.getPicture(defaultCameraOptions).then(data => {
+        if (defaultCameraOptions.destinationType === DestinationType.FILE_URL || defaultCameraOptions.destinationType === DestinationType.NATIVE_URI) {
+          console.log(JSON.stringify(data));
+
+          // Special handling for Android library
+          if (this.platform.is('android') && defaultCameraOptions.sourceType === PictureSourceType.PHOTOLIBRARY) {
+          this.platform.ready().then(() => {
+            let imagePath = data;
+            // this.filePath.resolveNativePath(data).then(imagePath => {
+              let correctPath: string = imagePath.substr(0, imagePath.lastIndexOf('/') + 1);
+              let currentName: string = imagePath.substring(imagePath.lastIndexOf('/') + 1, imagePath.lastIndexOf('?'));
+              console.log(correctPath, currentName);
+              (<any>window).resolveLocalFileSystemURL(correctPath + currentName, fileEntry =>
+                fileEntry.file(file => {
+                  let reader: FileReader = new FileReader();
+                  reader.onloadend = (evt: any) => {
+                    var imgBlob: any = new Blob([evt.target.result], { type: 'image/jpeg' });
+                    imgBlob.name = currentName;
+                    resolve(imgBlob);
+                  };
+
+                  reader.readAsArrayBuffer(file);
+                })
+              );
+            // });
+          });
+          } else {
+            let correctPath: string = data.substr(0, data.lastIndexOf('/') + 1);
+            let currentName: string = data.substr(data.lastIndexOf('/') + 1);
+            console.log(correctPath, currentName);
+            (<any>window).resolveLocalFileSystemURL(correctPath + currentName, fileEntry =>
+              fileEntry.file(file => {
+                let reader: FileReader = new FileReader();
+                reader.onloadend = (evt: any) => {
+                  var imgBlob: any = new Blob([evt.target.result], { type: 'image/jpeg' });
+                  imgBlob.name = currentName;
+                  resolve(imgBlob);
+                };
+
+                reader.readAsArrayBuffer(file);
+              })
+            );
+          }
+        } else if (defaultCameraOptions.destinationType === DestinationType.DATA_URL) {
+          resolve('data:image/jpg;base64,' + data as string);
+        } else {
+          resolve(null);
+        }
+      }, (err) => {
+        console.error('Unable to take photo.');
+        resolve(null);
+      })
     });
   }
 }
