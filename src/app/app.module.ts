@@ -4,7 +4,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Camera } from '@ionic-native/camera';
 import { FilePath } from '@ionic-native/file-path';
-import { File } from '@ionic-native/file';
 import { GoogleMaps } from '@ionic-native/google-maps';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
@@ -98,7 +97,6 @@ const firebaseConfig = {
   providers: [
     Api,
     User,
-    File,
     Camera,
     FilePath,
     GoogleMaps,
