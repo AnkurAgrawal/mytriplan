@@ -1,10 +1,11 @@
 import { Component, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Platform, IonicPage, ViewController, NavParams, ModalController, AlertController } from 'ionic-angular';
+import { Platform, IonicPage, ViewController, NavParams, ModalController, AlertController, LoadingController, Loading } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
 import { CalendarModal, CalendarModalOptions, CalendarResult } from 'ion2-calendar';
 import { MomentPipe } from '../../pipes/moment/moment';
-import { PhotoProvider } from '../../providers/providers';
+import { SanitizeStringPipe } from '../../pipes/sanitize-string/sanitize-string';
+import { PhotoProvider, StorageProvider } from '../../providers/providers';
 import moment from 'moment';
 
 import { Trip } from '../../models/trip';
@@ -14,7 +15,8 @@ import { Trip } from '../../models/trip';
   selector: 'page-trip-create',
   templateUrl: 'trip-create.html',
   providers: [
-    MomentPipe
+    MomentPipe,
+    SanitizeStringPipe
   ]
 })
 export class TripCreatePage {
@@ -25,13 +27,16 @@ export class TripCreatePage {
   form: FormGroup;
   private displayDateFormat: string = 'MMM DD, YYYY';
   unsavedChanges: boolean = false;
+  loading: Loading;
 
-  constructor(private platform: Platform, private viewCtrl: ViewController, private alertCtrl: AlertController, private navParams: NavParams, formBuilder: FormBuilder, private photoProvider: PhotoProvider, private modalCtrl: ModalController, private translate: TranslateService, private moment: MomentPipe) {
+  constructor(private platform: Platform, private viewCtrl: ViewController, private alertCtrl: AlertController, private navParams: NavParams, formBuilder: FormBuilder, private photoProvider: PhotoProvider, private storage: StorageProvider, private modalCtrl: ModalController, private loadingCtrl: LoadingController, private translate: TranslateService, private moment: MomentPipe, private sanitizer: SanitizeStringPipe) {
     this.mode = (this.navParams.get('mode')) || 'create';
     this.trip = (this.navParams.get('trip') as Trip) || new Trip();
 
+    let defaultTripPic = 'https://firebasestorage.googleapis.com/v0/b/mytriplan-0810.appspot.com/o/images%2Ftrips%2Fdefault.jpg?alt=media&token=be22757e-1772-40d8-b1a9-6cfccae19be7';
+
     this.form = formBuilder.group({
-      tripPic: [''],
+      tripPic: [defaultTripPic],
       name: ['', Validators.required],
       description: [''],
       destination: ['', Validators.required],
@@ -47,14 +52,25 @@ export class TripCreatePage {
     this.form.valueChanges.subscribe((value) => this.unsavedChanges = true);
   }
 
-  getPicture() {
-    this.photoProvider.getPicture().then(data =>
-      data? this.form.patchValue({ 'tripPic': data }): this.fileInput.nativeElement.click()
-    );
+  updateTripPhoto(file: File | string) {
+    console.log('Updating user photo.');
+    const filename: string = (this.sanitizer.transform(this.trip.name || Date.now().toString())) + '.' + ((typeof file === 'object')? this.getExtension(file.name): 'jpg');
+
+    this.storage.setUploadDirectory('images/trips').upload(file, {
+      name: filename,
+      contentType: typeof file === 'object'? file.type: 'image/jpeg'
+    }).then().then(res => {
+      this.form.patchValue({ 'tripPic': res.metadata.downloadURLs[0] });
+      this.loading.dismiss().then(() => console.log('Trip photo updated successfully.'))
+    })
+    .catch(error => this.loading.dismiss().then(() => console.log(error)));
+
+    this.loading = this.loadingCtrl.create();
+    this.loading.present();
   }
 
-  processWebPicture(event) {
-    this.photoProvider.processWebPicture(event.target.files[0]).then(data => this.form.patchValue({ 'tripPic': data }));
+  private getExtension(filename: string): string {
+    return filename.substring(filename.lastIndexOf('.') + 1, filename.length) || filename;
   }
 
   openCalendar() {

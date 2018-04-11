@@ -34,19 +34,9 @@
 
 </ion-header>
 
-
 <ion-content>
   <form *ngIf="form" [formGroup]="form" (ngSubmit)="createTrip()">
-    <input type="file" #fileInput style="visibility: hidden; height: 0px" name="files[]" (change)="processWebImage($event)" />
-    <div class="trip-image-wrapper" (click)="getPicture()">
-      <div class="trip-image-placeholder" *ngIf="!form.controls.tripPic.value">
-        <ion-icon name="add"></ion-icon>
-        <div>
-          {{ 'CHOOSE_IMAGE' | translate }}
-        </div>
-      </div>
-      <div class="trip-image" [style.backgroundImage]="'url(' + form.controls.tripPic.value + ')'" *ngIf="form.controls.tripPic.value"></div>
-    </div>
+    <mytriplan-picture [pictureUrl]="form.controls.tripPic.value" (success)="updateTripPhoto($event)"></mytriplan-picture>
     <ion-list>
       <ion-item>
         <ion-input type="text" placeholder="{{ 'TRIP_NAME_PLACEHOLDER' | translate }}" formControlName="name" autocorrect="on" clearInput></ion-input>
