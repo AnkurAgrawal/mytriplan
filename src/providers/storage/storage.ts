@@ -9,11 +9,16 @@ import { AngularFireStorage, AngularFireUploadTask, AngularFireStorageReference 
 */
 @Injectable()
 export class StorageProvider {
-  readonly ROOT: string = 'images';
+  private root: string = 'images';
   private afStorageRef: AngularFireStorageReference;
 
   constructor(private afStorage: AngularFireStorage) {
-    this.afStorageRef = this.afStorage.ref(this.ROOT);
+    this.afStorageRef = this.afStorage.ref(this.root);
+  }
+
+  setUploadDirectory(directoryPath: string): StorageProvider {
+    this.afStorageRef = this.afStorage.ref(this.root = directoryPath);
+    return this;
   }
 
   upload(file: File | string, metadata?: Partial<{name: string, contentType: string, size: number}>): AngularFireUploadTask {
