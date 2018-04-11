@@ -5,7 +5,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { CalendarModal, CalendarModalOptions, CalendarResult } from 'ion2-calendar';
 import { MomentPipe } from '../../pipes/moment/moment';
 import { SanitizeStringPipe } from '../../pipes/sanitize-string/sanitize-string';
-import { PhotoProvider, StorageProvider } from '../../providers/providers';
+import { StorageProvider } from '../../providers/providers';
 import moment from 'moment';
 
 import { Trip } from '../../models/trip';
@@ -29,7 +29,7 @@ export class TripCreatePage {
   unsavedChanges: boolean = false;
   loading: Loading;
 
-  constructor(private platform: Platform, private viewCtrl: ViewController, private alertCtrl: AlertController, private navParams: NavParams, formBuilder: FormBuilder, private photoProvider: PhotoProvider, private storage: StorageProvider, private modalCtrl: ModalController, private loadingCtrl: LoadingController, private translate: TranslateService, private moment: MomentPipe, private sanitizer: SanitizeStringPipe) {
+  constructor(private platform: Platform, private viewCtrl: ViewController, private alertCtrl: AlertController, private navParams: NavParams, formBuilder: FormBuilder, private storage: StorageProvider, private modalCtrl: ModalController, private loadingCtrl: LoadingController, private translate: TranslateService, private moment: MomentPipe, private sanitizer: SanitizeStringPipe) {
     this.mode = (this.navParams.get('mode')) || 'create';
     this.trip = (this.navParams.get('trip') as Trip) || new Trip();
 
