@@ -6,13 +6,15 @@ import { FormComponent } from './form/form';
 import { PipesModule } from '../pipes/pipes.module';
 import { AddressInputComponent } from './address-input/address-input';
 import { DateInputComponent } from './date-input/date-input';
+import { PictureInputComponent } from './picture-input/picture-input';
 
 @NgModule({
 	declarations: [
     PlanItemSlidingComponent,
     FormComponent,
     AddressInputComponent,
-    DateInputComponent
+    DateInputComponent,
+    PictureInputComponent
   ],
 	imports: [
     TranslateModule.forChild(),
@@ -23,7 +25,8 @@ import { DateInputComponent } from './date-input/date-input';
     PlanItemSlidingComponent,
     FormComponent,
     AddressInputComponent,
-    DateInputComponent
+    DateInputComponent,
+    PictureInputComponent
   ]
 })
 export class ComponentsModule {}

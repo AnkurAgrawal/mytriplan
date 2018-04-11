@@ -1,0 +1,11 @@
+<!-- Generated template for the PictureInputComponent component -->
+<input type="file" #fileInput style="visibility: hidden; height: 0px" name="files[]" (change)="processWebPicture($event)" />
+<div class="image-wrapper" (click)="getPicture()">
+  <div class="image-placeholder" *ngIf="!pictureUrl">
+    <ion-icon name="add"></ion-icon>
+    <div>
+      {{ 'CHOOSE_IMAGE' | translate }}
+    </div>
+  </div>
+  <div class="image" [style.backgroundImage]="'url(' + pictureUrl + ')'" *ngIf="pictureUrl"></div>
+</div>
