@@ -27,7 +27,7 @@ export class Trip {
       this.description = args[0]['description'] || '';
       this.dateFrom = args[0]['dateFrom'] || '';
       this.dateTo = args[0]['dateTo'] || '';
-      this.tripPic = args[0]['tripPic'] || 'assets/img/trips/portland-oregon.jpg';
+      this.tripPic = args[0]['tripPic'] || '';
       this.destination = args[0]['destination'] || '';
       this.itinerary = args[0]['itinerary']? new Itinerary(args[0]['itinerary'] as object): new Itinerary();
       if (args[0]['destinations']) {
