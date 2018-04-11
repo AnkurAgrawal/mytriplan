@@ -4,9 +4,11 @@
     <ion-toolbar color="primary">
       <ion-title>
         {{ auth.getDisplayName() || ('MENU_TITLE' | translate) }}
-        <button *ngIf="!auth.userLoggedIn" (click)="signIn()" color="light" float-right ion-button clear small no-padding no-margin>{{ 'SIGNIN' | translate }}</button>
-        <button *ngIf="auth.userLoggedIn" (click)="signOut()" color="light" float-right ion-button clear small no-padding no-margin>{{ 'SIGNOUT' | translate }}</button>
       </ion-title>
+      <ion-buttons end>
+        <button *ngIf="!auth.userLoggedIn" (click)="signIn()" color="light" float-right ion-button clear small no-padding no-margin><small>{{ 'SIGNIN' | translate }}</small></button>
+        <button *ngIf="auth.userLoggedIn" (click)="signOut()" color="light" float-right ion-button clear small no-padding no-margin><small>{{ 'SIGNOUT' | translate }}</small></button>
+      </ion-buttons>
     </ion-toolbar>
 
   </ion-header>
