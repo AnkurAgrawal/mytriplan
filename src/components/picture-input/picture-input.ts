@@ -1,6 +1,5 @@
 import { Component, ViewChild, Input, Output, EventEmitter } from '@angular/core';
 
-import { SanitizeStringPipe } from '../../pipes/sanitize-string/sanitize-string';
 import { PhotoProvider } from '../../providers/providers';
 
 /**
@@ -11,10 +10,7 @@ import { PhotoProvider } from '../../providers/providers';
  */
 @Component({
   selector: 'mytriplan-picture',
-  templateUrl: 'picture-input.html',
-  providers: [
-    SanitizeStringPipe
-  ],
+  templateUrl: 'picture-input.html'
 })
 export class PictureInputComponent {
   @ViewChild('fileInput') fileInput;
@@ -22,7 +18,7 @@ export class PictureInputComponent {
   @Input('pictureUrl') pictureUrl?: string;
   @Output() success = new EventEmitter();
 
-  constructor(private sanitizer: SanitizeStringPipe, private photoProvider: PhotoProvider) { }
+  constructor(private photoProvider: PhotoProvider) { }
 
   private getPicture() {
     this.photoProvider.getPicture().then(data => {
