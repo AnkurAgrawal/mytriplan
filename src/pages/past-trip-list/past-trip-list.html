@@ -1,0 +1,33 @@
+<!--
+  Generated template for the PastTripListPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>{{ 'PAST_TRIP_LIST_TITLE' | translate }}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content class="card-background-page">
+  <button ion-button class="button button-clear" (click)="openTrip(trip.id)" clear *ngFor="let trip of currentTrips">
+    <ion-card>
+      <div class="relative height-220">
+        <img [src]="trip.tripPic">
+      </div>
+      <div class="card-image-overlay"></div>
+      <div class="card-title">{{trip.name}}</div>
+      <div class="card-subtitle">{{trip.dateFrom | date: "MMM dd"}} - {{trip.dateTo | date: "MMM dd"}}</div>
+
+      <ion-fab right top>
+        <button ion-fab color="danger" (click)="deleteTrip(trip, $event)">
+          <ion-icon name="trash"></ion-icon>
+        </button>
+      </ion-fab>
+    </ion-card>
+  </button>
+
+</ion-content>
