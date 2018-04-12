@@ -49,7 +49,9 @@ export class Itinerary {
       return this.plans;
     }
     if (!params.date && params.day && params.dateFrom) {
-      params = {date: moment(params.dateFrom).add(+params.day - 1, 'days').format('YYYY-MM-DD')};
+      params = {
+        date: moment(params.dateFrom).add(+params.day - 1, 'days').format('YYYY-MM-DD')
+      };
     }
     return this.plans.filter((plan) => {
       for (let key in params) {
@@ -59,6 +61,11 @@ export class Itinerary {
         }
       }
       return null;
+    }).sort((p1, p2) => {
+      if (p1.time > p2.time)
+        return 1;
+      else
+        return -1;
     });
   }
 
