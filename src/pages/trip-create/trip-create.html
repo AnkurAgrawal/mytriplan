@@ -3,13 +3,13 @@
   <ion-navbar>
     <ion-title (click)="presentDiscard()">{{ (mode === 'create'? 'TRIP_CREATE_TITLE': 'TRIP_EDIT_TITLE') | translate }}</ion-title>
     <ion-buttons start>
-      <button ion-button (click)="cancel()" icon-only *ngIf="mode=='edit'">
+      <button ion-button icon-only (click)="cancel()" *ngIf="mode=='edit'">
         <span color="primary" showWhen="ios">
           {{ 'CANCEL_BUTTON' | translate }}
         </span>
         <ion-icon name="md-close" showWhen="android,windows"></ion-icon>
       </button>
-      <button ion-button (click)="cancel()" *ngIf="mode=='create'">
+      <button ion-button icon-only (click)="cancel()" *ngIf="mode=='create'">
         <span color="primary" showWhen="ios">
           {{ 'CANCEL_BUTTON' | translate }}
         </span>
