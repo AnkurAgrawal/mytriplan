@@ -47,13 +47,31 @@ export class TripsProvider {
     return this.firestore.getEditableDocument<Trip>(tripId, this.getTrips() || this.collectionName);
   }
 
-  query(params?: object): Observable<Trip[]> {
+  query(params?: { [key: string]: { type: string, value: string | number } }): Observable<Trip[]> {
     switch (this.currentDb) {
       default:
       case Database.Type.Firestore:
         return this.firestore.queryObservable<Trip>(this.collectionName, ref => {
           let query: CollectionReference | Query = ref;
-          Object.keys(params).forEach((key) => query = query.where(key, '>=', params[key]).where(key, '<=', params[key]+'z'));
+          Object.keys(params).forEach((key) => {
+            switch (params[key].type) {
+              case "substr":
+                query = query.where(key, '>=', params[key].value).where(key, '<=', params[key].value + 'z');
+                break;
+
+              case ">=":
+                query = query.where(key, '>=', params[key].value);
+                break;
+
+              case "<":
+                query = query.where(key, '<', params[key].value);
+                break;
+
+              default:
+
+                break;
+            }
+          });
           return query;
         });
       case Database.Type.Firebase:

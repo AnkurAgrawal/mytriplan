@@ -1,29 +1,39 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, ModalController } from 'ionic-angular';
+import { IonicPage, NavController, ModalController, PopoverController } from 'ionic-angular';
 import { Subject } from 'rxjs/Subject';
+import { TranslateService } from '@ngx-translate/core';
 
 import { Trip } from '../../models/trip';
 import { TripsProvider } from '../../providers/providers';
+import { MomentPipe } from '../../pipes/moment/moment';
 
 @IonicPage()
 @Component({
   selector: 'page-trip-list',
-  templateUrl: 'trip-list.html'
+  templateUrl: 'trip-list.html',
+  providers: [
+    MomentPipe
+  ]
 })
 export class TripListPage {
   private ngUnsubscribe: Subject<Trip> = new Subject<Trip>();
 
   currentTrips: Trip[];
 
-  constructor(private navCtrl: NavController, private tripsProvider: TripsProvider, private modalCtrl: ModalController) {
+  constructor(private navCtrl: NavController, private tripsProvider: TripsProvider, private modalCtrl: ModalController, private popoverCtrl: PopoverController, private moment: MomentPipe, private translate: TranslateService) {
     // Get trips form firebase using Firestype api
-    this.tripsProvider.getReadonlyTrips()
+    this.translate.get('DATABASE_DATE_FORMAT').subscribe((dateFormat) =>
+      this.tripsProvider.query({
+        dateFrom: {
+          type: '>=',
+          value: this.moment.transform(new Date().toString(), dateFormat)
+        }
+      })
       .takeUntil(this.ngUnsubscribe)
       .subscribe((trips: Trip[]) => {
         this.currentTrips = trips;
-      }
+      })
     );
-
     // Add trips to the database
     // this.currentTrips.forEach(trip => this.firebaseProvider.addDocument<Trip>(trip, "trips"))
   }
@@ -36,6 +46,13 @@ export class TripListPage {
   ionViewWillUnload() {
     this.ngUnsubscribe.next();
     this.ngUnsubscribe.complete();
+  }
+
+  showPopover(event) {
+    let popover = this.popoverCtrl.create('TripListOptionsPage');
+    popover.present({
+      ev: event
+    });
   }
 
   /**

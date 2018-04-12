@@ -27,7 +27,10 @@ export class TripSearchPage {
       return;
     }
     this.tripsProvider.query({
-      name: val
+      name: {
+        type: 'substr',
+        value: val
+      }
     })
     .takeUntil(this.ngUnsubscribe)
     .subscribe((trips: Trip[]) => {
