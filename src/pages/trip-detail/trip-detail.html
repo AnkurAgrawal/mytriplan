@@ -2,7 +2,7 @@
 
   <ion-navbar>
     <ion-title>{{ trip? trip.name: '' }}</ion-title>
-    <ion-buttons end>
+    <ion-buttons end *ngIf="!readonly">
       <button ion-button (click)="editTrip()" strong icon-only>
         <span color="primary" showWhen="ios">
           {{ 'EDIT_BUTTON' | translate }}
@@ -37,7 +37,7 @@
     <div *ngFor="let date of tripDates;">
       <ion-list class="absolute full-width" [@fadeInOut] *ngSwitchCase="date">
         <mytriplan-plan-item-sliding (open)="openPlan(plan)" (delete)="deletePlan(plan)" [plan]="plan" *ngFor="let plan of trip.getPlans({'date': date})"></mytriplan-plan-item-sliding>
-        <ion-item>
+        <ion-item *ngIf="!readonly">
           <button ion-button block outline (click)="openAddPlan(date)" aria-label="add plan to your itinerary">
             <ion-icon name="add" aria-hidden="true" item-start></ion-icon>&nbsp;
             Add plan

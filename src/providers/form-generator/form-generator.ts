@@ -17,7 +17,7 @@ export abstract class FormGeneratorProvider<T> {
   }) {
   }
 
-  create(data: T) {
+  create(data: T, readonly: boolean = false) {
 
     let keysToAdd = Object.keys(data).filter(k => !Object.keys(this.params.schema()).some(pk => pk === k));
 
@@ -29,7 +29,7 @@ export abstract class FormGeneratorProvider<T> {
 
 
     const schema = this.params.schema();
-    keysToAdd.forEach(k => schema[k] = ['']);
+    keysToAdd.forEach(k => schema[k] = (readonly? [{value: '', disabled: true}]: ['']));
 
     let validators = (data['validators']? data['validators'](): undefined);
     if (validators !== undefined) {
@@ -41,7 +41,7 @@ export abstract class FormGeneratorProvider<T> {
 
     form.patchValue(data);
 
-    objectKeysToAdd.forEach(k => form.addControl(k, this.create(data[k])));
+    objectKeysToAdd.forEach(k => form.addControl(k, this.create(data[k], readonly)));
 
     if (this.params.complexMapper !== undefined) {
       Object.keys(this.params.complexMapper).forEach(prop => {

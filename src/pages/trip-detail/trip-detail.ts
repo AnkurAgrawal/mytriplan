@@ -20,9 +20,12 @@ export class TripDetailPage {
 
   trip: Trip;
   itinerary: string;
+  readonly: boolean;
   private tripDates: any[];
 
   constructor(public tripsProvider: TripsProvider, public navCtrl: NavController, navParams: NavParams, public modalCtrl: ModalController, private translate: TranslateService) {
+    this.readonly = (navParams.get('readonly') || false) as boolean;
+
     this.tripsProvider.getReadonlyTrip(navParams.get('tripId'))
       .takeUntil(this.ngUnsubscribe)
       .subscribe(trip => {
@@ -60,7 +63,8 @@ export class TripDetailPage {
     let addModal = this.modalCtrl.create('TripViewPlanPage', {
       plan: plan,
       from: this.trip.dateFrom,
-      to: this.trip.dateTo
+      to: this.trip.dateTo,
+      readonly: this.readonly
     });
     addModal.onDidDismiss(updated => {
       // Update plan on the web-service

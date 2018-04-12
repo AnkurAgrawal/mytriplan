@@ -23,6 +23,7 @@ export class TripViewPlanPage {
   plan: Plan;
   private from: Date | number;
   private to: Date | number;
+  private readonly: boolean;
 
   unsavedChanges: boolean = false;
 
@@ -30,8 +31,9 @@ export class TripViewPlanPage {
     this.plan = navParams.get('plan') as Plan;
     this.from = navParams.get('from');
     this.to = navParams.get('to');
+    this.readonly = navParams.get('readonly') as boolean;
 
-    this.form = this.pfg.create(this.plan);
+    this.form = this.pfg.create(this.plan, this.readonly);
     this.form.valueChanges.subscribe((value) => this.unsavedChanges = true);
   }
 
