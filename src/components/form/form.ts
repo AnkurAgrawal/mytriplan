@@ -16,6 +16,7 @@ export class FormComponent {
   @Input('form') form: FormGroup;
   @Input('from') from: Date | number;
   @Input('to') to: Date | number;
+  @Input('readonly') readonly: boolean;
 
   constructor() { }
 

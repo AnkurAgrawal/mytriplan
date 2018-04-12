@@ -23,6 +23,7 @@ export class AddressInputComponent implements ControlValueAccessor {
 
   @Input('placeholder') placeholder?: string;
   @Input('searchPlaceholder') searchPlaceholder: string;
+  @Input('readonly') readonly: boolean;
   @Input()
   _value = '';
 
@@ -53,7 +54,12 @@ export class AddressInputComponent implements ControlValueAccessor {
     }
   }
 
-  openGoogleAutocompleteModal() {
+  openGoogleAutocompleteModal(ev: Event) {
+    if (this.readonly) {
+      ev.stopPropagation();
+      return;
+    }
+
     let googleAutocompleteModal = this.modalCtrl.create('GoogleAutocompleteModalPage', {
       searchPlaceholder: this.searchPlaceholder
     });

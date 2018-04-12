@@ -31,6 +31,7 @@ export class DateInputComponent implements ControlValueAccessor {
   @Input('returnFormat') returnFormat: string;
   @Input('from') from: number | Date;
   @Input('to') to: number | Date;
+  @Input('readonly') readonly: boolean;
   @Input()
   _value = '';
 
@@ -60,6 +61,10 @@ export class DateInputComponent implements ControlValueAccessor {
   }
 
   openCalendar(ev: any) {
+    if (this.readonly) {
+      ev.stopPropagation();
+      return;
+    }
     if (this.calendarTitle == undefined || this.calendarTitle == '')
       this.translate.get('DATE_CALENDAR_TITLE').subscribe((value) => this.calendarTitle = value);
 
