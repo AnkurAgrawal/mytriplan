@@ -1,13 +1,15 @@
 {
   "name": "MyTriplan",
-  "short_name": "mytriplan",
+  "short_name": "MyTriplan",
   "start_url": "index.html",
   "display": "standalone",
+  "description": "An app to create trip plans and itinerary.",
   "icons": [{
     "src": "assets/imgs/logo.png",
     "sizes": "512x512",
     "type": "image/png"
   }],
+  "orientation": "portrait",
   "background_color": "#4e8ef7",
   "theme_color": "#4e8ef7"
 }
