@@ -100,7 +100,15 @@ export class Trip {
 
   get daysLeft(): number {
     if (this.dateFrom) {
-      return 1 + moment(this.dateFrom).diff(moment(new Date()), 'days');
+      return moment(this.dateFrom).diff(moment(new Date()), 'days');
+    }
+    // console.error('Starting date for the trip ' + this.name + ' is not defined yet.');
+    return undefined;
+  }
+
+  get daysAgo(): number {
+    if (this.dateTo) {
+      return moment(new Date()).diff(moment(this.dateTo), 'days');
     }
     // console.error('Starting date for the trip ' + this.name + ' is not defined yet.');
     return undefined;
