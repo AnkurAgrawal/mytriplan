@@ -10,6 +10,7 @@ export class Taxi extends Travel {
   static ICON: string = 'taxi';
   static TYPE: string = 'taxi';
 
+  endTime: string = 'false';
   date: string = '';
   time: string = '';
   company: string = '';

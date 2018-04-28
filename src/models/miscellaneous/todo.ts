@@ -10,6 +10,7 @@ export class Todo extends Miscellaneous {
   static ICON: string = 'list';
   static TYPE: string = 'todo';
 
+  endTime: string = 'false';
   date: string = '';
   time: string = '';
   address: string = '';

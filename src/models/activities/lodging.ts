@@ -46,6 +46,14 @@ export class Lodging extends Activity {
     this.checkIn.time = value;
   }
 
+  get endTime(): string {
+    return this.checkOut.time;
+  }
+
+  set endTime(value: string) {
+    this.checkOut.time = value;
+  }
+
   displayText(): string {
     return this.nameOfThePlace;
   }

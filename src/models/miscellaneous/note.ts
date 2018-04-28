@@ -10,6 +10,7 @@ export class Note extends Miscellaneous {
   static ICON: string = 'sticky-note';
   static TYPE: string = 'note';
 
+  endTime: string = 'false';
   date: string = '';
   time: string = '';
   address: string = '';

@@ -52,6 +52,14 @@ export class Train extends Travel {
     this.departureStation.address = value;
   }
 
+  get endTime(): string {
+    return this.arrivalStation.time;
+  }
+
+  set endTime(value: string) {
+    this.arrivalStation.time = value;
+  }
+
   displayText(): string {
     return this.departureStation.displayText();
   }

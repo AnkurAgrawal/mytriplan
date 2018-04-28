@@ -10,6 +10,7 @@ export class Driving extends Travel {
   static ICON: string = 'road';
   static TYPE: string = 'driving';
 
+  endTime: string = 'false';
   date: string = '';
   time: string = '';
   startingAddress: string = '';

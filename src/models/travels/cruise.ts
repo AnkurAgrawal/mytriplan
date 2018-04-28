@@ -53,6 +53,14 @@ export class Cruise extends Travel {
     this.startingPort.address = value;
   }
 
+  get endTime(): string {
+    return this.endingPort.time;
+  }
+
+  set endTime(value: string) {
+    this.endingPort.time = value;
+  }
+
   displayText(): string {
     return this.startingPort.displayText();
   }

@@ -12,6 +12,7 @@ export abstract class Plan implements FormValidators {
   static TYPE: string;
 
   type: string = this.constructor['TYPE'];
+  note: string = '';
 
   constructor(fields?: any) { }
 
@@ -47,6 +48,9 @@ export abstract class Plan implements FormValidators {
 
   abstract get time(): string;
   abstract set time(value: string);
+
+  abstract get endTime(): string;
+  abstract set endTime(value: string);
 
   abstract get address(): string;
   abstract set address(value: string);
