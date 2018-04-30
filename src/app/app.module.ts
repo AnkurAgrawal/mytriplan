@@ -7,6 +7,8 @@ import { FilePath } from '@ionic-native/file-path';
 import { GoogleMaps } from '@ionic-native/google-maps';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
+import { NativeGeocoder } from '@ionic-native/native-geocoder';
+import { LaunchNavigator } from '@ionic-native/launch-navigator';
 import { IonicStorageModule, Storage } from '@ionic/storage';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
@@ -17,7 +19,7 @@ import { NgxErrorsModule } from '@ultimate/ngxerrors';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { AngularFireStorageModule } from 'angularfire2/storage';
-import { AngularFireAuthModule } from 'angularfire2/auth'
+import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFirestypeModule } from 'angular-firestype';
 import { modelMapping } from '../models/angularfireModelMapping';
 
@@ -80,7 +82,8 @@ const firebaseConfig = {
     }),
     NgxErrorsModule,
     IonicModule.forRoot(MyApp, {
-      scrollAssist: false
+      scrollAssist: false,
+      preloadModules: true
     }),
     IonicStorageModule.forRoot(),
     CalendarModule,
@@ -102,6 +105,8 @@ const firebaseConfig = {
     GoogleMaps,
     SplashScreen,
     StatusBar,
+    NativeGeocoder,
+    LaunchNavigator,
     { provide: Settings, useFactory: provideSettings, deps: [Storage] },
     // Keep this to enable Ionic's runtime error handling during development
     { provide: ErrorHandler, useClass: IonicErrorHandler },
