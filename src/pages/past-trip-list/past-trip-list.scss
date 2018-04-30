@@ -1,4 +1,4 @@
-.platform-core page-trip-list .button-md {
+.platform-core page-past-trip-list .button-md {
   width: 50%;
 }
 
@@ -36,7 +36,7 @@ page-past-trip-list {
 
     .card-title {
       position: absolute;
-      top: 45%;
+      top: 40%;
       font-size: 2.0em;
       width: 100%;
       font-weight: bold;
@@ -46,9 +46,18 @@ page-past-trip-list {
     .card-subtitle {
       font-size: 1.0em;
       position: absolute;
-      top: 59%;
+      top: 54%;
       width: 100%;
       color: #fff;
+    }
+
+    .card-subtitle1 {
+      text-transform: capitalize;
+    }
+
+    .card-subtitle2 {
+      font-size: 0.8em;
+      top: 64%;
     }
 
     .height-220 {

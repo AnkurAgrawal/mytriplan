@@ -14,7 +14,10 @@ import { MomentPipe } from '../../pipes/moment/moment';
  * Ionic pages and navigation.
  */
 
-@IonicPage()
+@IonicPage({
+  segment: 'past',
+  priority: 'low'
+})
 @Component({
   selector: 'page-past-trip-list',
   templateUrl: 'past-trip-list.html',
@@ -31,7 +34,7 @@ export class PastTripListPage {
     // Get trips form firebase using Firestype api
     this.translate.get('DATABASE_DATE_FORMAT').subscribe((dateFormat) =>
       this.tripsProvider.query({
-        dateFrom: {
+        dateTo: {
           type: '<',
           value: this.moment.transform(new Date().toString(), dateFormat)
         }

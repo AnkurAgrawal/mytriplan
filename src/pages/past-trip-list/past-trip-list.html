@@ -20,7 +20,8 @@
       </div>
       <div class="card-image-overlay"></div>
       <div class="card-title">{{trip.name}}</div>
-      <div class="card-subtitle">{{trip.dateFrom | date: "MMM dd"}} - {{trip.dateTo | date: "MMM dd"}}</div>
+      <div class="card-subtitle card-subtitle1">({{trip.destination}})</div>
+      <div class="card-subtitle card-subtitle2">{{trip.dateFrom | date: "MMM dd"}} - {{trip.dateTo | date: "MMM dd"}}</div>
 
       <ion-fab right top>
         <button ion-fab color="danger" (click)="deleteTrip(trip, $event)">
