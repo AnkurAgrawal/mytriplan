@@ -56,14 +56,16 @@ export class AuthServiceProvider {
   }
 
   signInWithEmail (credentials: {email: string, password: string}): Promise<any> {
-    return this.afAuth.auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL).then(() => {
-      return this.afAuth.auth.signInWithEmailAndPassword(credentials.email, credentials.password);
-    }).catch((error) => {
-      // Handle Errors here.
-      let errorCode = error.code;
-      let errorMessage = error.message;
-      console.error(errorCode + ': ' + JSON.stringify(errorMessage));
-    });
+    return new Promise(resolve =>
+      this.afAuth.auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL).then(() => {
+        resolve(this.afAuth.auth.signInWithEmailAndPassword(credentials.email, credentials.password));
+      }).catch((error) => {
+        // Handle Errors here.
+        let errorCode = error.code;
+        let errorMessage = error.message;
+        console.error(errorCode + ': ' + JSON.stringify(errorMessage));
+      })
+    );
   }
 
   signInWithGoogle(): Promise<any> {
