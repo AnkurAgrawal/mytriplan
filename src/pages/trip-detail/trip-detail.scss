@@ -1,4 +1,7 @@
 page-trip-detail {
+  ion-list[padding-bottom] {
+    padding-bottom: 32px !important;
+  }
   .trip-profile {
     width: 100%;
     background-position: center center;

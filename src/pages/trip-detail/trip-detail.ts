@@ -32,10 +32,12 @@ export class TripDetailPage {
       if (trip) {
         this.trip = trip;
         this.tripDates = this.trip.dates;
-        this.itinerary = this.itinerary || this.tripDates[0];
+        this.itinerary = this.itinerary || this.tripDates[(this.trip.daysLeft < 0 && this.trip.daysAgo <= 0)? Math.abs(this.trip.daysLeft): 0];
       }
     });
   }
+
+  ionViewDidLoad() { }
 
   ionViewWillUnload() {
     this.ngUnsubscribe.next();
