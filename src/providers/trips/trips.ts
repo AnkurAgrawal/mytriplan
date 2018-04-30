@@ -56,7 +56,28 @@ export class TripsProvider {
           Object.keys(params).forEach((key) => {
             switch (params[key].type) {
               case "substr":
-                query = query.where(key, '>=', params[key].value).where(key, '<=', params[key].value + 'z');
+                query = query.orderBy(key);
+                // query.where(key, '>=', params[key].value).where(key, '<=', params[key].value + 'z');
+                break;
+
+              case ">=":
+                query = query.orderBy(key);
+                break;
+
+              case "<":
+                query = query.orderBy(key);
+                break;
+
+              default:
+
+                break;
+            }
+          });
+          Object.keys(params).forEach((key) => {
+            switch (params[key].type) {
+              case "substr":
+                query = query.startAt(params[key].value).endAt(params[key].value + 'z');
+                // query.where(key, '>=', params[key].value).where(key, '<=', params[key].value + 'z');
                 break;
 
               case ">=":
