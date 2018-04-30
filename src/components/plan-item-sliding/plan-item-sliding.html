@@ -1,12 +1,19 @@
 <!-- Generated template for the MytriplanPlanItemSlidingComponent component -->
-<ion-item-sliding (ionSwipe)="delete.emit()">
+<ion-item-sliding [class.inactive]="inactive">
   <button ion-item (click)="open.emit()">
-    <ion-icon item-start color="dark-grey" class="fa fa-{{plan.icon}} fa-fw" aria-hidden="true"></ion-icon>
-    <h2>{{plan.displayText()}}</h2>
-    <small>{{plan.time | moment:('DATABASE_TIME_FORMAT' | translate):('DISPLAY_TIME_FORMAT' | translate)}}</small><small *ngIf="plan.timeTo"> - {{plan.timeTo | moment:('DATABASE_TIME_FORMAT' | translate):('DISPLAY_TIME_FORMAT' | translate)}}</small>
+    <ion-icon item-start class="fa fa-{{plan.icon}} fa-fw" [style.color]="plan.iconColor" aria-hidden="true"></ion-icon>
+    <h6>{{plan.displayText() || plan.address}}</h6>
+    <small>{{plan.time | moment:('DATABASE_TIME_FORMAT' | translate):('DISPLAY_TIME_FORMAT' | translate)}}</small><small *ngIf="plan.endTime && plan.endTime !== 'false'"> - {{plan.endTime | moment:('DATABASE_TIME_FORMAT' | translate):('DISPLAY_TIME_FORMAT' | translate)}}</small>
+    <button *ngIf="!(plan.group == 'miscellaneous')" item-end ion-button clear icon-only large (click)="openAddressInMap($event)">
+      <ion-icon name="locate"></ion-icon>
+    </button>
   </button>
 
-  <ion-item-options>
+  <ion-item-options (ionSwipe)="delete.emit()">
+    <button *ngIf="plan.group == 'travel'" ion-button color="primary" (click)="openRouteInMap($event)">
+      <ion-icon name="navigate"></ion-icon>
+      {{ 'MAP_BUTTON' | translate }}
+    </button>
     <button ion-button expandable color="danger" (click)="delete.emit()">
       <ion-icon name="trash"></ion-icon>
       {{ 'DELETE_BUTTON' | translate }}
