@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, ViewController, AlertController, Slides } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ViewController, AlertController, Slides, Content } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -31,6 +31,7 @@ import { Plan } from '../../models/plan';
 })
 export class TripAddPlanPage {
   @ViewChild('newPlanSlider') newPlanSlides: Slides;
+  @ViewChild('content') content: Content;
 
   private plan: Plan;
   private newPlanForm: FormGroup;
@@ -51,7 +52,8 @@ export class TripAddPlanPage {
     this.newPlanForm = this.formBuilder.group({
       date: ['', Validators.required],
       time: ['', Validators.required],
-      address: ['', Validators.required]
+      address: ['', Validators.required],
+      note: ['']
     });
     // console.log(Object.keys(this.newPlanForm.controls));
     this.grid = true;
@@ -126,6 +128,10 @@ export class TripAddPlanPage {
     });
 
     this.newPlanSlides.slideNext();
+  }
+
+  planSelected() {
+    this.content.scrollToTop();
   }
 
   presentDiscard(discardCallback) {
