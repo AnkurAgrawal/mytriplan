@@ -23,7 +23,7 @@
     <ion-item>
       <ion-icon item-start name="mail"></ion-icon>
       <ion-input type="email" readonly value="{{ user.email }}"></ion-input>
-      <ion-badge item-end color="danger">{{ !user.emailVerified && 'verification pending' }}</ion-badge>
+      <ion-badge item-end color="danger">{{ !user.emailVerified && 'verify' }}</ion-badge>
     </ion-item>
     <ion-item *ngIf="user.phoneNumber">
       <ion-icon item-start name="call"></ion-icon>

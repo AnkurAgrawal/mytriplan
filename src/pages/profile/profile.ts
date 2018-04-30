@@ -38,7 +38,7 @@ export class ProfilePage {
 
   updateUserPhoto(file: File | string) {
     console.log('Updating user photo.');
-    const filename: string = this.sanitizer.transform(this.user.email) + '.' + ((typeof file === 'object')? this.getExtension(file.name): 'jpg');
+    const filename: string = (this.sanitizer.transform(this.user.email) + '.' + ((typeof file === 'object')? this.getExtension(file.name): 'jpg')).replace("\'", '');
 
     this.storage.setUploadDirectory('images/users').upload(file, {
       name: filename,
