@@ -4,7 +4,7 @@
     <ng-template ngFor let-field [ngForOf]="form.controls | objectKeysToArray">
       <ion-item *ngIf="!form.controls[field].controls && field!='type' && field!='note'">
         <ion-label fixed>{{field.status}}{{field | beautifyString}}</ion-label>
-        <ion-input [readonly]="readonly" *ngIf="!(field | isType:'date':'time':'address':'phoneNumber':'description')" formControlName="{{field}}"></ion-input>
+        <ion-input [readonly]="readonly" *ngIf="!(field | isType:'date':'time':'address':'phonenumber':'description')" formControlName="{{field}}"></ion-input>
         <ion-input [readonly]="readonly" *ngIf="field | isType:'phonenumber'" type="tel" placeholder="+1(999)999-9999" formControlName="{{field}}"></ion-input>
         <mytriplan-address [readonly]="readonly" *ngIf="field | isType:'address'" item-content [searchPlaceholder]="'SEARCH_ADDRESS_PLACEHOLDER' | translate" formControlName="{{field}}"></mytriplan-address>
         <ion-datetime *ngIf="field | isType:'time'" displayFormat="{{'DISPLAY_TIME_FORMAT' | translate}}" pickerFormat="{{'PICKER_TIME_FORMAT' | translate}}" formControlName="{{field}}"></ion-datetime>
@@ -16,18 +16,18 @@
         <ion-item-group>
           <ion-item *ngFor="let f of form.controls[field].controls | objectKeysToArray">
             <ion-label fixed>{{f | beautifyString}}</ion-label>
-            <ion-input [readonly]="readonly" *ngIf="!(f | isType:'date':'time':'address':'description':'note')" formControlName="{{f}}"></ion-input>
+            <ion-input [readonly]="readonly" *ngIf="!(f | isType:'date':'time':'address':'description')" formControlName="{{f}}"></ion-input>
             <mytriplan-address [readonly]="readonly" *ngIf="f | isType:'address'" item-content [searchPlaceholder]="'SEARCH_ADDRESS_PLACEHOLDER' | translate" formControlName="{{f}}"></mytriplan-address>
             <ion-datetime *ngIf="f | isType:'time'" displayFormat="{{'DISPLAY_TIME_FORMAT' | translate}}" pickerFormat="{{'PICKER_TIME_FORMAT' | translate}}" formControlName="{{f}}"></ion-datetime>
             <mytriplan-date [readonly]="readonly" *ngIf="f | isType:'date'" item-content formControlName="{{f}}" [calendarTitle]="'DATE_CALENDAR_TITLE' | translate" [displayFormat]="'DISPLAY_DATE_FORMAT' | translate" [returnFormat]="'DATABASE_DATE_FORMAT' | translate" [from]="from" [to]="to" (success)="handleDate($event, field, f)"></mytriplan-date>
-            <ion-textarea [readonly]="readonly" *ngIf="f | isType:'description':'note'" formControlName="{{f}}"></ion-textarea>
+            <ion-textarea [readonly]="readonly" *ngIf="f | isType:'description'" formControlName="{{f}}"></ion-textarea>
           </ion-item>
         </ion-item-group>
       </div>
     </ng-template>
     <ion-list-header color="primary">{{'note' | beautifyString}}</ion-list-header>
     <ion-item-group>
-      <ion-textarea [readonly]="readonly" formControlName="note"></ion-textarea>
+      <ion-textarea class="light-background" #note [readonly]="readonly" formControlName="note" rows="5" maxLength="500" (keyup)="resize()"></ion-textarea>
     </ion-item-group>
   </ion-list>
 </form>
