@@ -7,14 +7,14 @@ import { Storage } from '@ionic/storage';
 import { Subject } from 'rxjs/Subject';
 import { User } from 'firebase/app';
 
-import { MainPage, SignInPage, WelcomePage, TutorialPage } from '../pages/pages';
-import { Settings, AuthServiceProvider } from '../providers/providers';
+import { MainPage, SignInPage, WelcomePage, TutorialPage, SplashPage } from '../pages/pages';
+import { AuthServiceProvider } from '../providers/providers';
 
 @Component({
   templateUrl: 'app.component.html'
 })
 export class MyApp {
-  rootPage = WelcomePage;
+  rootPage = SplashPage;
 
   @ViewChild(Nav) nav: Nav;
   @ViewChild(Menu) menu: Menu;
@@ -29,12 +29,18 @@ export class MyApp {
   loading: Loading;
   private ngUnsubscribe: Subject<User> = new Subject<User>();
 
-  constructor(private translate: TranslateService, private platform: Platform, private loadingCtrl: LoadingController, private auth: AuthServiceProvider, settings: Settings, private config: Config, private statusBar: StatusBar, private splashScreen: SplashScreen, private storage: Storage) {
+  constructor(private translate: TranslateService,
+    private platform: Platform,
+    private loadingCtrl: LoadingController,
+    private auth: AuthServiceProvider,
+    private config: Config,
+    private statusBar: StatusBar,
+    private splashScreen: SplashScreen,
+    private storage: Storage) {
     this.initTranslate();
 
     this.platform.ready().then(() => {
       this.storage.get('tutorial-done').then((result) => {
-
         if (result) {
           this.auth.afAuth.authState
           .takeUntil(this.ngUnsubscribe)
@@ -42,6 +48,9 @@ export class MyApp {
             user? this.rootPage = MainPage: this.rootPage = WelcomePage;
             this.ngUnsubscribe.next();
             this.ngUnsubscribe.complete();
+          },
+          () => {
+            this.rootPage = WelcomePage;
           });
         } else {
           this.storage.set('tutorial-done', true);
@@ -49,11 +58,11 @@ export class MyApp {
         }
       });
     });
-
   }
 
   ionViewDidLoad() {
     this.platform.ready().then(() => {
+      console.log("App loaded!");
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
       this.statusBar.styleDefault();
