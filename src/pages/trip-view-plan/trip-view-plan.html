@@ -7,13 +7,16 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>{{plan.type | beautifyString}}</ion-title>
+    <ion-title>
+      <ion-icon *ngIf="plan" class="fa fa-{{plan.icon}} fa-fw" aria-hidden="true"></ion-icon>
+      {{plan.type | beautifyString}}
+    </ion-title>
     <ion-buttons start>
       <button icon-only ion-button (click)="cancel()">
         <span color="primary" showWhen="ios">
           {{ 'BACK_BUTTON_TEXT' | translate }}
         </span>
-        <ion-icon name="md-close" showWhen="android,windows"></ion-icon>
+        <ion-icon name="md-close" showWhen="core,android,windows"></ion-icon>
       </button>
     </ion-buttons>
     <ion-buttons end *ngIf="!readonly">
@@ -30,10 +33,5 @@
 
 
 <ion-content>
-  <div text-center>
-    <div class="round-icon-placeholder light-background" padding margin>
-      <ion-icon *ngIf="plan" class="fa fa-{{plan.icon}} fa-3x" aria-hidden="true"></ion-icon>
-    </div>
-  </div>
   <mytriplan-form [readonly]="readonly" [form]="form" [from]="from" [to]="to"></mytriplan-form>
 </ion-content>
