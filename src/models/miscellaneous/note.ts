@@ -10,11 +10,9 @@ export class Note extends Miscellaneous {
   static ICON: string = 'sticky-note';
   static TYPE: string = 'note';
 
-  endTime: string = 'false';
   date: string = '';
   time: string = '';
   address: string = '';
-  description: string = '';
 
   constructor(fields?: any) {
     super(fields);
@@ -27,13 +25,19 @@ export class Note extends Miscellaneous {
     return new this(fields);
   }
 
+  set endTime(value: string) { }
+
+  get endTime(): string {
+    return 'false';
+  }
+
   displayText(): string {
-    return this.description;
+    return this.note;
   }
 
   public validators(): { [key: string]: Validators } {
     return {
-      description: Validators.required
+      note: Validators.required
     };
   }
 

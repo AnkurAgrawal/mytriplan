@@ -7,7 +7,8 @@ import { Plan } from '../models/plan';
 
 export abstract class Miscellaneous extends Plan {
   static ICON: string = 'suitcase';
-  static GROUP: string = 'Miscellaneous';
+  static ICON_COLOR: string = 'crimson';
+  static GROUP: string = 'miscellaneous';
   static TYPE: string;
 
   constructor(fields?: any) {

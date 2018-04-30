@@ -7,15 +7,14 @@ import { Validators } from '@angular/forms';
 import { FormValidators } from '../../providers/form-generator/form-validators';
 import { Travel } from '../../models/travel';
 
-export class Train extends Travel {
-  static ICON: string = 'train';
-  static TYPE: string = 'train';
+export class Bus extends Travel {
+  static ICON: string = 'bus';
+  static TYPE: string = 'bus';
 
-  carrier: string = '';
-  confirmationId: string = '';
+  busNumber: string = '';
 
-  departureStation: Station = new Station();
-  arrivalStation: Station = new Station();
+  departureStop: Stop = new Stop();
+  arrivalStop: Stop = new Stop();
 
   constructor(fields?: any) {
     super(fields);
@@ -29,66 +28,63 @@ export class Train extends Travel {
   }
 
   get date(): string {
-    return this.departureStation.date;
+    return this.departureStop.date;
   }
 
   set date(value: string) {
-    this.departureStation.date = value;
+    this.departureStop.date = value;
   }
 
   get time(): string {
-    return this.departureStation.time;
+    return this.departureStop.time;
   }
 
   set time(value: string) {
-    this.departureStation.time = value;
+    this.departureStop.time = value;
   }
 
   get address(): string {
-    return this.departureStation.address;
+    return this.departureStop.address;
   }
 
   set address(value: string) {
-    this.departureStation.address = value;
+    this.departureStop.address = value;
   }
 
   set destinationAddress(value: string) {
-    this.arrivalStation.address = value;
+    this.arrivalStop.address = value;
   }
 
   get destinationAddress(): string {
-    return this.arrivalStation.address;
+    return this.arrivalStop.address;
   }
 
   get endTime(): string {
-    return this.arrivalStation.time;
+    return this.arrivalStop.time;
   }
 
   set endTime(value: string) {
-    this.arrivalStation.time = value;
+    this.arrivalStop.time = value;
   }
 
   displayText(): string {
-    return this.departureStation.displayText();
+    return this.departureStop.displayText();
   }
 
   public validators(): { [key: string]: Validators } {
     return {
-      carrier: Validators.required
+      busNumber: Validators.required
     };
   }
 
 }
 
-class Station implements FormValidators {
+class Stop implements FormValidators {
 
-  constructor(public date: string = '', public time: string = '', public address: string = '', public platform: string = '') { }
+  constructor(public date: string = '', public time: string = '', public address: string = '') { }
 
   displayText(): string {
-    let address = this.address;
-    address = (this.platform? address + ` (Platform ${this.platform}`: address);
-
-    return address;
+    return this.address;
   }
 
   public validators(): { [key: string]: Validators } {

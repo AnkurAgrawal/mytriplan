@@ -83,11 +83,11 @@ export class Itinerary {
     {
       'name': Travel.GROUP,
       'icon': Travel.ICON,
-      'types': [ models.Flight, models.CarRental, models.Taxi, models.Train, models.Cruise, models.Driving ]
+      'types': [ models.Flight, models.CarRental, models.Taxi, models.Train, models.Bus, models.Cruise, models.Driving, models.Walk ]
     }, {
       'name': Activity.GROUP,
       'icon': Activity.ICON,
-      'types': [ models.Lodging, models.Meeting, models.Restaurant, models.Outing, models.Show, models.Shopping ]
+      'types': [ models.Lodging, models.Meeting, models.Restaurant, models.Sightseeing, models.Show, models.Shopping ]
     }, {
       'name': Miscellaneous.GROUP,
       'icon': Miscellaneous.ICON,

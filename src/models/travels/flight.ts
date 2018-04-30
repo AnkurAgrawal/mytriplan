@@ -53,6 +53,14 @@ export class Flight extends Travel {
     this.departureAirport.address = value;
   }
 
+  set destinationAddress(value: string) {
+    this.arrivalAirport.address = value;
+  }
+
+  get destinationAddress(): string {
+    return this.arrivalAirport.address;
+  }
+
   get endTime(): string {
     return this.arrivalAirport.time;
   }

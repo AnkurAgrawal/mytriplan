@@ -7,7 +7,7 @@ import { Validators } from '@angular/forms';
 import { Activity } from '../../models/activity';
 
 export class Meeting extends Activity {
-  static ICON: string = 'users';
+  static ICON: string = 'coffee';
   static TYPE: string = 'meeting';
 
   date: string = '';

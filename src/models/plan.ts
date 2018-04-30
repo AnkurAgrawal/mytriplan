@@ -8,6 +8,7 @@ import { FormValidators } from '../providers/form-generator/form-validators';
 
 export abstract class Plan implements FormValidators {
   static ICON: string = 'pencil';
+  static ICON_COLOR: string = 'dark-grey';
   static GROUP: string;
   static TYPE: string;
 
@@ -33,6 +34,10 @@ export abstract class Plan implements FormValidators {
 
   get icon(): string {
     return this.constructor['ICON'];
+  }
+
+  get iconColor(): string {
+    return this.constructor['ICON_COLOR'];
   }
 
   get group(): string {

@@ -7,10 +7,9 @@ import { Validators } from '@angular/forms';
 import { Travel } from '../../models/travel';
 
 export class Driving extends Travel {
-  static ICON: string = 'road';
+  static ICON: string = 'car';
   static TYPE: string = 'driving';
 
-  endTime: string = 'false';
   date: string = '';
   time: string = '';
   startingAddress: string = '';
@@ -33,6 +32,12 @@ export class Driving extends Travel {
 
   set address(value: string) {
     this.startingAddress = value;
+  }
+
+  set endTime(value: string) { }
+
+  get endTime(): string {
+    return 'false';
   }
 
   displayText(): string {

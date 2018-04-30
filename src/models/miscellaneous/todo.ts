@@ -7,14 +7,12 @@ import { Validators } from '@angular/forms';
 import { Miscellaneous } from '../../models/miscellaneous';
 
 export class Todo extends Miscellaneous {
-  static ICON: string = 'list';
+  static ICON: string = 'list-ol';
   static TYPE: string = 'todo';
 
-  endTime: string = 'false';
   date: string = '';
   time: string = '';
   address: string = '';
-  description: string = '';
 
   constructor(fields?: any) {
     super(fields);
@@ -27,15 +25,21 @@ export class Todo extends Miscellaneous {
     return new this(fields);
   }
 
+  set endTime(value: string) { }
+
+  get endTime(): string {
+    return 'false';
+  }
+
   displayText(): string {
-    return this.description;
+    return this.note;
   }
 
   public validators(): { [key: string]: Validators } {
     return {
       name: Validators.required,
       date: Validators.required,
-      description: Validators.required
+      note: Validators.required
     };
   }
 

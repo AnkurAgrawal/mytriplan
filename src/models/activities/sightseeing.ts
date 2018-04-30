@@ -6,9 +6,9 @@
 import { Validators } from '@angular/forms';
 import { Activity } from '../../models/activity';
 
-export class Outing extends Activity {
-  static ICON: string = 'coffee';
-  static TYPE: string = 'outing';
+export class Sightseeing extends Activity {
+  static ICON: string = 'binoculars';
+  static TYPE: string = 'sightseeing';
 
   nameOfThePlace: string = '';
   date: string = '';

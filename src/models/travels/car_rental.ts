@@ -54,6 +54,14 @@ export class CarRental extends Travel {
     this.pickUp.address = value;
   }
 
+  set destinationAddress(value: string) {
+    this.dropOff.address = value;
+  }
+
+  get destinationAddress(): string {
+    return this.dropOff.address;
+  }
+
   get endTime(): string {
     return this.dropOff.time;
   }

@@ -6,13 +6,12 @@
 import { Validators } from '@angular/forms';
 import { Travel } from '../../models/travel';
 
-export class Taxi extends Travel {
-  static ICON: string = 'taxi';
-  static TYPE: string = 'taxi';
+export class Walk extends Travel {
+  static ICON: string = 'road';
+  static TYPE: string = 'walk';
 
   date: string = '';
   time: string = '';
-  company: string = '';
   startingAddress: string = '';
   destinationAddress: string = '';
 
@@ -42,7 +41,7 @@ export class Taxi extends Travel {
   }
 
   displayText(): string {
-    return this.address;
+    return this.startingAddress;
   }
 
   public validators(): { [key: string]: Validators } {
@@ -53,4 +52,5 @@ export class Taxi extends Travel {
       destinationAddress: Validators.required
     };
   }
+
 }
