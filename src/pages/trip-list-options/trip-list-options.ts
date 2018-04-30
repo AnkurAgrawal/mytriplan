@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, ViewController } from 'ionic-angular';
+import { App, IonicPage, NavController, ViewController } from 'ionic-angular';
 
 /**
  * Generated class for the TripListOptionsPage page.
@@ -15,11 +15,11 @@ import { IonicPage, NavController, ViewController } from 'ionic-angular';
 })
 export class TripListOptionsPage {
 
-  constructor(private navCtrl: NavController, private viewCtrl: ViewController) { }
+  constructor(private app: App, private navCtrl: NavController, private viewCtrl: ViewController) { }
 
   ionViewDidLoad() { }
 
   openPastTripList() {
-    this.navCtrl.push('PastTripListPage').then(() => this.viewCtrl.dismiss());
+    this.viewCtrl.dismiss().then(() => this.app.getRootNav().push('PastTripListPage'));
   }
 }
