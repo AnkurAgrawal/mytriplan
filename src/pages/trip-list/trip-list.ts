@@ -7,7 +7,10 @@ import { Trip } from '../../models/trip';
 import { TripsProvider } from '../../providers/providers';
 import { MomentPipe } from '../../pipes/moment/moment';
 
-@IonicPage()
+@IonicPage({
+  segment: 'upcoming',
+  priority: 'high'
+})
 @Component({
   selector: 'page-trip-list',
   templateUrl: 'trip-list.html',
@@ -17,14 +20,17 @@ import { MomentPipe } from '../../pipes/moment/moment';
 })
 export class TripListPage {
   private ngUnsubscribe: Subject<Trip> = new Subject<Trip>();
+  private dateFormat: string;
 
   currentTrips: Trip[];
 
   constructor(private navCtrl: NavController, private tripsProvider: TripsProvider, private modalCtrl: ModalController, private popoverCtrl: PopoverController, private moment: MomentPipe, private translate: TranslateService) {
     // Get trips form firebase using Firestype api
-    this.translate.get('DATABASE_DATE_FORMAT').subscribe((dateFormat) =>
+    this.translate.get('DATABASE_DATE_FORMAT').subscribe((dateFormat) => {
+      this.dateFormat = dateFormat;
+
       this.tripsProvider.query({
-        dateFrom: {
+        dateTo: {
           type: '>=',
           value: this.moment.transform(new Date().toString(), dateFormat)
         }
@@ -32,11 +38,35 @@ export class TripListPage {
       .takeUntil(this.ngUnsubscribe)
       .subscribe((trips: Trip[]) => {
         this.currentTrips = trips;
-      })
-    );
+      });
+    });
     // Add trips to the database
     // this.currentTrips.forEach(trip => this.firebaseProvider.addDocument<Trip>(trip, "trips"))
   }
+
+  // filterTrips(ev) {
+  //   let val = ev.target.value;
+  //   if (!val || !val.trim()) {
+  //     // this.currentTrips = [];
+  //     // return;
+  //     val = '';
+  //   }
+  //   this.tripsProvider.query({
+  //     dateFrom: {
+  //       type: '>=',
+  //       value: this.moment.transform(new Date().toString(), this.dateFormat)
+  //     },
+  //     name: {
+  //       type: 'substr',
+  //       value: val
+  //     }
+  //   })
+  //   .takeUntil(this.ngUnsubscribe)
+  //   .subscribe((trips: Trip[]) => {
+  //     // console.log(trips);
+  //     this.currentTrips = trips;
+  //   });
+  // }
 
   /**
    * The view loaded, let's query our trips for the list
