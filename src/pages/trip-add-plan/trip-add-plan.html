@@ -41,7 +41,7 @@
             <ion-icon class="fa fa-{{planGroup.icon}} fa-fw" aria-hidden="true"></ion-icon>
             {{planGroup.name | beautifyString}}
           </ion-item-divider>
-          <button padding full clear text-center text-capitalize col-6 (click)="openNewPlanForm(type)" *ngFor="let type of planGroup.types">
+          <button class="clear-background" padding full clear text-center text-capitalize col-6 (click)="openNewPlanForm(type)" *ngFor="let type of planGroup.types">
             <ion-icon class="fa fa-{{type.ICON}} fa-2x" aria-hidden="true"></ion-icon>
             <ion-label margin-left margin-right text-uppercase>{{type.TYPE | beautifyString}}</ion-label>
           </button>
@@ -54,7 +54,7 @@
             <ion-icon class="fa fa-{{planGroup.icon}} fa-fw" aria-hidden="true"></ion-icon>
             {{planGroup.name | beautifyString}}
           </ion-item-divider>
-          <button ion-item (click)="openNewPlanForm(type)" *ngFor="let type of planGroup.types">
+          <button class="clear-background" ion-item (click)="openNewPlanForm(type)" *ngFor="let type of planGroup.types">
             <ion-icon class="fa fa-{{type.ICON}} fa-fw" aria-hidden="true"></ion-icon>
             {{type.TYPE | beautifyString}}
           </button>
