@@ -25,9 +25,9 @@
         </ion-item-group>
       </div>
     </ng-template>
-    <ion-list-header color="primary">{{'note' | beautifyString}}</ion-list-header>
+    <ion-list-header color="primary">{{'notes' | beautifyString}}</ion-list-header>
     <ion-item-group>
-      <ion-textarea class="light-background" #note [readonly]="readonly" formControlName="note" rows="5" maxLength="500" (keyup)="resize()"></ion-textarea>
+      <ion-textarea #note [readonly]="readonly" formControlName="note" rows="5" maxLength="500" (keyup)="resize()" placeholder="add your notes here..."></ion-textarea>
     </ion-item-group>
   </ion-list>
 </form>
