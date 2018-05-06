@@ -65,7 +65,7 @@ export class FirestoreProvider {
   }
 
   addDocument<T>(document: T, collection: string | Collection<T>): void {
-    console.log("Adding new trip");
+    console.log("Adding new document");
     if (typeof collection === 'string') {
       collection = this.getCollection<T>(collection);
     }
@@ -74,13 +74,13 @@ export class FirestoreProvider {
   }
 
   deleteDocument<T>(document: T, collection: string | Collection<T>): Promise<void> {
-    console.log("Deleting trip");
+    console.log("Deleting document");
     return this.getDocument(document['id'], collection).delete();
   }
 
   // TODO write partial class implementation
   updateDocument<T>(partialDocument: Partial<T>, collection: string | Collection<T>): Promise<void> {
-    console.log("Updating trip");
+    console.log("Updating document");
     console.log(partialDocument);
     if (partialDocument['id'] === undefined) {
       console.error('Cannot update the document without ID.');
