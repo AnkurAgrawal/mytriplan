@@ -26,12 +26,13 @@ export class TripSearchPage {
       this.currentTrips = [];
       return;
     }
-    this.tripsProvider.query({
-      name: {
+    this.tripsProvider.query([
+      {
+        field: 'name',
         type: 'substr',
         value: val
       }
-    })
+    ])
     .takeUntil(this.ngUnsubscribe)
     .subscribe((trips: Trip[]) => {
       // console.log(trips);
