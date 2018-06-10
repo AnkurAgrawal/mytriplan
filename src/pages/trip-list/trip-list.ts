@@ -4,7 +4,7 @@ import { Subject } from 'rxjs/Subject';
 import { TranslateService } from '@ngx-translate/core';
 
 import { Trip } from '../../models/trip';
-import { TripsProvider } from '../../providers/providers';
+import { TripsProvider, AuthServiceProvider, UsersProvider } from '../../providers/providers';
 import { MomentPipe } from '../../pipes/moment/moment';
 
 @IonicPage({
@@ -24,49 +24,26 @@ export class TripListPage {
 
   currentTrips: Trip[];
 
-  constructor(private navCtrl: NavController, private tripsProvider: TripsProvider, private modalCtrl: ModalController, private popoverCtrl: PopoverController, private moment: MomentPipe, private translate: TranslateService) {
+  constructor(private navCtrl: NavController, private usersProvider: UsersProvider, private tripsProvider: TripsProvider, private auth: AuthServiceProvider, private modalCtrl: ModalController, private popoverCtrl: PopoverController, private moment: MomentPipe, private translate: TranslateService) {
     // Get trips form firebase using Firestype api
     this.translate.get('DATABASE_DATE_FORMAT').subscribe((dateFormat) => {
       this.dateFormat = dateFormat;
 
-      this.tripsProvider.query({
-        dateTo: {
-          type: '>=',
+      this.usersProvider.queryTripsForCurrentUser([
+        {
+          field: 'dateTo',
+          type: 'startAt',
           value: this.moment.transform(new Date().toString(), dateFormat)
         }
-      })
+      ])
       .takeUntil(this.ngUnsubscribe)
-      .subscribe((trips: Trip[]) => {
-        this.currentTrips = trips;
-      });
+      .subscribe((trips: Trip[]) =>
+        this.currentTrips = trips
+      );
     });
     // Add trips to the database
     // this.currentTrips.forEach(trip => this.firebaseProvider.addDocument<Trip>(trip, "trips"))
   }
-
-  // filterTrips(ev) {
-  //   let val = ev.target.value;
-  //   if (!val || !val.trim()) {
-  //     // this.currentTrips = [];
-  //     // return;
-  //     val = '';
-  //   }
-  //   this.tripsProvider.query({
-  //     dateFrom: {
-  //       type: '>=',
-  //       value: this.moment.transform(new Date().toString(), this.dateFormat)
-  //     },
-  //     name: {
-  //       type: 'substr',
-  //       value: val
-  //     }
-  //   })
-  //   .takeUntil(this.ngUnsubscribe)
-  //   .subscribe((trips: Trip[]) => {
-  //     // console.log(trips);
-  //     this.currentTrips = trips;
-  //   });
-  // }
 
   /**
    * The view loaded, let's query our trips for the list
@@ -78,12 +55,12 @@ export class TripListPage {
     this.ngUnsubscribe.complete();
   }
 
-  showPopover(event) {
-    let popover = this.popoverCtrl.create('TripListOptionsPage');
-    popover.present({
-      ev: event
-    });
-  }
+  // showPopover(event) {
+  //   let popover = this.popoverCtrl.create('TripListOptionsPage');
+  //   popover.present({
+  //     ev: event
+  //   });
+  // }
 
   /**
    * Prompt the user to add a new trip. This shows our TripCreatePage in a
