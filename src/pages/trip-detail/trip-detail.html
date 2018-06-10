@@ -30,24 +30,46 @@
       </ion-row>
     </div>
   </div>
-  <ion-toolbar no-border-top class="trip-itinerary">
-    <ion-scroll scrollX="true" style="height:45px" >
-      <ion-segment [(ngModel)]="itinerary">
-        <ion-segment-button value="{{date}}" *ngFor="let date of tripDates;">{{date | date: "MMM dd"}}</ion-segment-button>
-      </ion-segment>
-    </ion-scroll>
+  <ion-toolbar no-border-top>
+    <ion-segment [(ngModel)]="detail">
+      <ion-segment-button value="plans">
+        <ion-icon name="calendar"></ion-icon>
+      </ion-segment-button>
+      <ion-segment-button value="travelers">
+        <ion-icon name="people"></ion-icon>
+      </ion-segment-button>
+    </ion-segment>
   </ion-toolbar>
-  <div [ngSwitch]="itinerary">
-    <div *ngFor="let date of tripDates;">
-      <ion-list class="absolute full-width" [@fadeInOut] *ngSwitchCase="date" padding-bottom text-wrap>
-        <mytriplan-plan-item-sliding (open)="openPlan(plan)" (delete)="deletePlan(plan)" [plan]="plan" *ngFor="let plan of trip.getPlans({'date': date})"></mytriplan-plan-item-sliding>
-        <ion-item *ngIf="!readonly">
-          <button ion-button block outline (click)="openAddPlan(date)" aria-label="add plan to your itinerary">
-            <ion-icon name="add" aria-hidden="true" item-start></ion-icon>&nbsp;
-            Add plan
-          </button>
-        </ion-item>
-      </ion-list>
+  <div *ngIf="detail=='plans'">
+    <ion-toolbar no-border-top class="trip-itinerary">
+      <ion-scroll scrollX="true" style="height:45px" >
+        <ion-segment [(ngModel)]="itinerary">
+          <ion-segment-button value="{{date}}" *ngFor="let date of tripDates;">{{date | date: "MMM dd"}}</ion-segment-button>
+        </ion-segment>
+      </ion-scroll>
+    </ion-toolbar>
+    <div [ngSwitch]="itinerary">
+      <div *ngFor="let date of tripDates;">
+        <ion-list class="absolute full-width" [@fadeInOut] *ngSwitchCase="date" padding-bottom text-wrap>
+          <mytriplan-plan-item-sliding (open)="openPlan(plan)" (delete)="deletePlan(plan)" [plan]="plan" *ngFor="let plan of trip.getPlans({'date': date})"></mytriplan-plan-item-sliding>
+          <ion-item *ngIf="!readonly">
+            <button ion-button block outline (click)="openAddPlan(date)" aria-label="add plan to your itinerary">
+              <ion-icon name="add" aria-hidden="true" item-start></ion-icon>&nbsp;
+              Add plan
+            </button>
+          </ion-item>
+        </ion-list>
+      </div>
     </div>
+  </div>
+  <div *ngIf="detail=='travelers'">
+    <ion-list>
+      <ion-item *ngFor="let traveler of trip.getTravelers()">
+        <ion-thumbnail item-start>
+          <img [src]="traveler.photoURL">
+        </ion-thumbnail>
+        <h2>{{ traveler.displayName }}</h2>
+      </ion-item>
+    </ion-list>
   </div>
 </ion-content>

@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { IonicPageModule } from 'ionic-angular';
 import { ComponentsModule } from '../../components/components.module';
+import { PipesModule } from '../../pipes/pipes.module';
 
 import { TripDetailPage } from './trip-detail';
 
@@ -12,7 +13,8 @@ import { TripDetailPage } from './trip-detail';
   imports: [
     IonicPageModule.forChild(TripDetailPage),
     TranslateModule.forChild(),
-    ComponentsModule
+    ComponentsModule,
+    PipesModule
   ],
   exports: [
     TripDetailPage

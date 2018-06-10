@@ -20,6 +20,7 @@ export class TripDetailPage {
 
   trip: Trip;
   itinerary: string;
+  detail: string;
   readonly: boolean;
   private tripDates: any[];
 
@@ -35,6 +36,7 @@ export class TripDetailPage {
         this.itinerary = this.itinerary || this.tripDates[(this.trip.daysLeft < 0 && this.trip.daysAgo <= 0)? Math.abs(this.trip.daysLeft): 0];
       }
     });
+    this.detail = 'plans';
   }
 
   ionViewDidLoad() { }
