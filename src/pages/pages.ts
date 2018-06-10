@@ -11,5 +11,5 @@ export const TutorialPage = 'TutorialPage';
 
 // The initial root pages for our tabs (remove if not using tabs)
 export const Tab1Root = 'TripListPage';
-export const Tab2Root = 'PastTripListPage';
+export const Tab2Root = 'TripListPastPage';
 export const Tab3Root = 'ProfilePage';
