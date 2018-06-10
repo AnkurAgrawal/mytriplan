@@ -31,7 +31,7 @@ import { TripsProvider,
   PhotoProvider,
   StorageProvider,
   Settings,
-  User,
+  UsersProvider,
   Api } from '../providers/providers';
 import { MyApp } from './app.component';
 
@@ -99,7 +99,7 @@ const firebaseConfig = {
   ],
   providers: [
     Api,
-    User,
+    UsersProvider,
     Camera,
     FilePath,
     GoogleMaps,
