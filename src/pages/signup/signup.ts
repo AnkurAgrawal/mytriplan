@@ -3,7 +3,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { IonicPage, NavController, LoadingController, Loading } from 'ionic-angular';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
-import { User, AuthServiceProvider } from '../../providers/providers';
+import { UsersProvider, AuthServiceProvider } from '../../providers/providers';
 import { MainPage } from '../pages';
 
 @IonicPage()
@@ -20,8 +20,7 @@ export class SignupPage {
   // Our translated text strings
   private signupErrorString: string;
 
-  constructor(public navCtrl: NavController, private loadingCtrl: LoadingController, private auth: AuthServiceProvider, formBuilder: FormBuilder, public translateService: TranslateService,
-    public user: User) {
+  constructor(public navCtrl: NavController, private loadingCtrl: LoadingController, private auth: AuthServiceProvider, formBuilder: FormBuilder, public translateService: TranslateService, public user: UsersProvider) {
 
     this.translateService.get('SIGNUP_ERROR').subscribe((value) => {
       this.signupErrorString = value;

@@ -3,7 +3,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { IonicPage, NavController, Loading, LoadingController } from 'ionic-angular';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
-import { User, AuthServiceProvider } from '../../providers/providers';
+import { UsersProvider, AuthServiceProvider } from '../../providers/providers';
 import { MainPage } from '../pages';
 
 @IonicPage()
@@ -20,7 +20,7 @@ export class SignInPage {
   signInError: string;
   loading: Loading;
 
-  constructor(private navCtrl: NavController, private auth: AuthServiceProvider, private loadingCtrl: LoadingController, public user: User, formBuilder: FormBuilder, public translateService: TranslateService) {
+  constructor(private navCtrl: NavController, private auth: AuthServiceProvider, private loadingCtrl: LoadingController, public user: UsersProvider, formBuilder: FormBuilder, public translateService: TranslateService) {
     this.translateService.get('LOGIN_ERROR').subscribe((value) => {
       this.signInErrorString = value;
     });
