@@ -4,11 +4,11 @@ import { Subject } from 'rxjs/Subject';
 import { TranslateService } from '@ngx-translate/core';
 
 import { Trip } from '../../models/trip';
-import { TripsProvider } from '../../providers/providers';
+import { TripsProvider, AuthServiceProvider, UsersProvider } from '../../providers/providers';
 import { MomentPipe } from '../../pipes/moment/moment';
 
 /**
- * Generated class for the PastTripListPage page.
+ * Generated class for the TripListPastPage page.
  *
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
@@ -19,30 +19,31 @@ import { MomentPipe } from '../../pipes/moment/moment';
   priority: 'low'
 })
 @Component({
-  selector: 'page-past-trip-list',
-  templateUrl: 'past-trip-list.html',
+  selector: 'page-trip-list-past',
+  templateUrl: 'trip-list-past.html',
   providers: [
     MomentPipe
   ]
 })
-export class PastTripListPage {
+export class TripListPastPage {
   private ngUnsubscribe: Subject<Trip> = new Subject<Trip>();
 
   currentTrips: Trip[];
 
-  constructor(public navCtrl: NavController, private tripsProvider: TripsProvider, private moment: MomentPipe, private translate: TranslateService) {
+  constructor(public navCtrl: NavController, private usersProvider: UsersProvider, private tripsProvider: TripsProvider, private auth: AuthServiceProvider, private moment: MomentPipe, private translate: TranslateService) {
     // Get trips form firebase using Firestype api
     this.translate.get('DATABASE_DATE_FORMAT').subscribe((dateFormat) =>
-      this.tripsProvider.query({
-        dateTo: {
-          type: '<',
+      this.usersProvider.queryTripsForCurrentUser([
+        {
+          field: 'dateTo',
+          type: 'endBefore',
           value: this.moment.transform(new Date().toString(), dateFormat)
         }
-      })
+      ])
       .takeUntil(this.ngUnsubscribe)
-      .subscribe((trips: Trip[]) => {
-        this.currentTrips = trips;
-      })
+      .subscribe((trips: Trip[]) =>
+        this.currentTrips = trips
+      )
     );
   }
 

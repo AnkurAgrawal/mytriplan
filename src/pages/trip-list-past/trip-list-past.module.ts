@@ -2,18 +2,18 @@ import { NgModule } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { IonicPageModule } from 'ionic-angular';
 
-import { PastTripListPage } from './past-trip-list';
+import { TripListPastPage } from './trip-list-past';
 
 @NgModule({
   declarations: [
-    PastTripListPage,
+    TripListPastPage,
   ],
   imports: [
-    IonicPageModule.forChild(PastTripListPage),
+    IonicPageModule.forChild(TripListPastPage),
     TranslateModule.forChild()
   ],
   exports: [
-    PastTripListPage
+    TripListPastPage
   ]
 })
 export class PastTripListPageModule {}
