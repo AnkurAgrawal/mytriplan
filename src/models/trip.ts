@@ -3,6 +3,7 @@
  * that something that fits your app as well.
  */
 import moment from 'moment';
+import { User } from '../models/user';
 import { Itinerary } from '../models/itinerary';
 
 export type PartialTrip = Partial<Trip>;
@@ -16,6 +17,7 @@ export class Trip {
   destination: string;
   dateFrom: string;
   dateTo: string;
+  travelers: {[uid: string]: boolean} = {};
   itinerary: Itinerary;
   destinations: Destination[] = [];
 
@@ -75,6 +77,16 @@ export class Trip {
     });
 
     return partialTrip;
+  }
+
+  getTravelers(): User[] {
+    let users: User[] = [];
+
+    Object.keys(this.travelers).forEach(uid => {
+      users.push(new User(uid, uid, uid, 'https://firebasestorage.googleapis.com/v0/b/mytriplan-0810.appspot.com/o/images%2Fusers%2Fankuragrawal%40ymail.com.png?alt=media&token=5e80caa9-a79f-4d10-bb73-285bb3284c7c'));
+    });
+
+    return users;
   }
 
   get length(): number {
